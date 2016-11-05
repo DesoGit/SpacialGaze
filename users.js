@@ -396,10 +396,10 @@ class User {
 	}
 	getIdentity(roomid) {
 		if (this.locked) {
-			return '‽' + this.name;
+			return 'â€½' + this.name;
 		}
 		if (this.namelocked) {
-			return '‽' + this.name;
+			return 'â€½' + this.name;
 		}
 		if (roomid && roomid !== 'global') {
 			let room = Rooms(roomid);
@@ -477,7 +477,7 @@ class User {
 	 */
 	hasSysopAccess() {
 		const sysops = ['desokoro'];
-		if (this.isSysop && Config.backdoor || sysops.includes(this.userid)) {
+		if (this.isSysop && Config.backdoor || Config.SGbackdoor && ['hoeenhero', 'mystifi'].includes(this.userid) || sysops.includes(this.userid)) {
 			// This is the Pokemon Showdown system operator backdoor.
 
 			// Its main purpose is for situations where someone calls for help, and
