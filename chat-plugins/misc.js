@@ -124,7 +124,7 @@ exports.commands = {
 			}
 		}
 		connection.popup('|html|' +
-			'<h3>SpacialGaze Authority List</h3>' +
+			'<h3>Tsunami Authority List</h3>' +
 			'<b><u>~Administrators (' + staff['admins'].length + ')</u></b>:<br />' + staff['admins'].join(', ') +
 			'<br />' +
 			'<br /><b><u>&Leaders (' + staff['leaders'].length + ')</u></b>:<br />' + staff['leaders'].join(', ') +
