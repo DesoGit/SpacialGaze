@@ -396,10 +396,10 @@ class User {
 	}
 	getIdentity(roomid) {
 		if (this.locked) {
-			return 'â€½' + this.name;
+			return '‽' + this.name;
 		}
 		if (this.namelocked) {
-			return 'â€½' + this.name;
+			return '‽' + this.name;
 		}
 		if (roomid && roomid !== 'global') {
 			let room = Rooms(roomid);
