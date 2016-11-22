@@ -26,8 +26,8 @@ function writeShop() {
   fs.writeFile('config/eShop.json', JSON.stringify(SG.eShop));
 }
 
-function shopDisplay() { //2px solid #070e96
-  let output = '<div style="max-height:300px; width: 100%;"><table style="border:2px solid #101ad1; border-radius: 5px; width: 100%;"><tr><th colspan="3" style="border: 2px solid #070e96; border-radius: 5px">Server Shop</th></tr>';
+function shopDisplay() {
+  let output = '<div style="max-height:300px; width: 100%; overflow: scroll"><table style="border:2px solid #101ad1; border-radius: 5px; width: 100%;"><tr><th colspan="3" style="border: 2px solid #070e96; border-radius: 5px">Server Shop</th></tr>';
   for (let i in SG.eShop) {
     if (!SG.eShop[i]) continue;
     output += '<tr><td style="border: 2px solid #070e96; width: 20%; text-align: center"><button name="send" value="/eshop buy ' + SG.eShop[i].id + '">' + SG.eShop[i].name + '</button></td><td style="border: 2px solid #070e96; width: 70%; text-align: center">' + SG.eShop[i].desc + '</td><td style="border: 2px solid #070e96; width: 10%; text-align: center">' + SG.eShop[i].price + '</td></tr>';
@@ -85,9 +85,9 @@ exports.commands =  {
       if (SG.eShop.closed) return this.sendReply('An error closed the shop.');
       if (!target) return this.parse('/eshop help');
       if (!SG.eShop[toId(target)]) return this.errorReply(target + ' is not in the shop.');
-      delete SG.eShop[toId(target[0])];
+      delete SG.eShop[toId(target)];
       writeShop();
-      return this.sendReply('The item ' + target[0] + ' was removed.');
+      return this.sendReply('The item ' + target + ' was removed.');
     },
     buy: function (target, room, user, connection, cmd, message) {
       if (!allowThisShop) return this.errorReply('This shop is closed');
@@ -134,18 +134,23 @@ exports.commands =  {
                 break;
               case 'shiny':
                 SG.ssb[user.userid].canShiny = true;
+                writeSSB();
                 break;
               case 'ffacustomsymbol':
                 SG.ssb[user.userid].cSymbol = true;
+                writeSSB();
                 break;
               case 'customitem':
                 SG.ssb[user.userid].bought.cItem = true;
+                writeSSB();
                 break;
               case 'customability':
                 SG.ssb[user.userid].bought.cAbility = true;
+                writeSSB();
                 break;
               case 'custommove':
                 SG.ssb[user.userid].bought.cMove = true;
+                writeSSB();
                 break;
               default:
                 SG.messageSeniorStaff(user.name + ' has purchased a ' + item.name + '.');

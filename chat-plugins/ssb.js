@@ -7,7 +7,7 @@ var customMovepool = ['Stretch', 'Flame Tower', 'Rain Spear', 'Healing Herbs', '
 var customDescs = ['+1 Atk, +1 SpA, +1 Spe', '75 power Special attack, traps opponent for 4-5 turns and damages, 50% chance of burn', '50 power special move, 100 accuracy, summons rain, 20% chance to flinch', 'Heal your whole team of status conditions and heal 25% of your HP.', 'More power the faster the user is than the target, rasies speed by 1 after use.', 'Hail + Blizzard', '200 Base Power, has a 50% chance to paralyze target, must recharge after use', 'Inflict toxic on foe, and lower foes attack by 1. Lower accuracy.', '150BP Physical move, 15% chance to flinch', 'Remove entry hazards and set the weather to clear.', 'Sets Light Screen, Reflect, and Quick Guard.', '100 power physical attack, 90 accuracy, 30% chance to raise speed and attack.', 'Special attack, 95 power, 100 accuracy, 30% chance to Flinch', '70BP, 10% flinch chance, Always crits', '175BP outrage, also lowers your atk by 2 after it ends.', '100BP knock off', '100BP Physical move, if the foe is a steel type they will be trapped.', '120BP Special move. 10% par chance, power based move.'];
 var typeList = ['Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'];
 
-function writeSSB() {
+global.writeSSB = function() {
   if (!ssbWrite) return false; //Prevent corruptions
   fs.writeFile('config/ssb.json', JSON.stringify(SG.ssb));
 }
@@ -272,7 +272,7 @@ class SSB {
     item = Tools.getItem(toId(item));
     if (!item.exists) {
       //check custom
-      if (this.cItem && toId(this.cItem) === item.id) {
+      if (this.cItem && toId(this.cItem) === item.id && this.bought.citem) {
         this.item = this.cItem;
         return true;
       } else return false;
@@ -286,7 +286,7 @@ class SSB {
     ability = Tools.getAbility(toId(ability));
     if (!ability.exists) {
       //check custom
-      if (this.cAbility && toId(this.cAbility) === ability.id) {
+      if (this.cAbility && toId(this.cAbility) === ability.id && this.bought.cAbility) {
         this.ability = this.cAbility;
         return true;
       } else return false;
@@ -336,7 +336,7 @@ class SSB {
     }
     if (customIds.indexOf(move) < 0) {
       //check for self-made custom move
-      if (this.selfCustomMove && toId(this.selfCustomMove) === move) {
+      if (this.selfCustomMove && toId(this.selfCustomMove) === move && this.bought.cMove) {
         this.cMove = this.selfCustomMove;
         return true;
       } else return false;
@@ -680,11 +680,11 @@ exports.commands = {
         if (targetUser.active) {
           writeSSB();
           user.sendTo(room, '|uhtmlchange|ssb' + user.userid + '|' + buildMenu(user.userid));
-          return this.sendReply('Your pokemon was activated! Your pokemon will appear in battles once an administrator hotpatches formats, or restarts the server.');
+          return this.sendReply('Your pokemon was activated! Your pokemon will appear in battles now.');
         } else {
           writeSSB();
           user.sendTo(room, '|uhtmlchange|ssb' + user.userid + '|' + buildMenu(user.userid));
-          return this.sendReply('Your pokemon was deactivated. Your pokemon will no longer appear in battles once an administrator hotpatches formats, or restarts the server.');
+          return this.sendReply('Your pokemon was deactivated. Your pokemon will no longer appear in battles.');
         }
       } else return this.errorReply('Could not activate your pokemon, all pokemon must have at least 1 move.');
     },
@@ -701,6 +701,116 @@ exports.commands = {
       let targetUser = SG.ssb[user.userid];
       return this.sendReplyBox(customMenu());
     },
+    log: function (target, room, user, connection, cmd, message) {
+      if (!target) target = (user.can('roomowner') ? 'view, all' : 'view, ' + user.userid);
+      target = target.split(',');
+      switch(target[0]) {
+        case 'view':
+          if (!target[1]) target[1] = (user.can('roomowner') ? 'all' : user.userid);
+          if (toId(target[1]) !== user.userid && !user.can('roomowner')) return this.errorReply('You can only view your own SSBFFA purchases.');
+          let output = '<div style="max-height: 300px; overflow: scroll; width: 100%"><table><tr><th style="border: 1px solid black">Name</th><th style="border: 1px solid black">Item</th><th style="border: 1px solid black">Status</th>';
+          if (toId(target[1]) === 'all') {
+            output += '<th style="border: 1px solid black">Options</th><tr/>'
+            for (let i in SG.ssb) {
+              for (let j in SG.ssb[i].bought) {
+                let buttons = '<button class="button" name="send" value="/ssb log mark, ' + SG.ssb[i].userid + ', ' + j + ', complete">Mark as Complete</button><button class="button" name="send" value="/ssb log mark, ' + SG.ssb[i].userid + ', ' + j + ', pending">Mark as Pending</button><button class="button" name="send" value="/ssb log mark, ' + SG.ssb[i].userid + ', ' + j + ', remove"><span style="color:red">Remove this purchase</span</button>';
+                output += '<tr><td style="border: 1px solid black">' + SG.ssb[i].name + '</td><td style="border: 1px solid black">' + j + '</td><td style="border: 1px solid black">' + (SG.ssb[i].bought[j] ? (SG.ssb[i].bought[j] === 'complete' ? 'Complete' : 'Pending') : 'Removed') + '</td><td style="border: 1px solid black">' + buttons + '</td></tr>';
+              }
+            }
+          } else {
+            target[1] = toId(target[1]);
+            if (!SG.ssb[target[1]]) return this.errorReply(target[1] + ' does not have a SSBFFA pokemon yet.');
+            if (user.can('roomowner')) {
+              output += '<th style="border: 1px solid black">Options</th><tr/>';
+              for (let j in SG.ssb[target[1]].bought) {
+                let buttons = '<button class="button" name="send" value="/ssb log mark, ' + SG.ssb[target[1]].userid + ', ' + j + ', complete">Mark as Complete</button><button class="button" name="send" value="/ssb log mark, ' + SG.ssb[target[1]].userid + ', ' + j + ', pending">Mark as Pending</button><button class="button" name="send" value="/ssb log mark, ' + SG.ssb[target[1]].userid + ', ' + j + ', remove"><span style="color:red">Remove this purchase</span</button>';
+                output += '<tr><td style="border: 1px solid black">' + SG.ssb[target[1]].name + '</td><td style="border: 1px solid black">' + j + '</td><td style="border: 1px solid black">' + (SG.ssb[target[1]].bought[j] ? (SG.ssb[target[1]].bought[j] === 'complete' ? 'Complete' : 'Pending') : 'Removed') + '</td><td style="border: 1px solid black">' + buttons + '</td></tr>';
+              }
+            } else {
+              output += '</tr>';
+              for (let j in SG.ssb[target[1]].bought) {
+                output += '<tr><td style="border: 1px solid black">' + SG.ssb[target[1]].name + '</td><td style="border: 1px solid black">' + j + '</td><td style="border: 1px solid black">' + (SG.ssb[target[1]].bought[j] ? (SG.ssb[target[1]].bought[j] === 'complete' ? 'Complete' : 'Pending') : 'Removed') + '</td></tr>';
+              }
+            }
+          }
+          return this.sendReplyBox(output);
+          break;
+        case 'mark':
+          if (!user.can('roomowner')) return this.errorReply('/sbb mark - Access Denied.');
+          if (!target[3]) return this.parse('/help ssb log');
+          target[1] = toId(target[1]);
+          target[2] = target[2].trim();
+          target[3] = toId(target[3]);
+          if (!SG.ssb[target[1]]) return this.errorReply(target[1] + ' does not have a SSBFFA pokemon yet.');
+          if (SG.ssb[target[1]].bought[target[2]] === undefined) return this.parse('/help ssb log');
+          switch(target[3]) {
+            case 'complete':
+              if (SG.ssb[target[1]].bought[target[2]] === target[3]) return this.errorReply(target[1] + '\'s ' + target[2] + ' is already ' + target[3] + '.');
+              SG.ssb[target[1]].bought[target[2]] = 'complete';
+              writeSSB();
+              return this.sendReply(target[1] + '\'s ' + target[2] + ' was marked as complete.');
+              break;
+            case 'pending':
+              if (SG.ssb[target[1]].bought[target[2]] === true) return this.errorReply(target[1] + '\'s ' + target[2] + ' is already ' + target[3] + '.');
+              SG.ssb[target[1]].bought[target[2]] = true;
+              writeSSB();
+              return this.sendReply(target[1] + '\'s ' + target[2] + ' was marked as pending.');
+              break;
+            case 'remove':
+              if (SG.ssb[target[1]].bought[target[2]] === false) return this.errorReply(target[1] + '\'s ' + target[2] + ' is already removed.');
+              if (!target[4] || toId(target[4]) !== 'force') return this.sendReply('WARNING. If you remove this purchase the user will not be able to use their ' + target[2] + ' and the user will not be refunded (unless you provide it). If you are sure you want to do this, run: /ssb log mark, ' + target[1] + ', ' + target[2] + ', ' + target[3] + ', force');
+              SG.ssb[target[1]].bought[target[2]] = false;
+              writeSSB();
+              return this.sendReply(target[1] + '\'s ' + target[2] + ' was removed.');
+              break;
+            default:
+              return this.parse('/help ssb log');
+          }
+          break;
+        default:
+          return this.parse('/help ssb log');
+      }
+    },
+    loghelp: ['/ssb log - Accepts the following commands:',
+              '/ssb log view, [all|user] - View the purchases of a user or all users. Requires &, ~ unless viewing your own.',
+              '/ssb log mark, [user], [cItem|cAbility|cMove], [complete|pending|remove] - Update the status for a users SSBFFA purchase.'],
+    forceupdate: 'validate',
+    validate: function (target, room, user, connection, cmd, message) {
+      if (!this.can('roomowner')) return;
+      if (!target) return this.parse('/help ssb validate');
+      let targetUser = SG.ssb[toId(target)];
+      if (!targetUser) return this.errorReply(target + ' does not have a SSBFFA pokemon yet.');
+      //Start validation.
+      this.sendReply('Validating ' + targetUser.name + '\'s SSBFFA pokemon...');
+      let valid = true;
+      if (targetUser.item !== false && !targetUser.setItem(targetUser.item)) {
+        valid = false;
+        this.errorReply(targetUser.name + '\'s item was invalid.');
+        targetUser.item = false;
+      }
+      if (!targetUser.setAbility(targetUser.ability)) {
+        valid = false;
+        this.errorReply(targetUser.name + '\'s ability was invalid.');
+        targetUser.ability = Tools.getTemplate(targetUser.species).abilities[0]; //Default to first ability of species.
+      }
+      for (let i in targetUser.movepool) {
+        if (!Tools.getMove(targetUser.movepool[i]).exists) {
+          //Check custom first!
+          if (!targetUser.selfCustomMove || toId(targetUser.selfCustomMove) !== targetUser.movepool[i] || !targetUser.bought.cMove) {
+            valid = false;
+            this.errorReply(targetUser.name + '\'s move "' + targetUser.movepool[i] + '" was invalid.');
+            targetUser.removeMove(targetUser.movepool[i]);
+          }
+        }
+      }
+      if (!valid) {
+        targetUser.active = false;
+        if (Users(toId(targetUser.name))) Users(toId(targetUser.name)).popup('Your SSBFFA pokemon was deactivated because it is invalid.');
+        writeSSB();
+        return this.errorReply('Done. Invalid things have been set to their defaults, and this pokemon has been deactivated.');
+      } else return this.sendReply('Done! This pokemon is valid');
+    },
+    validatehelp: ['/ssb validate [user] - Validate a users SSBFFA pokemon and if anything invalid is found, set ti to its default value. Requires: &, ~'],
     '': function (target, room, user, connection, cmd, message) {
       return this.parse('/help ssb');
     }
@@ -715,5 +825,7 @@ exports.commands = {
     '/ssb edit details - pulls up the editing menu for level, gender, (if purchased) shinyness, and (if purchased or if global auth) symbol.',
     '/ssb toggle - Attempts to active or deactive your pokemon. Acitve pokemon can be seen in the tier. If your pokemon cannot be activated, you will see a popup explaining why.',
     '/ssb custom - Shows all the default custom moves, with details.',
+    '/ssb log - Shows purchase details for SSBFFA.',
+    '/ssb validate [user] - validate a users SSBFFA pokemon. If the pokemon is invalid it will be fixed and decativated. Requires: &, ~',
     'Programed by HoeenHero.']
 }
