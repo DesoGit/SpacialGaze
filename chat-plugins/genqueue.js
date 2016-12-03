@@ -30,6 +30,7 @@ this.sendReply(targetUser + ' is now blacklisted.');
 
 genwhitelist: function (target, room, user) {
 if (user.userid !== 'desokoro') return this.errorReply('You lack the permissions to use this.');
+if (!target) return this.errorReply('Please specify a target.');
 let targetUser = Users(toId(target));
 if (!targetUser) return this.errorReply(target + ' could not be found. Check your spelling.');
 if (targetUser.isBlacklisted === false) return this.errorReply(targetUser.username + ' is not blacklisted.');
