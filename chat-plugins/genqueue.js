@@ -12,7 +12,7 @@ try {
 	if (e.code !== 'MODULE_NOT_FOUND') throw e;
 }
 
-if (!(genRequests || typeof genRequests === 'object')) genRequests = {requests: [], blacklist: {}};
+if (!(genRequests || typeof genRequests === 'object')) genRequests = {requests: [], blacklist: []};
 
 function writeGenRequests() {
 	fs.writeFileSync(requestsFile, JSON.stringify(genRequests));
