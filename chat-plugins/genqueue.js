@@ -49,5 +49,7 @@ else return this.sendReply('This user is not blacklisted.');
 reqclear: function (target, room, user) {
 if (user.userid !== 'desokoro') return this.errorReply('You lack the permissions to use this.');
 GenReqArray = []
+    this.sendReply('All requests have been cleared.');
+console.log('Gen requests have been cleared by ' + user.name);
 },
     };
