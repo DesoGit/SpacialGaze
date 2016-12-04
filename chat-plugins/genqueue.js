@@ -38,10 +38,11 @@ exports.commands = {
 		if (!genRequests.requests.length) return this.errorReply('There are no current genning requests.');
 		let output = `There are <b>${genRequests.requests.length}</b> users who requested genning:<br />`;
 		for (let i = 0; i < genRequests.requests.length; i++) {
-			output += `<b>${genRequests.requests[i].username}</b>: ${genRequests.requests[i].request} (${genRequests.requests[i].time}).`;
+			output += `<b>${genRequests.requests[i].username}</b>: ${genRequests.requests[i].request} (${genRequests.requests[i].time}).<br />`;
 		}
 		this.sendReplyBox(output);
 	},
+
 
         gbl: 'genblacklist',
 	genblacklist: function (target, room, user) {
@@ -75,7 +76,7 @@ exports.commands = {
         vbl: 'blacklistview',
         blv: 'blacklistview',
 	blacklistview: function (target, room, user) {
-                if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
+                if (!permittedGenners.includes(user.userid)) return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
 		if (!genRequests.blacklist.length) return this.errorReply("There are currently no users on the genning blacklist.");
 		let output = `There are <b>${genRequests.blacklist.length}</b> users on the genning blacklist:<br />`;
