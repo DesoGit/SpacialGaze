@@ -7,7 +7,7 @@ const path = require('path');
 
 const requestsFile = path.resolve(__dirname, '../config/chat-plugins/genrequests.json');
 
-const permittedGenners ['desokoro', 'lombres']
+const permittedGenners = ['desokoro', 'lombres']
 
 let genRequests = {requests: [], blacklist: []};
 try {
