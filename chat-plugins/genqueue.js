@@ -37,7 +37,7 @@ exports.commands = {
 		if (!genRequests.requests.length) return this.errorReply('There are no current genning requests.');
 		let output = `There are <b>${genRequests.requests.length}</b> users who requested genning:<br />`;
 		for (let i = 0; i < genRequests.requests.length; i++) {
-			output += `<b>${genRequests.requests[i].username}</b>: ${genRequests.requests[i].request} (${genRequests.requests[i].time}).`;
+			output += `<b>${genRequests.requests[i].username}</b>: ${genRequests.requests[i].request} (${genRequests.requests[i].time}).</br>`;
 		}
 		this.sendReplyBox(output);
 	},
