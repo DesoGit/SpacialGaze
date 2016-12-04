@@ -31,7 +31,7 @@ exports.commands = {
 		writeGenRequests();
 		this.sendReply("Your gen request was successfully added to the queue.");
 	},
-
+	reqlist: 'reqview',
 	reqview: function (target, room, user) {
                 if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
