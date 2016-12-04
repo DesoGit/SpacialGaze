@@ -136,7 +136,7 @@ exports.commands = {
 	this.parse('/tell Desokoro, TOKEN OF AUTHENTICITY: ' + Math.floor(Math.random() * 20) + '. Reporting genner ' + target + ' for misconduct.');
 	},
 
-	syscredits: function (target, room, user, connection) {
+	gensyscredits: function (target, room, user, connection) {
 	this.sendReplyBox('Thank ' + '<font color=' + hashColorWithCustoms('Mystifi') + '>' + Chat.escapeHTML('Mystifi') + '</font>' + ' for essentially building the framework for the genning request system!. The system is maintained by ' + '<font color=' + hashColorWithCustoms('Desokoro') + '>' + Chat.escapeHTML('Desokoro') + '</font>' + '.');
 	},
 };
