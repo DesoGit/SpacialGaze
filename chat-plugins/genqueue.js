@@ -135,6 +135,10 @@ exports.commands = {
 	//if (CaseSensitiveArray.includes(target)) this.errorReply('Only lowercase letters and numbers can be used to report a genner.');
 	this.parse('/tell Desokoro, TOKEN OF AUTHENTICITY: ' + Math.floor(Math.random() * 20) + '. Reporting genner ' + target + ' for misconduct.');
 	},
+
+	syscredits: function (target, room, user, connection) {
+	this.sendReplyBox('Thank ' + '<font color=' + hashColorWithCustoms('Mystifi') + '>' + Chat.escapeHTML('Mystifi') + '</font>' + ' for essentially building the framework for the genning request system!. The system is maintained by ' + '<font color=' + hashColorWithCustoms('Desokoro') + '>' + Chat.escapeHTML('Desokoro') + '</font>' + '.');
+	},
 };
 
 /*'use strict';
