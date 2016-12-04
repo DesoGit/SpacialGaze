@@ -97,6 +97,14 @@ exports.commands = {
 		writeGenRequests();
 		this.sendReply("All genning requests were erased from the server.");
 	},
+		genguide: function (target, room, user) {
+	this.sendReplyBox('<center><h3>GENNING GUIDE</h3></center><center><h4>genreq (request): Requests a gen for those who can gen and are permitted by Tsunami to do so</h4></center><center><h2>More commands available to all users will be listed here in the future</h2></center>')
+	},
+
+	staffgenguide: function (target, room, user) {
+	if (!permittedGenners.includes(user.userid)) return this.errorReply('You are not permitted to view this.');
+	this.sendReplyBox('<center><h3>GENNING RESPONSE GUIDE</h3></center><center></h1>reqclear: Clears all requests</h1></center><center></h1>vbl: Views all blacklisted users</h1></center><center></h1>gbl: Blacklists a user.</h1></center><center></h1>gwl: Un-blacklists a user</h1></center>')
+	},
 };
 
 /*'use strict';
