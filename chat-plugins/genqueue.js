@@ -133,7 +133,7 @@ exports.commands = {
 	if (!permittedGenners.includes(target) && !permittedGennersByNames.includes(target)) return this.errorReply('The user you have reported is not a valid genner.');
 	if (target === 'desokoro') return this.errorReply('Reporting the owner of the server to himself won\'t do you much good...');
 	//if (CaseSensitiveArray.includes(target)) this.errorReply('Only lowercase letters and numbers can be used to report a genner.');
-	this.parse('/tell Desokoro, TOKEN OF AUTHENTICITY: ' + Math.floor(Math.random() * 20) + '. Reporting genner ' + target + ' for misconduct.');
+	this.parse('/tell Desokoro, TOKEN OF AUTHENTICITY: ' + user.name + '|' + Math.floor(Math.random() * 20) + '|' +  + Math.floor(Math.random() * 20) + '|' + Math.floor(Math.random() * 20) + '. Reporting genner ' + target + ' for misconduct.');
 	},
 
 	gensyscredits: function (target, room, user, connection) {
