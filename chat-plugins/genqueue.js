@@ -100,13 +100,25 @@ exports.commands = {
 		writeGenRequests();
 		this.sendReply("All genning requests were erased from the server.");
 	},
-		genguide: function (target, room, user) {
-	this.sendReplyBox('<center><h3>GENNING GUIDE</h3></center><center><h4>genreq (request): Requests a gen for those who can gen and are permitted by Tsunami to do so</h4></center><center><h2>More commands available to all users will be listed here in the future</h2></center>')
+	genguide: function (target, room, user) {
+	this.sendReplyBox('<center><h3>GENNING GUIDE</h3></center><center><h4>genreq (request): Requests a gen for those who can gen and are permitted by Tsunami to do so</h4></center><center><h2>More commands available to all users will be listed here in the future</h2></center>');
 	},
 
 	staffgenguide: function (target, room, user) {
 	if (!permittedGenners.includes(user.userid)) return this.errorReply('You are not permitted to view this.');
-	this.sendReplyBox('<center><h3>GENNING RESPONSE GUIDE</h3></center><center></h1>reqclear: Clears all requests</h1></center><center></h1>vbl: Views all blacklisted users</h1></center><center></h1>gbl: Blacklists a user.</h1></center><center></h1>gwl: Un-blacklists a user</h1></center>')
+	this.sendReplyBox('<center><h3>GENNING RESPONSE GUIDE</h3></center><center></h1>reqclear: Clears all requests</h1></center><center></h1>vbl: Views all blacklisted users</h1></center><center></h1>gbl: Blacklists a user.</h1></center><center></h1>gwl: Un-blacklists a user</h1></center>');
+	},
+
+	addgenner: 'genneradd',
+	genneradd: function (target, room, user) {
+	if (user.userid !== 'desokoro') return this.errorReply('You are not permitted to use this command.');
+	if (!target) return this.errorReply('Please specify a target.')
+	let targetUser = Users(toId(target));
+	if (!targetUser) return this.errorReply('The target user ' + target + ' could not be found. Please check your spelling!');
+	if (permittedGenners.includes(targetUser.userid)) return this.errorReply('The target user ' + target + ' is already on the permitted genners list.');
+	permittedGenners.push(targetUser.userid);
+	this.sendReply('You have successfully added ' + targetUser.name + ' to the permitted genners list!');
+	console.log(targetUser.name + ' was added to the permitted genners list by ' + user.name + '.');
 	},
 };
 
