@@ -5,17 +5,17 @@ const path = require('path');
 
 const requestsFile = path.resolve(__dirname, '../config/chat-plugins/genrequests.json');
 
-const permittedGenners = ['desokoro', 'lombres']
-const permittedGennersByNames = ['Desokoro', 'Lombres']
+//const permittedGenners = ['desokoro', 'lombres']
+//const permittedGennersByNames = ['Desokoro', 'Lombres']
 
-let genRequests = {requests: [], blacklist: []};
+let genRequests = {requests: [], blacklist: [], permittedGenners: [], permittedGennersByNames: []};
 try {
 	genRequests = require(requestsFile);	
 } catch (e) {
 	if (e.code !== 'MODULE_NOT_FOUND') throw e;
 }
 
-if (!(genRequests || typeof genRequests === 'object')) genRequests = {requests: [], blacklist: {}};
+if (!(genRequests || typeof genRequests === 'object')) genRequests = {requests: [], blacklist: [], permittedGenners: [], permittedGennersByNames: []};
 
 function writeGenRequests() {
 	fs.writeFileSync(requestsFile, JSON.stringify(genRequests));
@@ -113,15 +113,29 @@ exports.commands = {
 	if (!target) return this.errorReply('Please specify a target.')
 	let targetUser = Users(toId(target));
 	if (!targetUser) return this.errorReply('The target user ' + target + ' could not be found. Please check your spelling!');
-	if (permittedGenners.includes(targetUser.userid)) return this.errorReply('The target user ' + target + ' is already on the permitted genners list.');
-	permittedGenners.push(targetUser.userid);
-	permittedGennersByNames.push(targetUser.name);
+		if (genRequests.permittedGenners.includes(targetUser.userid) || genRequests.permittedGennersByNames.includes(targetUser.name)) return this.errorReply(`${target} is already present on the permitted genners list.`);
+		genRequests.permittedGenners.push(targetUser.userid);
+		genRequests.permittedGennersByNames.push(targetUser.name);
+		writeGenRequests();
 	this.sendReply('You have successfully added ' + targetUser.name + ' to the permitted genners list!');
 	console.log(targetUser.name + ' was added to the permitted genners list by ' + user.name + '.');
 	},
 
+	removegenner: function (target, room, user) {
+	if (user.userid !== 'desokoro') return this.errorReply('You are not permitted to use this command.');
+	if (!target) return this.errorReply('Please specify a target.');
+	let targetUser = Users(toId(target));
+	if (!targetUser) return this.errorReply('The target user ' + target + ' was not found. Check your spelling!');
+	if (!genRequests.permittedGenners.includes(targetUser.userid) || !genRequests.permittedGennersByNames.includes(targetUser.name)) return this.errorReply('The target ' + target + ' is not on the permitted genners list.');
+		genRequests.permittedGenners.splice(genRequests.permittedGenners.indexOf(targetUser.userid), 1);
+		genRequests.permittedGennersByNames.splice(genRequests.permittedGennersByNames.indexOf(targetUser.name), 1);
+		writeGenRequests();
+	this.sendReply(target + ' was successfully removed from the permitted genners list.');
+	console.log(target + ' was removed from the genners list by ' + user.name);
+	},
+
 	viewgenners: function (target, room, user) {
-	for (let i = 0; i <  permittedGenners.length; i++) { this.sendReplyBox(permittedGenners[i]);   }
+	for (let i = 0; i <  genRequests.permittedGennersByNames.length; i++) { this.sendReplyBox(genRequests.permittedGennersByNames[i]);   }
 	},
 
 	reportgenner: function (target, room, user) {
@@ -130,7 +144,7 @@ exports.commands = {
 	if (user.canTalk) return this.errorReply('You are currently unable to be trusted due to your disciplinary status; your report will not be accepted.');
 	if (!user.autoconfirmed) return this.errorReply('You are not autoconfirmed and your report will not be accepted.');
 	if (!target) return this.errorReply('Please specify a target.');
-	if (!permittedGenners.includes(target) && !permittedGennersByNames.includes(target)) return this.errorReply('The user you have reported is not a valid genner.');
+	if (!genRequests.permittedGenners.includes(target) && !genRequests.permittedGennersByNames.includes(target)) return this.errorReply('The user you have reported is not a valid genner.');
 	if (target === 'desokoro') return this.errorReply('Reporting the owner of the server to himself won\'t do you much good...');
 	//if (CaseSensitiveArray.includes(target)) this.errorReply('Only lowercase letters and numbers can be used to report a genner.');
 	this.parse('/tell Desokoro, TOKEN OF AUTHENTICITY: ' + user.name + '|' + Math.floor(Math.random() * 20) + '|' +  + Math.floor(Math.random() * 20) + '|' + Math.floor(Math.random() * 20) + '. Reporting genner ' + target + ' for misconduct.');
