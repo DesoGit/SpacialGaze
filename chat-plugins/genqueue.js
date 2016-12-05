@@ -26,7 +26,7 @@ exports.commands = {
 		if (genRequests.blacklist.includes(user.userid)) return false;
 		if (user.locked || !user.autoconfirmed) return this.errorReply('You do not have adequate permissions to request a gen.');
 		if (!target) return this.errorReply("Please specify something for the gen request.");
-		if (target.includes("pornhub" || "xvideos" || "xnxx") return this.errorReply('You are not permitted to link those things.');
+		if (target.includes("pornhub" || "xvideos" || "xnxx")) return this.errorReply('You are not permitted to link those things.');
 				if (target.includes("http://" || ".com")) { 
 			target = '<a href=' + target + '>' + 'Gen Request' + '</a>';
 		}
