@@ -26,6 +26,9 @@ exports.commands = {
 		if (genRequests.blacklist.includes(user.userid)) return false;
 		if (user.locked || !user.autoconfirmed) return this.errorReply('You do not have adequate permissions to request a gen.');
 		if (!target) return this.errorReply("Please specify something for the gen request.");
+				if (target.includes("http://")) { 
+			target = '<a href=' + target + '>' + 'Gen Request' + '</a>';
+		}
 		genRequests.requests.push({username: user.name, request: target, time: new Date().toUTCString()});
 		writeGenRequests();
 		this.sendReply("Your gen request was successfully added to the queue.");
