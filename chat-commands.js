@@ -118,6 +118,14 @@ exports.commands = {
 		return this.parse("/search " + target);
 	},
 
+	pi: function (target, room, user) {
+		return this.sendReplyBox(
+			'Did you mean: 1. 3.1415926535897932384626... (Decimal)<br />' +
+			'2. 3.184809493B91866... (Duodecimal)<br />' +
+			'3. 3.243F6A8885A308D... (Hexadecimal)<br /><br />' +
+			'How many digits of pi do YOU know? Test it out <a href=" http://guangcongluo.com/mempi/">here</a>!');
+	},
+
 	'!avatar': true,
 	avatar: function (target, room, user) {
 		if (!target) return this.parse('/avatars');
@@ -936,6 +944,7 @@ exports.commands = {
 			return;
 		}
 		if (!this.can('ban', null, room)) return false;
+		if (!this.canTalk()) return;
 		if (target === 'off' || target === 'disable' || target === 'delete') return this.errorReply('Did you mean "/deletestaffintro"?');
 		target = this.canHTML(target);
 		if (!target) return;
@@ -1050,7 +1059,7 @@ exports.commands = {
 		}
 		if (!room.auth) {
 			this.sendReply("/roompromote - This room isn't designed for per-room moderation");
-			return this.sendReply("Before setting room mods, you need to set it up with /roomowner");
+			return this.sendReply("Before setting room staff, you need to set a room owner with /roomowner");
 		}
 		if (!target) return this.parse('/help roompromote');
 
@@ -1061,10 +1070,10 @@ exports.commands = {
 
 		if (!userid) return this.parse('/help roompromote');
 		if (!targetUser && !Users.isUsernameKnown(userid)) {
-			return this.errorReply("User '" + name + "' is offline and unrecognized, and so can't be promoted.");
+			return this.errorReply(`User '${name}' is offline and unrecognized, and so can't be promoted.`);
 		}
 		if (targetUser && !targetUser.registered) {
-			return this.errorReply("User '" + name + "' is unregistered, and so can't be promoted.");
+			return this.errorReply(`User '${name}' is unregistered, and so can't be promoted.`);
 		}
 
 		let currentGroup = room.getAuth({userid, group: (Users.usergroups[userid] || ' ').charAt(0)});
@@ -1074,30 +1083,31 @@ exports.commands = {
 			return this.errorReply("Please specify a group such as /roomvoice or /roomdeauth");
 		}
 		if (!Config.groups[nextGroup]) {
-			return this.errorReply("Group '" + nextGroup + "' does not exist.");
+			return this.errorReply(`Group '${nextGroup}' does not exist.`);
 		}
 
 		if (Config.groups[nextGroup].globalonly || (Config.groups[nextGroup].battleonly && !room.battle)) {
-			return this.errorReply("Group 'room" + Config.groups[nextGroup].id + "' does not exist as a room rank.");
+			return this.errorReply(`Group 'room${Config.groups[nextGroup].id}' does not exist as a room rank.`);
 		}
 
 		let groupName = Config.groups[nextGroup].name || "regular user";
 		if ((room.auth[userid] || Config.groupsranking[0]) === nextGroup) {
-			return this.errorReply("User '" + name + "' is already a " + groupName + " in this room.");
+			return this.errorReply(`User '${name}' is already a ${groupName} in this room.`);
 		}
 		if (!user.can('makeroom')) {
 			if (currentGroup !== ' ' && !user.can('room' + (Config.groups[currentGroup] ? Config.groups[currentGroup].id : 'voice'), null, room)) {
-				return this.errorReply("/" + cmd + " - Access denied for promoting/demoting from " + (Config.groups[currentGroup] ? Config.groups[currentGroup].name : "an undefined group") + ".");
+				return this.errorReply(`/${cmd} - Access denied for promoting/demoting from ${(Config.groups[currentGroup] ? Config.groups[currentGroup].name : "an undefined group")}.`);
 			}
 			if (nextGroup !== ' ' && !user.can('room' + Config.groups[nextGroup].id, null, room)) {
-				return this.errorReply("/" + cmd + " - Access denied for promoting/demoting to " + Config.groups[nextGroup].name + ".");
+				return this.errorReply(`/${cmd} - Access denied for promoting/demoting to ${Config.groups[nextGroup].name}.`);
 			}
 		}
-		if (targetUser && targetUser.locked && !room.isPrivate && !room.battle && !room.isPersonal && (nextGroup === '%' || nextGroup === '@' || nextGroup === '*')) {
+		let nextGroupIndex = Config.groupsranking.indexOf(nextGroup) || 1; // assume voice if not defined (although it should be by now)
+		if (targetUser && targetUser.locked && !room.isPrivate && !room.battle && !room.isPersonal && nextGroupIndex >= 2) {
 			return this.errorReply("Locked users can't be promoted.");
 		}
 
-		if (nextGroup === ' ') {
+		if (nextGroup === Config.groupsranking[0]) {
 			delete room.auth[userid];
 		} else {
 			room.auth[userid] = nextGroup;
@@ -1115,22 +1125,24 @@ exports.commands = {
 				// if the user can't see the demotion message (i.e. rank < %), it is shown in the chat
 				targetUser.send(">" + room.id + "\n(You were demoted to Room " + groupName + " by " + user.name + ".)");
 			}
-			this.privateModCommand("(" + name + " was demoted to Room " + groupName + " by " + user.name + ".)");
-			if (needsPopup) targetUser.popup("You were demoted to Room " + groupName + " by " + user.name + " in " + room.id + ".");
+			this.privateModCommand(`(${name} was demoted to Room ${groupName} by ${user.name}.)`);
+			if (needsPopup) targetUser.popup(`You were demoted to Room ${groupName} by ${user.name} in ${room.id}.`);
 		} else if (nextGroup === '#') {
-			this.addModCommand("" + name + " was promoted to " + groupName + " by " + user.name + ".");
-			if (needsPopup) targetUser.popup("You were promoted to " + groupName + " by " + user.name + " in " + room.id + ".");
+			this.addModCommand(`${'' + name} was promoted to ${groupName} by ${user.name}.`);
+			if (needsPopup) targetUser.popup(`You were promoted to ${groupName} by ${user.name} in ${room.id}.`);
 		} else {
-			this.addModCommand("" + name + " was promoted to Room " + groupName + " by " + user.name + ".");
-			if (needsPopup) targetUser.popup("You were promoted to Room " + groupName + " by " + user.name + " in " + room.id + ".");
+			this.addModCommand(`${'' + name} was promoted to Room ${groupName} by ${user.name}.`);
+			if (needsPopup) targetUser.popup(`You were promoted to Room ${groupName} by ${user.name} in ${room.id}.`);
 		}
 
 		if (targetUser) targetUser.updateIdentity(room.id);
 		if (room.chatRoomData) Rooms.global.writeChatRoomData();
 	},
-	roompromotehelp: ["/roompromote OR /roomdemote [username], [group symbol] - Promotes/demotes the user to the specified room rank. Requires: @ * # & ~",
+	roompromotehelp: [
+		"/roompromote OR /roomdemote [username], [group symbol] - Promotes/demotes the user to the specified room rank. Requires: @ * # & ~",
 		"/room[group] [username] - Promotes/demotes the user to the specified room rank. Requires: @ * # & ~",
-		"/roomdeauth [username] - Removes all room rank from the user. Requires: @ * # & ~"],
+		"/roomdeauth [username] - Removes all room rank from the user. Requires: @ * # & ~",
+	],
 
 	'!roomauth': true,
 	roomstaff: 'roomauth',
@@ -2154,7 +2166,10 @@ exports.commands = {
 		let reason = parts[1];
 		let targets = parts[0].split(',').map(s => toId(s));
 
-		let duplicates = targets.filter(userid => Punishments.roomUserids.nestedGet(room.id, userid));
+		let duplicates = targets.filter(userid => {
+			let punishment = Punishments.roomUserids.nestedGet(room.id, userid);
+			return punishment && punishment[0] === 'BLACKLIST';
+		});
 		if (duplicates.length) {
 			return this.errorReply(`[${duplicates.join(', ')}] ${Chat.plural(duplicates, "are", "is")} already blacklisted.`);
 		}
@@ -2282,7 +2297,9 @@ exports.commands = {
 			target = targets[1].trim();
 			roomId = toId(targets[0]) || room.id;
 		}
-		let targetRoom = Rooms.get(roomId);
+		let targetRoom = Rooms.search(roomId);
+		// if a room alias was used, replace alias with actual id
+		if (targetRoom) roomId = targetRoom.id;
 		let addModlogLinks = Config.modloglink && (!hideIps || (targetRoom && !targetRoom.isPrivate));
 
 		// Let's check the number of lines to retrieve or if it's a word instead

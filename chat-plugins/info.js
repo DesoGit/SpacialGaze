@@ -59,7 +59,8 @@ exports.commands = {
 			let targetRoom = Rooms.get(roomid);
 
 			let authSymbol = (targetRoom.auth && targetRoom.auth[targetUser.userid] ? targetRoom.auth[targetUser.userid] : '');
-			let output = `${authSymbol}<a href="/${roomid}">${roomid}</a>`;
+			let battleTitle = (roomid.battle ? ` title="${roomid.title}"` : '');
+			let output = `${authSymbol}<a href="/${roomid}"${battleTitle}>${roomid}</a>`;
 			if (targetRoom.isPrivate === true) {
 				if (targetRoom.modjoin === '~') return;
 				if (privaterooms) privaterooms += " | ";
@@ -140,37 +141,24 @@ exports.commands = {
 		}
 
 		if (user.can('alts', targetUser) || (room.isPrivate !== true && user.can('mute', targetUser, room) && targetUser.userid in room.users)) {
-			let roomPunishments = ``;
-			for (let i = 0; i < Rooms.global.chatRooms.length; i++) {
-				const curRoom = Rooms.global.chatRooms[i];
-				if (!curRoom || curRoom.isPrivate === true) continue;
-				let punishment = Punishments.roomIps.nestedGet(curRoom.id, targetUser.latestIp);
-				if (!punishment) {
-					punishment = Punishments.roomUserids.nestedGet(curRoom.id, targetUser.userid);
-				}
-				let punishDesc = ``;
-				if (punishment) {
-					const [punishType, userid, expireTime, reason] = punishment;
-					punishDesc = Punishments.roomPunishmentTypes.get(punishType);
-					if (!punishDesc) punishDesc = `punished`;
-					if (userid !== targetUser.userid) punishDesc += ` as ${userid}`;
+			let punishments = Punishments.getRoomPunishments(user);
 
+			if (punishments.length) {
+				buf += `<br />Room punishments: `;
+
+				buf += punishments.map(([room, punishment]) => {
+					const [punishType, punishUserid, expireTime, reason] = punishment;
+					let punishDesc = Punishments.roomPunishmentTypes.get(punishType);
+					if (!punishDesc) punishDesc = `punished`;
+					if (punishUserid !== user.userid) punishDesc += ` as ${punishUserid}`;
 					let expiresIn = new Date(expireTime).getTime() - Date.now();
-					let expiresDays = Math.round(expiresIn / 1000 / 60 / 60 / 24);
-					if (expiresIn > 1) punishDesc += ` for ${expiresDays} day${Chat.plural(expiresDays)}`;
+					let expireString = Chat.toDurationString(expiresIn, {precision: 1});
+					punishDesc += ` for ${expireString}`;
+
 					if (reason) punishDesc += `: ${reason}`;
-				} else {
-					let muted = curRoom.isMuted(targetUser);
-					if (muted) {
-						punishDesc = `muted`;
-						if (muted !== targetUser.userid) punishDesc += ` as ${muted}`;
-					}
-				}
-				if (!punishDesc) continue;
-				if (roomPunishments) roomPunishments += `, `;
-				roomPunishments += `<a href="/${curRoom}">${curRoom}</a> (${punishDesc})`;
+					return `<a href="/${room}">${room}</a> (${punishDesc})`;
+				}).join(', ');
 			}
-			if (roomPunishments) buf += `<br />Room punishments: ` + roomPunishments;
 		}
 		this.sendReplyBox(buf);
 	},
@@ -206,29 +194,23 @@ exports.commands = {
 			}
 		}
 
-		let roomPunishments = ``;
-		for (let i = 0; i < Rooms.global.chatRooms.length; i++) {
-			const curRoom = Rooms.global.chatRooms[i];
-			if (!curRoom || curRoom.isPrivate === true) continue;
-			let punishment = Punishments.roomUserids.nestedGet(curRoom.id, userid);
-			let punishDesc = ``;
-			if (punishment) {
-				const [punishType, punishUserid, expireTime, reason] = punishment;
-				punishDesc = Punishments.roomPunishmentTypes.get(punishType);
-				if (!punishDesc) punishDesc = `punished`;
-				if (punishUserid !== userid) punishDesc += ` as ${punishUserid}`;
+		let punishments = Punishments.getRoomPunishments(user);
 
+		if (punishments.length) {
+			buf += `<br />Room punishments: `;
+
+			buf += punishments.map(([room, punishment]) => {
+				const [punishType, punishUserid, expireTime, reason] = punishment;
+				let punishDesc = Punishments.roomPunishmentTypes.get(punishType);
+				if (!punishDesc) punishDesc = `punished`;
+				if (punishUserid !== user.userid) punishDesc += ` as ${punishUserid}`;
 				let expiresIn = new Date(expireTime).getTime() - Date.now();
-				let expiresDays = Math.round(expiresIn / 1000 / 60 / 60 / 24);
-				if (expiresIn > 1) punishDesc += ` for ${expiresDays} day${Chat.plural(expiresDays)}`;
+				let expireString = Chat.toDurationString(expiresIn, {precision: 1});
+				punishDesc += ` for ${expireString}`;
+
 				if (reason) punishDesc += `: ${reason}`;
-			}
-			if (!punishDesc) continue;
-			if (roomPunishments) roomPunishments += `, `;
-			roomPunishments += `<a href="/${curRoom}">${curRoom}</a> (${punishDesc})`;
-		}
-		if (roomPunishments) {
-			buf += `Room punishments: ` + roomPunishments;
+				return `<a href="/${room}">${room}</a> (${punishDesc})`;
+			}).join(', ');
 			atLeastOne = true;
 		}
 		if (!atLeastOne) {
@@ -400,7 +382,6 @@ exports.commands = {
 				details = {
 					"Priority": move.priority,
 					"Gen": move.gen,
-					"Contest Condition": move.contestType,
 				};
 
 				if (move.secondary || move.secondaries) details["&#10003; Secondary effect"] = "";
@@ -419,6 +400,35 @@ exports.commands = {
 
 				if (move.id === 'snatch') isSnatch = true;
 				if (move.id === 'mirrormove') isMirrorMove = true;
+
+				if (move.zMovePower) {
+					details["Z-Power"] = move.zMovePower;
+				} else if (move.zMoveEffect) {
+					details["Z-Effect"] = {
+						'clearnegativeboost': "Restores negative stat stages to 0",
+						'crit1': "Crit ratio +1",
+						'heal': "Restores HP 100%",
+						'curse': "Restores HP 100% if user is Ghost type, otherwise Attack +1",
+						'redirect': "Redirects opposing attacks to user",
+						'healreplacement': "Restores replacement's HP 100%",
+					}[move.zMoveEffect];
+				} else if (move.zMoveBoost) {
+					details["Z-Effect"] = "";
+					let boost = move.zMoveBoost;
+					let stats = {atk: 'Attack', def: 'Defense', spa: 'Sp. Atk', spd: 'Sp. Def', spe: 'Speed', accuracy: 'Accuracy', evasion: 'Evasiveness'};
+					for (let i in boost) {
+						details["Z-Effect"] += " " + stats[i] + " +" + boost[i];
+					}
+				} else if (move.isZ) {
+					details["&#10003; Z-Move"] = "";
+					details["Z-Crystal"] = Tools.getItem(move.isZ).name;
+					if (move.basePower !== 1) {
+						details["User"] = Tools.getItem(move.isZ).zMoveUser.join(", ");
+						details["Required Move"] = Tools.getItem(move.isZ).zMoveFrom;
+					}
+				} else {
+					details["Z-Effect"] = "None";
+				}
 
 				details["Target"] = {
 					'normal': "One Adjacent Pok\u00e9mon",
@@ -1836,7 +1846,7 @@ exports.commands = {
 	},
 	htmlboxhelp: [
 		"/htmlbox [message] - Displays a message, parsing HTML code contained.",
-		"!htmlbox [message] - Shows everyone a message, parsing HTML code contained. Requires: ~ & * with global authority OR # * with room authority",
+		"!htmlbox [message] - Shows everyone a message, parsing HTML code contained. Requires: ~ & #",
 	],
 };
 

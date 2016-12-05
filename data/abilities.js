@@ -246,10 +246,10 @@ exports.BattleAbilities = {
 		num: 4,
 	},
 	"battlebond": {
-		desc: "If this Pokemon is a Greninja, it transforms into Ash-Greninja after knocking out a Pokemon.",
-		shortDesc: "If user is a Greninja, it transforms into Ash-Greninja after knocking out a Pokemon.",
+		desc: "If this Pokemon is a Greninja, it transforms into Ash-Greninja after knocking out a Pokemon. As Ash-Greninja, its Water Shuriken has 20 base power and always hits 3 times.",
+		shortDesc: "After KOing a Pokemon: becomes Ash-Greninja, Water Shuriken: 20 power, hits 3x.",
 		onSourceFaint: function (target, source, effect) {
-			if (effect && effect.effectType === 'Move' && source.template.speciesid === 'greninja' && !source.transformed) {
+			if (effect && effect.effectType === 'Move' && source.template.speciesid === 'greninja' && !source.transformed && source.side.foe.pokemonLeft) {
 				this.add('-activate', source, 'ability: Battle Bond');
 				let template = this.getTemplate('Greninja-Ash');
 				source.formeChange(template);
@@ -257,6 +257,11 @@ exports.BattleAbilities = {
 				source.details = template.species + (source.level === 100 ? '' : ', L' + source.level) + (source.gender === '' ? '' : ', ' + source.gender) + (source.set.shiny ? ', shiny' : '');
 				this.add('detailschange', source, source.details);
 				this.add('-message', "" + source.name + " became Ash-Greninja! (placeholder)"); // TODO: -bond
+			}
+		},
+		onModifyMove: function (move, attacker) {
+			if (move.id === 'watershuriken' && attacker.template.species === 'Greninja-Ash') {
+				move.multihit = 3;
 			}
 		},
 		id: "battlebond",
@@ -442,6 +447,7 @@ exports.BattleAbilities = {
 			this.add('-immune', target, '[msg]', '[from] ability: Comatose');
 			return false;
 		},
+		isUnbreakable: true,
 		id: "comatose",
 		name: "Comatose",
 		rating: 3,
@@ -701,6 +707,7 @@ exports.BattleAbilities = {
 	"disguise": {
 		desc: "If this Pokemon is a Mimikyu, it will take 0 damage the first time it is attacked in battle. It then changes to Busted Form.",
 		shortDesc: "If this Pokemon is a Mimikyu, it takes 0 damage the first time it is attacked in battle.",
+		onDamagePriority: 1,
 		onDamage: function (damage, target, source, effect) {
 			if (effect && effect.effectType === 'Move' && target.template.speciesid === 'mimikyu' && !target.transformed) {
 				this.add('-activate', target, 'ability: Disguise');
@@ -1146,6 +1153,7 @@ exports.BattleAbilities = {
 			}
 			if (showMsg && !effect.secondaries) this.add("-fail", target, "unboost", "[from] ability: Full Metal Body", "[of] " + target);
 		},
+		isUnbreakable: true,
 		id: "fullmetalbody",
 		name: "Full Metal Body",
 		rating: 2,
@@ -1169,7 +1177,7 @@ exports.BattleAbilities = {
 		},
 		id: "galewings",
 		name: "Gale Wings",
-		rating: 4.5,
+		rating: 3,
 		num: 177,
 	},
 	"galvanize": {
@@ -2404,7 +2412,7 @@ exports.BattleAbilities = {
 		shortDesc: "If Zygarde 10%/50%, changes to Complete if at 1/2 max HP or less at end of turn.",
 		onResidualOrder: 27,
 		onResidual: function (pokemon) {
-			if (pokemon.baseTemplate.baseSpecies !== 'Zygarde' || pokemon.transformed) return;
+			if (pokemon.baseTemplate.baseSpecies !== 'Zygarde' || pokemon.transformed || !pokemon.hp) return;
 			if (pokemon.template.speciesid === 'zygardecomplete' || pokemon.hp > pokemon.maxhp / 2) return;
 			this.add('-message', "You sense the presence of many! (placeholder)");
 			this.add('-activate', pokemon, 'ability: Power Construct');
@@ -2443,7 +2451,7 @@ exports.BattleAbilities = {
 		num: 223,
 	},
 	"prankster": {
-		shortDesc: "This Pokemon's non-damaging moves have +1 priority, but fail gainst Dark Pokémon.",
+		shortDesc: "This Pokemon's Status moves have priority raised by 1, but Dark types are immune.",
 		onModifyPriority: function (priority, pokemon, target, move) {
 			if (move && move.category === 'Status') {
 				return priority + 1;
@@ -2510,6 +2518,7 @@ exports.BattleAbilities = {
 				return this.chainModify(0.75);
 			}
 		},
+		isUnbreakable: true,
 		id: "prismarmor",
 		name: "Prism Armor",
 		rating: 3,
@@ -2824,27 +2833,27 @@ exports.BattleAbilities = {
 			if (pokemon.hp > pokemon.maxhp / 4) {
 				if (pokemon.template.speciesid === 'wishiwashi') {
 					pokemon.formeChange('Wishiwashi-School');
-					this.add('-formechange', pokemon, 'Wishiwashi-School', '[msg]', '[from] ability: Schooling');
+					this.add('-formechange', pokemon, 'Wishiwashi-School', '[from] ability: Schooling');
 				}
 			} else {
 				if (pokemon.template.speciesid === 'wishiwashischool') {
 					pokemon.formeChange('Wishiwashi');
-					this.add('-formechange', pokemon, 'Wishiwashi', '[msg]', '[from] ability: Schooling');
+					this.add('-formechange', pokemon, 'Wishiwashi', '[from] ability: Schooling');
 				}
 			}
 		},
 		onResidualOrder: 27,
 		onResidual: function (pokemon) {
-			if (pokemon.baseTemplate.baseSpecies !== 'Wishiwashi' || pokemon.level < 20 || pokemon.transformed) return;
+			if (pokemon.baseTemplate.baseSpecies !== 'Wishiwashi' || pokemon.level < 20 || pokemon.transformed || !pokemon.hp) return;
 			if (pokemon.hp > pokemon.maxhp / 4) {
 				if (pokemon.template.speciesid === 'wishiwashi') {
 					pokemon.formeChange('Wishiwashi-School');
-					this.add('-formechange', pokemon, 'Wishiwashi-School', '[msg]', '[from] ability: Schooling');
+					this.add('-formechange', pokemon, 'Wishiwashi-School', '[from] ability: Schooling');
 				}
 			} else {
 				if (pokemon.template.speciesid === 'wishiwashischool') {
 					pokemon.formeChange('Wishiwashi');
-					this.add('-formechange', pokemon, 'Wishiwashi', '[msg]', '[from] ability: Schooling');
+					this.add('-formechange', pokemon, 'Wishiwashi', '[from] ability: Schooling');
 				}
 			}
 		},
@@ -2892,6 +2901,7 @@ exports.BattleAbilities = {
 				return this.chainModify(0.5);
 			}
 		},
+		isUnbreakable: true,
 		id: "shadowshield",
 		name: "Shadow Shield",
 		rating: 4,
@@ -2975,8 +2985,8 @@ exports.BattleAbilities = {
 		num: 19,
 	},
 	"shieldsdown": {
-		desc: "If this Pokemon is a Minior, it changes to its Core forme if it has 1/2 or less of its maximum HP at the end of a turn. If Minior's HP is above 1/2 of its maximum HP at the end of a turn, it changes back to Meteor Form.",
-		shortDesc: "If Minior, at end of turn changes forme to Core if at 1/2 max HP or less, else Meteor.",
+		desc: "If this Pokemon is a Minior, it changes to its Core forme if it has 1/2 or less of its maximum HP, and changes to Meteor Form if it has more than 1/2 its maximum HP. This check is done on switch-in and at the end of each turn. While in its Meteor Form, it cannot become affected by major status conditions.",
+		shortDesc: "If Minior, switch-in/end of turn it changes to Core at 1/2 max HP or less, else Meteor.",
 		onStart: function (pokemon) {
 			if (pokemon.baseTemplate.baseSpecies !== 'Minior' || pokemon.transformed) return;
 			if (pokemon.hp > pokemon.maxhp / 2) {
@@ -2986,14 +2996,14 @@ exports.BattleAbilities = {
 				}
 			} else {
 				if (pokemon.template.speciesid !== 'minior') {
-					pokemon.formeChange('Minior');
-					this.add('-formechange', pokemon, 'Minior', '[msg]', '[from] ability: Shields Down');
+					pokemon.formeChange(pokemon.set.species);
+					this.add('-formechange', pokemon, pokemon.set.species, '[msg]', '[from] ability: Shields Down');
 				}
 			}
 		},
 		onResidualOrder: 27,
 		onResidual: function (pokemon) {
-			if (pokemon.baseTemplate.baseSpecies !== 'Minior' || pokemon.transformed) return;
+			if (pokemon.baseTemplate.baseSpecies !== 'Minior' || pokemon.transformed || !pokemon.hp) return;
 			if (pokemon.hp > pokemon.maxhp / 2) {
 				if (pokemon.template.speciesid === 'minior') {
 					pokemon.formeChange('Minior-Meteor');
@@ -3001,8 +3011,8 @@ exports.BattleAbilities = {
 				}
 			} else {
 				if (pokemon.template.speciesid !== 'minior') {
-					pokemon.formeChange('Minior');
-					this.add('-formechange', pokemon, 'Minior', '[msg]', '[from] ability: Shields Down');
+					pokemon.formeChange(pokemon.set.species);
+					this.add('-formechange', pokemon, pokemon.set.species, '[msg]', '[from] ability: Shields Down');
 				}
 			}
 		},
@@ -3233,7 +3243,7 @@ exports.BattleAbilities = {
 	"stamina": {
 		shortDesc: "This Pokemon's Defense is raised by 1 stage after it is damaged by a move.",
 		onAfterDamage: function (damage, target, source, effect) {
-			if (effect && effect.effectType === 'Move') {
+			if (effect && effect.effectType === 'Move' && effect.id !== 'confused') {
 				this.boost({def:1});
 			}
 		},
@@ -3245,7 +3255,7 @@ exports.BattleAbilities = {
 	"stancechange": {
 		desc: "If this Pokemon is an Aegislash, it changes to Blade Forme before attempting to use an attacking move, and changes to Shield Forme before attempting to use King's Shield.",
 		shortDesc: "If Aegislash, changes Forme to Blade before attacks and Shield before King's Shield.",
-		onBeforeMovePriority: 11,
+		onBeforeMovePriority: 0.5,
 		onBeforeMove: function (attacker, defender, move) {
 			if (attacker.template.baseSpecies !== 'Aegislash' || attacker.transformed) return;
 			if (move.category === 'Status' && move.id !== 'kingsshield') return;
@@ -3485,10 +3495,8 @@ exports.BattleAbilities = {
 		shortDesc: "If an ally uses its item, this Pokemon gives its item to that ally immediately.",
 		onAllyAfterUseItem: function (item, pokemon) {
 			let sourceItem = this.effectData.target.getItem();
-			let noSharing = sourceItem.onTakeItem && sourceItem.onTakeItem(sourceItem, pokemon) === false;
-			if (!sourceItem || noSharing) {
-				return;
-			}
+			if (!sourceItem) return;
+			if (!this.singleEvent('TakeItem', item, this.effectData.target.itemData, this.effectData.target, pokemon, this.effectData, item)) return;
 			sourceItem = this.effectData.target.takeItem();
 			if (!sourceItem) {
 				return;
@@ -3883,7 +3891,7 @@ exports.BattleAbilities = {
 		},
 		id: "waterbubble",
 		name: "Water Bubble",
-		rating: 3.5,
+		rating: 4,
 		num: 199,
 	},
 	"watercompaction": {
