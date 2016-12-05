@@ -104,7 +104,7 @@ exports.commands = {
 	},
 
 	staffgenguide: function (target, room, user) {
-	if (!permittedGenners.includes(user.userid)) return this.errorReply('You are not permitted to view this.');
+	if (!genRequests.permittedGenners.includes(user.userid) || !genRequests.permittedGennersByNames.includes(user.name)) return this.errorReply('You are not permitted to view this.');
 	this.sendReplyBox('<center><h3>GENNING RESPONSE GUIDE</h3></center><center></h1>reqclear: Clears all requests</h1></center><center></h1>vbl: Views all blacklisted users</h1></center><center></h1>gbl: Blacklists a user.</h1></center><center></h1>gwl: Un-blacklists a user</h1></center>');
 	},
 
