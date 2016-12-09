@@ -26,7 +26,7 @@ exports.commands = {
 		if (genRequests.blacklist.includes(user.userid)) return false;
 		if (user.locked || !user.autoconfirmed) return this.errorReply('You do not have adequate permissions to request a gen.');
 		if (!target) return this.errorReply("Please specify something for the gen request.");
-		if (target.length > 180) return this.errorReply('|raw|Please use a link shortener like <a href="http://pastebin.com">Pastebin</a>');
+		if (target.length > 180) return this.sendReply('|html|<font color="ff0000">Please use a link shortener like <a href="http://pastebin.com">Pastebin</a></font>');
 		if (target.includes("pornhub" || "xvideos" || "xnxx")) return this.errorReply('You are not permitted to link those things.');
 				if (target.includes("http://" || ".com")) { 
 			target = '<a href=' + target + '>' + 'Gen Request' + '</a>';
