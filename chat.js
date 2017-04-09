@@ -14,7 +14,6 @@
  *
  * @license MIT license
  */
-
 /*
 
 To reload chat commands:
@@ -22,7 +21,6 @@ To reload chat commands:
 /hotpatch chat
 
 */
-
 'use strict';
 
 let Chat = module.exports;
@@ -170,7 +168,7 @@ class CommandContext {
 			if (this.pmTarget) {
 				let noEmotes = message;
 				let emoticons = SG.parseEmoticons(message);
-				if(emoticons) {
+				if (emoticons) {
 					noEmotes = message;
 					message = "/html " + emoticons;
 				}
@@ -185,7 +183,7 @@ class CommandContext {
 				this.user.lastPM = this.pmTarget.userid;
 			} else {
 				let emoticons = SG.parseEmoticons(message);
-				if(emoticons && !this.room.disableEmoticons) {
+				if (emoticons && !this.room.disableEmoticons) {
 					if (Users.ShadowBan.checkBanned(this.user)) {
 						Users.ShadowBan.addMessage(this.user, "To " + this.room.id, message);
 						if (!SG.ignoreEmotes[this.user.userid]) this.user.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|/html ' + emoticons);
@@ -202,6 +200,8 @@ class CommandContext {
 						}
 						curUser.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|/html ' + emoticons);
 					}
+					this.room.log.push((this.room.type === 'chat' ? (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') : '|c|') + this.user.getIdentity(this.room.id) + '|' + message);
+					this.room.lastUpdate = this.room.log.length;
 					this.room.messageCount++;
 				} else {
 					if (Users.ShadowBan.checkBanned(this.user)) {
@@ -242,7 +242,8 @@ class CommandContext {
 		if (cmdToken === message.charAt(1)) return;
 		if (cmdToken === BROADCAST_TOKEN && /[^A-Za-z0-9]/.test(message.charAt(1))) return;
 
-		let cmd = '', target = '';
+		let cmd = '',
+			target = '';
 
 		let spaceIndex = message.indexOf(' ');
 		if (spaceIndex > 0) {
@@ -484,7 +485,7 @@ class CommandContext {
 		this.room.logEntry(data);
 	}
 	addModCommand(text, logOnlyText) {
-		this.add('|c|' + this.user.getIdentity(this.room) + '|/log ' + text);
+		this.room.addLogMessage(this.user, text);
 		this.room.modlog(text + (logOnlyText || ""));
 	}
 	logModCommand(text) {
@@ -514,7 +515,7 @@ class CommandContext {
 			let broadcastMessage = message.toLowerCase().replace(/[^a-z0-9\s!,]/g, '');
 
 			if (this.room && this.room.lastBroadcast === this.broadcastMessage &&
-					this.room.lastBroadcastTime >= Date.now() - BROADCAST_COOLDOWN) {
+				this.room.lastBroadcastTime >= Date.now() - BROADCAST_COOLDOWN) {
 				this.errorReply("You can't broadcast this because it was just broadcasted.");
 				return false;
 			}
@@ -607,8 +608,8 @@ class CommandContext {
 				if (targetUser.ignorePMs && targetUser.ignorePMs !== user.group && !user.can('lock')) {
 					if (!targetUser.can('lock')) {
 						return this.errorReply(`This user is blocking private messages right now.`);
-					} else if (targetUser.can('bypassall')) {
-						return this.errorReply(`This admin is too busy to answer private messages right now. Please contact a different staff member.`);
+					} else if (targetUser.can('roomowner')) {
+						return this.errorReply(`This ` + (targetUser.can('bypassall') ? `admin` : `leader`) + ` is too busy to answer private messages right now. Please contact a different staff member.`);
 					}
 				}
 				if (user.ignorePMs && user.ignorePMs !== targetUser.group && !targetUser.can('lock')) {
@@ -645,6 +646,10 @@ class CommandContext {
 				return false;
 			}
 
+			if (!this.checkBanwords(room, user.name)) {
+				this.errorReply(`Your username contains a phrase banned by this room.`);
+				return false;
+			}
 			if (!this.checkBanwords(room, message) && !user.can('mute', null, room)) {
 				this.errorReply("Your message contained banned words.");
 				return false;
@@ -653,7 +658,7 @@ class CommandContext {
 			if (room) {
 				let normalized = message.trim();
 				if (room.id === 'lobby' && (normalized === user.lastMessage) &&
-						((Date.now() - user.lastMessageTime) < MESSAGE_COOLDOWN)) {
+					((Date.now() - user.lastMessageTime) < MESSAGE_COOLDOWN)) {
 					this.errorReply("You can't send the same message again so soon.");
 					return false;
 				}
@@ -747,7 +752,7 @@ class CommandContext {
 		}
 
 		// check for mismatched tags
-		let tags = html.toLowerCase().match(/<\/?(div|a|button|b|i|u|center|font)\b/g);
+		let tags = html.toLowerCase().match(/<\/?(div|a|button|b|strong|em|i|u|center|font|marquee|blink|details|summary|code|table|td|tr)\b/g);
 		if (tags) {
 			let stack = [];
 			for (let i = 0; i < tags.length; i++) {
@@ -782,34 +787,26 @@ class CommandContext {
 		this.splitTarget(target, exactName);
 		return this.targetUser;
 	}
-	splitTarget(target, exactName) {
+	splitOne(target) {
 		let commaIndex = target.indexOf(',');
 		if (commaIndex < 0) {
-			let targetUser = Users.get(target, exactName);
-			this.targetUser = targetUser;
-			this.inputUsername = target.trim();
-			this.targetUsername = targetUser ? targetUser.name : target;
-			return '';
+			return [target, ''];
 		}
-		this.inputUsername = target.substr(0, commaIndex);
-		let targetUser = Users.get(this.inputUsername, exactName);
-		if (targetUser) {
-			this.targetUser = targetUser;
-			this.targetUsername = targetUser.name;
-		} else {
-			this.targetUser = null;
-			this.targetUsername = this.inputUsername;
-		}
-		return target.substr(commaIndex + 1).trim();
+		return [target.substr(0, commaIndex), target.substr(commaIndex + 1).trim()];
+	}
+	splitTarget(target, exactName) {
+		let [name, rest] = this.splitOne(target);
+
+		this.targetUser = Users.get(name, exactName);
+		this.inputUsername = name.trim();
+		this.targetUsername = this.targetUser ? this.targetUser.name : this.inputUsername;
+		return rest;
 	}
 	splitTargetText(target) {
-		let commaIndex = target.indexOf(',');
-		if (commaIndex < 0) {
-			this.targetUsername = target;
-			return '';
-		}
-		this.targetUsername = target.substr(0, commaIndex);
-		return target.substr(commaIndex + 1).trim();
+		let [first, rest] = this.splitOne(target);
+
+		this.targetUsername = first.trim();
+		return rest.trim();
 	}
 }
 Chat.CommandContext = CommandContext;
@@ -820,7 +817,7 @@ Chat.CommandContext = CommandContext;
  * Usage:
  *   Chat.parse(message, room, user, connection)
  *
- * Parses the message. If it's a command, the commnad is executed, if
+ * Parses the message. If it's a command, the command is executed, if
  * not, it's displayed directly in the room.
  *
  * Examples:
@@ -843,7 +840,12 @@ Chat.CommandContext = CommandContext;
  */
 Chat.parse = function (message, room, user, connection) {
 	Chat.loadCommands();
-	let context = new CommandContext({message, room, user, connection});
+	let context = new CommandContext({
+		message,
+		room,
+		user,
+		connection,
+	});
 
 	return context.parse();
 };
@@ -858,8 +860,8 @@ Chat.uncacheTree = function (root) {
 			if (require.cache[uncache[i]]) {
 				newuncache.push.apply(newuncache,
 					require.cache[uncache[i]].children
-						.filter(cachedModule => !cachedModule.id.endsWith('.node'))
-						.map(cachedModule => cachedModule.id)
+					.filter(cachedModule => !cachedModule.id.endsWith('.node'))
+					.map(cachedModule => cachedModule.id)
 				);
 				delete require.cache[uncache[i]];
 			}
@@ -883,11 +885,15 @@ Chat.loadCommands = function () {
 
 	// info always goes first so other plugins can shadow it
 	Object.assign(commands, require('./chat-plugins/info').commands);
-	Object.assign(commands, require('./chat-plugins/SG').commands);
+	Object.assign(commands, require('./spacialgaze-plugins/SG.js').commands);
 
 	for (let file of fs.readdirSync(path.resolve(__dirname, 'chat-plugins'))) {
-		if (file.substr(-3) !== '.js' || file === 'info.js' || file === 'SG.js') continue;
+		if (file.substr(-3) !== '.js' || file === 'info.js') continue;
 		Object.assign(commands, require('./chat-plugins/' + file).commands);
+	}
+	for (let file of fs.readdirSync(path.resolve(__dirname, 'spacialgaze-plugins'))) {
+		if (file.substr(-3) !== '.js' || file === 'SG.js') continue;
+		Object.assign(commands, require('./spacialgaze-plugins/' + file).commands);
 	}
 };
 
@@ -974,12 +980,19 @@ Chat.toDurationString = function (number, options) {
 	// https://github.com/tc39/ecma402/issues/47
 	const date = new Date(+number);
 	const parts = [date.getUTCFullYear() - 1970, date.getUTCMonth(), date.getUTCDate() - 1, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()];
+	const roundingBoundaries = [6, 15, 12, 30, 30];
 	const unitNames = ["second", "minute", "hour", "day", "month", "year"];
 	const positiveIndex = parts.findIndex(elem => elem > 0);
 	const precision = (options && options.precision ? options.precision : parts.length);
 	if (options && options.hhmmss) {
 		let string = parts.slice(positiveIndex).map(value => value < 10 ? "0" + value : "" + value).join(":");
 		return string.length === 2 ? "00:" + string : string;
+	}
+	// round least significant displayed unit
+	if (positiveIndex + precision < parts.length && precision > 0 && positiveIndex >= 0) {
+		if (parts[positiveIndex + precision] >= roundingBoundaries[positiveIndex + precision - 1]) {
+			parts[positiveIndex + precision - 1]++;
+		}
 	}
 	return parts.slice(positiveIndex).reverse().map((value, index) => value ? value + " " + unitNames[index] + (value > 1 ? "s" : "") : "").reverse().slice(0, precision).join(" ").trim();
 };

@@ -113,17 +113,14 @@ exports.BattleMovedex = {
 	},
 	detect: {
 		inherit: true,
-		desc: "The user is protected from attacks made by the opponent during this turn. This move has an X/256 chance of being successful, where X starts at 255 and halves, rounded down, each time this move is successfully used. X resets to 255 if this move fails or if the user's last move used is not Detect, Endure, or Protect. Fails if the user moves last this turn.",
+		desc: "The user is protected from attacks made by the opponent during this turn. This move has an X/255 chance of being successful, where X starts at 255 and halves, rounded down, each time this move is successfully used. X resets to 255 if this move fails or if the user's last move used is not Detect, Endure, or Protect. Fails if the user moves last this turn.",
 		priority: 2,
-		onTryHit: function (pokemon) {
-			if (!pokemon.volatiles['stall']) {
-				this.debug("Success chance: 99.6% (255/256)");
-				return (this.random(256) < 255);
-			}
-		},
 	},
 	dig: {
 		inherit: true,
+		onPrepareHit: function (target, source) {
+			return source.status !== 'slp';
+		},
 		effect: {
 			duration: 2,
 			onImmunity: function (type, pokemon) {
@@ -132,6 +129,10 @@ exports.BattleMovedex = {
 			onAccuracy: function (accuracy, target, source, move) {
 				if (move.id === 'earthquake' || move.id === 'magnitude' || move.id === 'fissure') {
 					return;
+				}
+				if (move.id in {attract:1, curse:1, foresight:1, meanlook:1, mimic:1, nightmare:1, spiderweb:1, transform:1}) {
+					// Oversight in the interaction between these moves and the Lock-On effect
+					return 0;
 				}
 				if (source.volatiles['lockon'] && target === source.volatiles['lockon'].source) return;
 				return 0;
@@ -197,14 +198,8 @@ exports.BattleMovedex = {
 	},
 	endure: {
 		inherit: true,
-		desc: "The user will survive attacks made by the opponent during this turn with at least 1 HP. This move has an X/256 chance of being successful, where X starts at 255 and halves, rounded down, each time this move is successfully used. X resets to 255 if this move fails or if the user's last move used is not Detect, Endure, or Protect. Fails if the user moves last this turn.",
+		desc: "The user will survive attacks made by the opponent during this turn with at least 1 HP. This move has an X/255 chance of being successful, where X starts at 255 and halves, rounded down, each time this move is successfully used. X resets to 255 if this move fails or if the user's last move used is not Detect, Endure, or Protect. Fails if the user moves last this turn.",
 		priority: 2,
-		onTryHit: function (pokemon) {
-			if (!pokemon.volatiles['stall']) {
-				this.debug("Success chance: 99.6% (255/256)");
-				return (this.random(256) < 255);
-			}
-		},
 	},
 	explosion: {
 		inherit: true,
@@ -218,11 +213,22 @@ exports.BattleMovedex = {
 	},
 	fly: {
 		inherit: true,
+		onPrepareHit: function (target, source) {
+			return source.status !== 'slp';
+		},
 		effect: {
 			duration: 2,
 			onAccuracy: function (accuracy, target, source, move) {
 				if (move.id === 'gust' || move.id === 'twister' || move.id === 'thunder' || move.id === 'whirlwind') {
 					return;
+				}
+				if (move.id === 'earthquake' || move.id === 'magnitude' || move.id === 'fissure') {
+					// These moves miss even during the Lock-On effect
+					return 0;
+				}
+				if (move.id in {attract:1, curse:1, foresight:1, meanlook:1, mimic:1, nightmare:1, spiderweb:1, transform:1}) {
+					// Oversight in the interaction between these moves and the Lock-On effect
+					return 0;
 				}
 				if (source.volatiles['lockon'] && target === source.volatiles['lockon'].source) return;
 				return 0;
@@ -461,14 +467,8 @@ exports.BattleMovedex = {
 	},
 	protect: {
 		inherit: true,
-		desc: "The user is protected from attacks made by the opponent during this turn. This move has an X/256 chance of being successful, where X starts at 255 and halves, rounded down, each time this move is successfully used. X resets to 255 if this move fails or if the user's last move used is not Detect, Endure, or Protect. Fails if the user moves last this turn.",
+		desc: "The user is protected from attacks made by the opponent during this turn. This move has an X/255 chance of being successful, where X starts at 255 and halves, rounded down, each time this move is successfully used. X resets to 255 if this move fails or if the user's last move used is not Detect, Endure, or Protect. Fails if the user moves last this turn.",
 		priority: 2,
-		onTryHit: function (pokemon) {
-			if (!pokemon.volatiles['stall']) {
-				this.debug("Success chance: 99.6% (255/256)");
-				return (this.random(256) < 255);
-			}
-		},
 	},
 	psywave: {
 		inherit: true,
@@ -490,6 +490,9 @@ exports.BattleMovedex = {
 		inherit: true,
 		accuracy: 75,
 		critRatio: 3,
+		onPrepareHit: function (target, source) {
+			return source.status !== 'slp';
+		},
 	},
 	reflect: {
 		inherit: true,
@@ -545,9 +548,18 @@ exports.BattleMovedex = {
 			this.add('-nothing');
 		},
 	},
+	skullbash: {
+		inherit: true,
+		onPrepareHit: function (target, source) {
+			return source.status !== 'slp';
+		},
+	},
 	skyattack: {
 		inherit: true,
 		critRatio: 1,
+		onPrepareHit: function (target, source) {
+			return source.status !== 'slp';
+		},
 		secondary: {},
 	},
 	slash: {
@@ -561,10 +573,9 @@ exports.BattleMovedex = {
 			for (let i = 0; i < pokemon.moveset.length; i++) {
 				let move = pokemon.moveset[i].id;
 				let NoSleepTalk = {
-					bide:1, dig:1, fly:1, metronome:1, mirrormove:1,
-					skullbash:1, skyattack:1, sleeptalk:1, solarbeam:1, razorwind:1,
+					bide:1, sleeptalk:1,
 				};
-				if (move && !NoSleepTalk[move]) {
+				if (move && !NoSleepTalk[move] && !this.getMove(move).flags['charge']) {
 					moves.push(move);
 				}
 			}
@@ -577,6 +588,9 @@ exports.BattleMovedex = {
 	},
 	solarbeam: {
 		inherit: true,
+		onPrepareHit: function (target, source) {
+			return source.status !== 'slp';
+		},
 		// Rain weakening done directly in the damage formula
 		onBasePower: function () {},
 	},
@@ -716,6 +730,11 @@ exports.BattleMovedex = {
 				}
 			},
 		},
+	},
+	triplekick: {
+		inherit: true,
+		multiaccuracy: false,
+		multihit: [1, 3],
 	},
 	whirlwind: {
 		inherit: true,

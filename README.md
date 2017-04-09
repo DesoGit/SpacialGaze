@@ -1,4 +1,4 @@
-Spacialgaze Server @ Pokémon Showdown
+﻿Spacialgaze Server @ Pokémon Showdown
 ========================================================================
 
 Navigation: [Spacialgaze][1] | [PS Server repository][10] | [PS Client repository][2] | [PS Dex repository][3]
@@ -9,11 +9,15 @@ Navigation: [Spacialgaze][1] | [PS Server repository][10] | [PS Client repositor
   [10]: https://github.com/Zarel/Pokemon-Showdown
 
 [![Build Status](https://travis-ci.org/HoeenCoder/SpacialGaze.svg)](https://travis-ci.org/HoeenCoder/SpacialGaze)
+[![dependencies Status](https://david-dm.org/HoeenCoder/SpacialGaze/status.svg)](https://david-dm.org/HoeenCoder/SpacialGaze)
+[![devDependencies Status](https://david-dm.org/HoeenCoder/SpacialGaze/dev-status.svg)](https://david-dm.org/HoeenCoder/SpacialGaze?type=dev)
+[![optionalDependencies Status](https://david-dm.org/HoeenCoder/SpacialGaze/optional-status.svg)](https://david-dm.org/HoeenCoder/SpacialGaze?type=optional)
+
 
 Introduction
 ------------------------------------------------------------------------
 
-This is the source code for the Pokémon Showdown server [Spacialgaze][4], a website for Pokémon battling. Pokémon Showdown simulates singles, doubles and triples battles in all the games out so far (Generations 1 through 6).
+This is the source code for the Pokémon Showdown server [Spacialgaze][4], a website for Pokémon battling. Pokémon Showdown simulates singles, doubles and triples battles in all the games out so far (Generations 1 through 7).
 
 This repository contains the files needed to set up your own Pokémon Showdown server. The Spacialgaze server also comes with some custom additions not found on the main repo. This repo will still have all the features from the main server. Note that to set up a server, you'll also need a server computer.
 
@@ -35,6 +39,18 @@ $ git clone https://github.com/HoeenCoder/SpacialGaze.git
 cd spacialgaze && npm install
 node app.js
 ```
+
+Next, obtain a copy of Pokémon Showdown. If you're reading this outside of GitHub, you've probably already done this. If you're reading this in GitHub, there's a "Clone or download" button near the top right (it's green). I recommend the "Open in Desktop" method - you need to install GitHub Desktop which is more work than "Download ZIP", but it makes it much easier to update in the long run (it lets you use the `/updateserver` command).
+
+Pokémon Showdown is installed and run using a command line. In Mac OS X, open `Terminal` (it's in Utilities). In Windows, open `Command Prompt` (type `cmd` into the Start menu and it should be the first result). Type this into the command line:
+
+    cd LOCATION
+
+Replace `LOCATION` with the location Pokémon Showdown is in (ending up with, for instance, `cd "~/Downloads/Pokemon-Showdown"` or `cd "C:\Users\Bob\Downloads\Pokemon-Showdown\"`).
+
+This will set your command line's location to Pokémon Showdown's folder. You'll have to do this each time you open a command line to run commands for Pokémon Showdown.
+
+Copy `config/config-example.js` into `config/config.js`, and edit as you please.
 
   [6]: https://nodejs.org/
 
@@ -80,11 +96,11 @@ Spacialgaze's and Pokémon Showdown's server is distributed under the terms of t
 Maintainers
 ------------------------------------------------------------------------
 
-This boilerplate is brought to you and maintained by the following people:
+This server is brought to you and maintained by the following people:
 
 Owners
 
-[HoeenCoder](https://github.com/HoeenCoder) | [Mystifi](https://github.com/Mystifi) 
+[HoeenCoder](https://github.com/HoeenCoder) | [Mystifi](https://github.com/Mystifi)
 
 
 Special thanks

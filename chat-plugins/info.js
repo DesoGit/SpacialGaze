@@ -28,7 +28,7 @@ exports.commands = {
 		let targetUser = this.targetUserOrSelf(target, user.group === ' ');
 		let showAll = (cmd === 'ip' || cmd === 'whoare' || cmd === 'alt' || cmd === 'alts');
 		if (!targetUser) {
-			if (showAll) return this.parse('/checkpunishment ' + target);
+			if (showAll) return this.parse('/offlinewhois ' + target);
 			return this.errorReply("User " + this.targetUsername + " not found.");
 		}
 		if (showAll && !user.trusted && targetUser !== user) {
@@ -128,6 +128,7 @@ exports.commands = {
 		}
 		if ((user.can('ip', targetUser) || user === targetUser)) {
 			let ips = Object.keys(targetUser.ips);
+			ips = ips.map(ip => ip + (Punishments.sharedIps.has(ip) ? ' (shared)' : ''));
 			buf += `<br /> IP${Chat.plural(ips)}: ${ips.join(", ")}`;
 			if (user.group !== ' ' && targetUser.latestHost) {
 				buf += Chat.html`<br />Host: ${targetUser.latestHost}`;
@@ -141,7 +142,7 @@ exports.commands = {
 		}
 
 		if (user.can('alts', targetUser) || (room.isPrivate !== true && user.can('mute', targetUser, room) && targetUser.userid in room.users)) {
-			let punishments = Punishments.getRoomPunishments(user);
+			let punishments = Punishments.getRoomPunishments(targetUser, {checkIps: true});
 
 			if (punishments.length) {
 				buf += `<br />Room punishments: `;
@@ -150,7 +151,7 @@ exports.commands = {
 					const [punishType, punishUserid, expireTime, reason] = punishment;
 					let punishDesc = Punishments.roomPunishmentTypes.get(punishType);
 					if (!punishDesc) punishDesc = `punished`;
-					if (punishUserid !== user.userid) punishDesc += ` as ${punishUserid}`;
+					if (punishUserid !== targetUser.userid) punishDesc += ` as ${punishUserid}`;
 					let expiresIn = new Date(expireTime).getTime() - Date.now();
 					let expireString = Chat.toDurationString(expiresIn, {precision: 1});
 					punishDesc += ` for ${expireString}`;
@@ -165,14 +166,29 @@ exports.commands = {
 	whoishelp: ["/whois - Get details on yourself: alts, group, IP address, and rooms.",
 		"/whois [username] - Get details on a username: alts (Requires: % @ * & ~), group, IP address (Requires: @ * & ~), and rooms."],
 
-	'!checkpunishment': true,
-	checkpunishment: function (target, room, user) {
+	'!offlinewhois': true,
+	checkpunishment: 'offlinewhois',
+	offlinewhois: function (target, room, user) {
 		if (!user.trusted) {
-			return this.errorReply("/checkpunishment - Access denied.");
+			return this.errorReply("/offlinewhois - Access denied.");
 		}
 		let userid = toId(target);
 		if (!userid) return this.errorReply("Please enter a valid username.");
-		let buf = Chat.html`<strong class="username">${target}</strong> <em style="color:gray">(offline)</em><br /><br />`;
+		let targetUser = Users(userid);
+		let buf = Chat.html`<strong class="username">${target}</strong>`;
+		if (!targetUser || !targetUser.connected) buf += ` <em style="color:gray">(offline)</em>`;
+
+		let roomauth = '';
+		if (room && room.auth && userid in room.auth) roomauth = room.auth[userid];
+		if (Config.groups[roomauth] && Config.groups[roomauth].name) {
+			buf += `<br />${Config.groups[roomauth].name} (${roomauth})`;
+		}
+		let group = (Users.usergroups[userid] || '').charAt(0);
+		if (Config.groups[group] && Config.groups[group].name) {
+			buf += `<br />Global ${Config.groups[group].name} (${group})`;
+		}
+
+		buf += `<br /><br />`;
 		let atLeastOne = false;
 
 		let punishment = Punishments.userids.get(userid);
@@ -194,16 +210,16 @@ exports.commands = {
 			}
 		}
 
-		let punishments = Punishments.getRoomPunishments(user);
+		let punishments = Punishments.getRoomPunishments(targetUser);
 
-		if (punishments.length) {
+		if (punishments && punishments.length) {
 			buf += `<br />Room punishments: `;
 
 			buf += punishments.map(([room, punishment]) => {
 				const [punishType, punishUserid, expireTime, reason] = punishment;
 				let punishDesc = Punishments.roomPunishmentTypes.get(punishType);
 				if (!punishDesc) punishDesc = `punished`;
-				if (punishUserid !== user.userid) punishDesc += ` as ${punishUserid}`;
+				if (punishUserid !== targetUser.userid) punishDesc += ` as ${punishUserid}`;
 				let expiresIn = new Date(expireTime).getTime() - Date.now();
 				let expireString = Chat.toDurationString(expiresIn, {precision: 1});
 				punishDesc += ` for ${expireString}`;
@@ -301,7 +317,6 @@ exports.commands = {
 	dex: 'data',
 	pokedex: 'data',
 	data: function (target, room, user, connection, cmd) {
-		if (toId(target) === 'constructor') return this.errorReply("Invalid data lookup command.");
 		if (!this.runBroadcast()) return;
 
 		let buffer = '';
@@ -406,7 +421,7 @@ exports.commands = {
 				} else if (move.zMoveEffect) {
 					details["Z-Effect"] = {
 						'clearnegativeboost': "Restores negative stat stages to 0",
-						'crit1': "Crit ratio +1",
+						'crit2': "Crit ratio +2",
 						'heal': "Restores HP 100%",
 						'curse': "Restores HP 100% if user is Ghost type, otherwise Attack +1",
 						'redirect': "Redirects opposing attacks to user",
@@ -563,7 +578,7 @@ exports.commands = {
 		buffer.push('<span class="message-effect-weak">Weaknesses</span>: ' + (weaknesses.join(', ') || '<font color=#999999>None</font>'));
 		buffer.push('<span class="message-effect-resist">Resistances</span>: ' + (resistances.join(', ') || '<font color=#999999>None</font>'));
 		buffer.push('<span class="message-effect-immune">Immunities</span>: ' + (immunities.join(', ') || '<font color=#999999>None</font>'));
-		this.sendReplyBox(buffer.join('<br>'));
+		this.sendReplyBox(buffer.join('<br />'));
 	},
 	weaknesshelp: ["/weakness [pokemon] - Provides a Pok\u00e9mon's resistances, weaknesses, and immunities, ignoring abilities.",
 		"/weakness [type 1]/[type 2] - Provides a type or type combination's resistances, weaknesses, and immunities, ignoring abilities.",
@@ -627,7 +642,7 @@ exports.commands = {
 		}
 
 		let hasThousandArrows = source.id === 'thousandarrows' && defender.types.includes('Flying');
-		let additionalInfo = hasThousandArrows ? "<br>However, Thousand Arrows will be 1x effective on the first hit." : "";
+		let additionalInfo = hasThousandArrows ? "<br />However, Thousand Arrows will be 1x effective on the first hit." : "";
 
 		this.sendReplyBox("" + atkName + " is " + factor + "x effective against " + defName + "." + additionalInfo);
 	},
@@ -736,7 +751,7 @@ exports.commands = {
 			buffer.push('<span class="message-effect-resist">Neutral</span>: ' + (neutral.join(', ') || '<font color=#999999>None</font>'));
 			buffer.push('<span class="message-effect-weak">Resists</span>: ' + (resists.join(', ') || '<font color=#999999>None</font>'));
 			buffer.push('<span class="message-effect-immune">Immunities</span>: ' + (immune.join(', ') || '<font color=#999999>None</font>'));
-			return this.sendReplyBox(buffer.join('<br>'));
+			return this.sendReplyBox(buffer.join('<br />'));
 		} else {
 			let buffer = '<div class="scrollable"><table cellpadding="1" width="100%"><tr><th></th>';
 			let icon = {};
@@ -804,10 +819,10 @@ exports.commands = {
 			buffer += '</table></div>';
 
 			if (hasThousandArrows) {
-				buffer += "<br><b>Thousand Arrows has neutral type effectiveness on Flying-type Pok\u00e9mon if not already smacked down.";
+				buffer += "<br /><b>Thousand Arrows has neutral type effectiveness on Flying-type Pok\u00e9mon if not already smacked down.";
 			}
 
-			this.sendReplyBox('Coverage for ' + sources.join(' + ') + ':<br>' + buffer);
+			this.sendReplyBox('Coverage for ' + sources.join(' + ') + ':<br />' + buffer);
 		}
 	},
 	coveragehelp: ["/coverage [move 1], [move 2] ... - Provides the best effectiveness match-up against all defending types for given moves or attacking types",
@@ -1035,27 +1050,59 @@ exports.commands = {
 		this.sendReplyBox("Uptime: <b>" + uptimeText + "</b>");
 	},
 
+	'!servertime': true,
+	servertime: function (target, room, user) {
+		if (!this.runBroadcast()) return;
+		let servertime = new Date();
+		this.sendReplyBox(`Server time: <b>${servertime.toLocaleString()}</b>`);
+	},
+
 	'!groups': true,
 	groups: function (target, room, user) {
 		if (!this.runBroadcast()) return;
+		const showRoom = (target !== 'global');
+		const showGlobal = (target !== 'room' && target !== 'rooms');
 		this.sendReplyBox(
-			"<b>Room Rank</b><br />" +
-			"+ <b>Voice</b> - They can use ! commands like !groups, and talk during moderated chat<br />" +
-			"% <b>Driver</b> - The above, and they can mute and warn<br />" +
-			"@ <b>Moderator</b> - The above, and they can room ban users<br />" +
-			"* <b>Bot</b> - Like Moderator, but makes it clear that this user is a bot<br />" +
-			"# <b>Room Owner</b> - They are leaders of the room and can almost totally control it<br /><br />" +
-			"<b>Global Rank</b><br />" +
-			"+ <b>Global Voice</b> - They can use ! commands like !groups, and talk during moderated chat<br />" +
-			"% <b>Global Driver</b> - The above, and they can also lock users and check for alts<br />" +
-			"@ <b>Global Moderator</b> - The above, and they can globally ban users<br />" +
-			"* <b>Global Bot</b> - Like Moderator, but makes it clear that this user is a bot<br />" +
-			"&amp; <b>Global Leader</b> - The above, and they can promote to global moderator and force ties<br />" +
-			"~ <b>Global Administrator</b> -  They can do anything, like change what this message says"
+			(showRoom ? `<strong>Room ranks</strong><br />` +
+			`+ <strong>Voice</strong> - They can use ! commands like !groups, and talk during moderated chat<br />` +
+			`% <strong>Driver</strong> - The above, and they can mute and warn<br />` +
+			`@ <strong>Moderator</strong> - The above, and they can room ban users<br />` +
+			`* <strong>Bot</strong> - Like Moderator, but makes it clear that this user is a bot<br />` +
+			`# <strong>Room Owner</strong> - They are leaders of the room and can almost totally control it<br />` : ``) +
+			(showRoom && showGlobal ? `<br />` : ``) +
+			(showGlobal ? `<strong>Global ranks</strong><br />` +
+			`+ <strong>Global Voice</strong> - They can use ! commands like !groups, and talk during moderated chat<br />` +
+			`% <strong>Global Driver</strong> - The above, and they can also lock users and check for alts<br />` +
+			`@ <strong>Global Moderator</strong> - The above, and they can globally ban users<br />` +
+			`* <strong>Global Bot</strong> - Like Moderator, but makes it clear that this user is a bot<br />` +
+			`&amp; <strong>Global Leader</strong> - The above, and they can promote to global moderator and force ties<br />` +
+			`~ <strong>Global Administrator</strong> -  They can do anything, like change what this message says` : ``)
 		);
 	},
 	groupshelp: ["/groups - Explains what the symbols (like % and @) before people's names mean.",
+		"/groups [global|room] - Explains only global or room symbols.",
 		"!groups - Shows everyone that information. Requires: + % @ * # & ~"],
+
+	'!punishments': true,
+	punishments: function (target, room, user) {
+		if (!this.runBroadcast()) return;
+		this.sendReplyBox(
+			"<strong>Room punishments</strong>:<br />" +
+			"<strong>warn</strong> - Displays a popup with the rules.<br />" +
+			"<strong>mute</strong> - Mutes a user (makes them unable to talk) for 7 minutes.<br />" +
+			"<strong>hourmute</strong> - Mutes a user for 60 minutes.<br />" +
+			"<strong>ban</strong> - Bans a user (makes them unable to join the room) for 2 days.<br />" +
+			"<strong>blacklist</strong> - Bans a user for a year.<br />" +
+			"<br />" +
+			"<strong>Global punishments</strong>:<br />" +
+			"<strong>lock</strong> - Locks a user (makes them unable to talk in any rooms or PM non-staff) for 2 days.<br />" +
+			"<strong>weeklock</strong> - Locks a user for a week.<br />" +
+			"<strong>namelock</strong> - Locks a user and prevents them from having a username for 2 days.<br />" +
+			"<strong>globalban</strong> - Globally bans (makes them unable to connect and play games) for a week."
+		);
+	},
+	punishmentshelp: ["/punishments - Explains punishments.",
+		"!punishments - Show everyone that information. Requires: + % @ * # & ~"],
 
 	'!opensource': true,
 	repo: 'opensource',
@@ -1178,10 +1225,10 @@ exports.commands = {
 			"- <a href=\"https://www.smogon.com/cap/\">CAP project website and description</a><br />" +
 			"- <a href=\"https://www.smogon.com/forums/threads/48782/\">What Pok&eacute;mon have been made?</a><br />" +
 			"- <a href=\"https://www.smogon.com/forums/forums/311\">Talk about the metagame here</a><br />" +
-			"- <a href=\"https://www.smogon.com/forums/threads/3512318/\">Sample XY CAP teams</a>"
+			"- <a href=\"https://www.smogon.com/forums/threads/3593752/\">Sample SM CAP teams</a>"
 		);
 	},
-	caphelp: ["/cap - Provides an introduction to the Create-A-Pok&eacute;mon project.",
+	caphelp: ["/cap - Provides an introduction to the Create-A-Pok\u00e9mon project.",
 		"!cap - Show everyone that information. Requires: + % @ * # & ~"],
 
 	'!gennext': true,
@@ -1208,8 +1255,8 @@ exports.commands = {
 		}
 
 		if (!target || target === 'all') {
-			buffer += "- <a href=\"https://www.smogon.com/forums/forums/other-metagames.206/\">Other Metagames Forum</a><br />";
-			buffer += "- <a href=\"https://www.smogon.com/forums/forums/other-metagames-analyses.310/\">Other Metagames Analyses</a><br />";
+			buffer += "- <a href=\"https://www.smogon.com/forums/forums/other-metagames.394/\">Other Metagames Forum</a><br />";
+			buffer += "- <a href=\"https://www.smogon.com/forums/forums/om-analyses.416/\">Other Metagames Analyses</a><br />";
 			if (!target) return this.sendReplyBox(buffer);
 		}
 		let showMonthly = (target === 'all' || target === 'omofthemonth' || target === 'omotm' || target === 'month');
@@ -1270,7 +1317,9 @@ exports.commands = {
 		for (let i = 0; i < formatList.length; i++) {
 			let format = Tools.getFormat(formatList[i]);
 			let sectionId = toId(format.section);
-			if (targetId && !format[targetId + 'Show'] && sectionId !== targetId && format.id === formatList[i] && !format.id.startsWith(targetId)) continue;
+			let formatId = format.id;
+			if (!/^gen\d+/.test(targetId)) formatId = formatId.replace(/^gen\d+/, ''); // skip generation prefix if it wasn't provided
+			if (targetId && !format[targetId + 'Show'] && sectionId !== targetId && format.id === formatList[i] && !formatId.startsWith(targetId)) continue;
 			if (isOMSearch && format.id.startsWith('gen') && ['ou', 'uu', 'ru', 'ubers', 'lc', 'customgame', 'doublescustomgame', 'gbusingles', 'gbudoubles'].includes(format.id.slice(4))) continue;
 			if (isOMSearch && (format.id === 'gen5nu')) continue;
 			totalMatches++;
@@ -1354,6 +1403,7 @@ exports.commands = {
 			"- /tour create <em>format</em>, roundrobin: Creates a new round robin tournament in the current room.<br />" +
 			"- /tour end: Forcibly ends the tournament in the current room<br />" +
 			"- /tour start: Starts the tournament in the current room<br />" +
+			"- /tour banlist [pokemon], [talent], [...]: Bans moves, abilities, Pokémon or items from being used in a tournament (it must be created first)<br />" +
 			"<br />" +
 			"More detailed help can be found in the <a href=\"https://www.smogon.com/forums/threads/3570628/#post-6777489\">tournaments guide</a><br />" +
 			"</div>"
@@ -1445,6 +1495,9 @@ exports.commands = {
 		if (showAll || target === 'tiering' || target === 'tiers' || target === 'tier') {
 			buffer.push("<a href=\"https://www.smogon.com/ingame/battle/tiering-faq\">Tiering FAQ</a>");
 		}
+		if (showAll || target === 'badge' || target === 'badges') {
+			buffer.push("<a href=\"http://www.smogon.com/badge_faq\">Badge FAQ</a>");
+		}
 		if (showAll || !buffer.length) {
 			buffer.unshift("<a href=\"https://www.smogon.com/forums/threads/3570628/#post-6774128\">Frequently Asked Questions</a>");
 		}
@@ -1466,12 +1519,15 @@ exports.commands = {
 		let ability = Tools.getAbility(targets[0]);
 		let format = Tools.getFormat(targets[0]);
 		let atLeastOne = false;
-		let generation = (targets[1] || 'xy').trim().toLowerCase();
-		let genNumber = 6;
+		let generation = (targets[1] || 'sm').trim().toLowerCase();
+		let genNumber = 7;
 		let extraFormat = Tools.getFormat(targets[2]);
 
-		if (generation === 'xy' || generation === 'oras' || generation === '6' || generation === 'six') {
+		if (generation === 'sm' || generation === 'sumo' || generation === '7' || generation === 'seven') {
+			generation = 'sm';
+		} else if (generation === 'xy' || generation === 'oras' || generation === '6' || generation === 'six') {
 			generation = 'xy';
+			genNumber = 6;
 		} else if (generation === 'bw' || generation === 'bw2' || generation === '5' || generation === 'five') {
 			generation = 'bw';
 			genNumber = 5;
@@ -1488,7 +1544,7 @@ exports.commands = {
 			generation = 'rb';
 			genNumber = 1;
 		} else {
-			generation = 'xy';
+			generation = 'sm';
 		}
 
 		// Pokemon
@@ -1502,13 +1558,20 @@ exports.commands = {
 				this.errorReply("CAP is not currently supported by Smogon Strategic Pokedex.");
 			}
 
-			if (pokemon.battleOnly || pokemon.baseSpecies === 'Keldeo' || pokemon.baseSpecies === 'Genesect') {
+			if ((pokemon.battleOnly && pokemon.baseSpecies !== 'Greninja') || pokemon.baseSpecies === 'Keldeo' || pokemon.baseSpecies === 'Genesect') {
 				pokemon = Tools.getTemplate(pokemon.baseSpecies);
 			}
 
 			let formatName = extraFormat.name;
 			let formatId = extraFormat.id;
-			if (formatId === 'doublesou') {
+			if (formatId === 'battlespotdoubles') {
+				formatId = 'battle_spot_doubles';
+			} else if (formatId === 'battlespottriples') {
+				formatId = 'battle_spot_triples';
+				if (genNumber > 6) {
+					this.sendReplyBox("Triples formats are not an available format in Pok&eacute;mon generation " + generation.toUpperCase() + ".");
+				}
+			} else if (formatId === 'doublesou') {
 				formatId = 'doubles';
 			} else if (formatId === 'balancedhackmons') {
 				formatId = 'bh';
@@ -1521,7 +1584,7 @@ exports.commands = {
 				formatName = formatId = '';
 			}
 			let speciesid = pokemon.speciesid;
-			// Special case for Meowstic-M and Hoopa-Unbound
+			// Special case for Meowstic-M
 			if (speciesid === 'meowstic') speciesid = 'meowsticm';
 			if (pokemon.tier === 'CAP') {
 				this.sendReplyBox("<a href=\"https://www.smogon.com/cap/pokemon/strategies/" + speciesid + "\">" + generation.toUpperCase() + " " + Chat.escapeHTML(formatName) + " " + pokemon.name + " analysis preview</a>, brought to you by <a href=\"https://www.smogon.com\">Smogon University</a> <a href=\"https://smogon.com/cap/\">CAP Project</a>");
@@ -1552,10 +1615,19 @@ exports.commands = {
 		if (format.id) {
 			let formatName = format.name;
 			let formatId = format.id;
-			if (formatId === 'doublesou') {
+			if (formatId === 'battlespotdoubles') {
+				formatId = 'battle_spot_doubles';
+			} else if (formatId === 'battlespottriples') {
+				formatId = 'battle_spot_triples';
+				if (genNumber > 6) {
+					this.sendReplyBox("Triples formats are not an available format in Pok&eacute;mon generation " + generation.toUpperCase() + ".");
+				}
+			} else if (formatId === 'doublesou') {
 				formatId = 'doubles';
 			} else if (formatId === 'balancedhackmons') {
 				formatId = 'bh';
+			} else if (formatId === 'battlespotsingles') {
+				formatId = 'battle_spot_singles';
 			} else if (formatId.includes('vgc')) {
 				formatId = 'vgc' + formatId.slice(-2);
 				formatName = 'VGC20' + formatId.slice(-2);

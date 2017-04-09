@@ -39,27 +39,16 @@
  *
  * @license MIT license
  */
-
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
 
-/*********************************************************
- * Make sure we have everything set up correctly
- *********************************************************/
-
-// Make sure our dependencies are available, and install them if they
-// aren't
-
+// Check for dependencies
 try {
 	require.resolve('sockjs');
 } catch (e) {
-	if (require.main !== module) throw new Error("Dependencies unmet");
-
-	let command = 'npm install --production';
-	console.log('Installing dependencies: `' + command + '`...');
-	require('child_process').spawnSync('sh', ['-c', command], {stdio: 'inherit'});
+	throw new Error("Dependencies unmet; run npm install");
 }
 
 /*********************************************************
@@ -99,9 +88,9 @@ if (Config.watchconfig) {
  * Set up most of our globals
  *********************************************************/
 
-global.sqlite3 = require('sqlite3');
+global.SG = {};
 
-global.Db = require('origindb')('config/db');
+global.Db = require('nef')(require('nef-fs')('config/db'));
 
 global.Monitor = require('./monitor');
 
@@ -117,7 +106,6 @@ global.Users = require('./users');
 global.Punishments = require('./punishments');
 
 global.Chat = require('./chat');
-
 global.Rooms = require('./rooms');
 
 global.Tells = require('./tells.js');
@@ -126,9 +114,8 @@ delete process.send; // in case we're a child process
 global.Verifier = require('./verifier');
 Verifier.PM.spawn();
 
-global.SG = {};
-
 global.Tournaments = require('./tournaments');
+
 
 global.Dnsbl = require('./dnsbl');
 Dnsbl.loadDatacenters();
@@ -160,17 +147,19 @@ if (Config.crashguard) {
 			10: 'Internal JavaScript Run-Time Failure',
 			11: 'A sysadmin forced an emergency exit',
 			12: 'Invalid Debug Argument',
-			130: 'Control-C via Terminal or Command Prompt'
+			130: 'Control-C via Terminal or Command Prompt',
 		};
 		if (code !== 0) {
 			let exitInfo = 'Unused Error Code';
 			if (exitCodes[code]) {
 				exitInfo = exitCodes[code];
-			} else if (code > 128) exitInfo = 'Signal Exit';
-			console.log('');
-			console.error('WARNING: Process exiting with code ' + code);
-			console.error('Exit code details: ' + exitInfo + '.');
-			console.error('Refer to https://github.com/nodejs/node-v0.x-archive/blob/master/doc/api/process.markdown#exit-codes for more details. The process will now exit.');
+			} else if (code > 128) {
+				exitInfo = 'Signal Exit';
+				console.log('');
+				console.error('WARNING: Process exiting with code ' + code);
+				console.error('Exit code details: ' + exitInfo + '.');
+				console.error('Refer to https://github.com/nodejs/node-v0.x-archive/blob/master/doc/api/process.markdown#exit-codes for more details. The process will now exit.');
+			}
 		}
 	});
 }
@@ -206,7 +195,10 @@ global.TeamValidator = require('./team-validator');
 TeamValidator.PM.spawn();
 
 /*********************************************************
+ * Start up the githubhook server
+ ********************************************************/
+require('./github');
+/*********************************************************
  * Start up the REPL server
  *********************************************************/
-
 require('./repl').start('app', cmd => eval(cmd));

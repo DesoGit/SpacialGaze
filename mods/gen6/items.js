@@ -40,9 +40,13 @@ exports.BattleItems = {
 		inherit: true,
 		isUnreleased: false,
 	},
-	beedrillite: {
+	belueberry: {
 		inherit: true,
 		isUnreleased: false,
+	},
+	bigroot: {
+		inherit: true,
+		desc: "Holder gains 1.3x HP from draining moves, Aqua Ring, Ingrain, and Leech Seed.",
 	},
 	blazikenite: {
 		inherit: true,
@@ -52,7 +56,23 @@ exports.BattleItems = {
 		inherit: true,
 		isUnreleased: false,
 	},
+	cornnberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	custapberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
 	diancite: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	durinberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	enigmaberry: {
 		inherit: true,
 		isUnreleased: false,
 	},
@@ -102,6 +122,17 @@ exports.BattleItems = {
 		},
 		desc: "Restores 1/8 max HP at 1/2 max HP or less; confuses if -Def Nature. Single use.",
 	},
+	jabocaberry: {
+		inherit: true,
+		isUnreleased: false,
+		onAfterDamage: function (damage, target, source, move) {
+			if (source && source !== target && move && move.category === 'Physical') {
+				if (target.eatItem()) {
+					this.damage(source.maxhp / 8, source, target, null, true);
+				}
+			}
+		},
+	},
 	latiasite: {
 		inherit: true,
 		isUnreleased: false,
@@ -110,7 +141,15 @@ exports.BattleItems = {
 		inherit: true,
 		isUnreleased: false,
 	},
+	lightclay: {
+		inherit: true,
+		desc: "Holder's use of Light Screen or Reflect lasts 8 turns instead of 5.",
+	},
 	lopunnite: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	machobrace: {
 		inherit: true,
 		isUnreleased: false,
 	},
@@ -129,11 +168,11 @@ exports.BattleItems = {
 		},
 		desc: "Restores 1/8 max HP at 1/2 max HP or less; confuses if -Spe Nature. Single use.",
 	},
-	manectite: {
+	magostberry: {
 		inherit: true,
 		isUnreleased: false,
 	},
-	mawilite: {
+	manectite: {
 		inherit: true,
 		isUnreleased: false,
 	},
@@ -141,11 +180,19 @@ exports.BattleItems = {
 		inherit: true,
 		isUnreleased: false,
 	},
-	mewtwonitex: {
+	micleberry: {
 		inherit: true,
 		isUnreleased: false,
 	},
-	mewtwonitey: {
+	nanabberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	nomelberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	pamtreberry: {
 		inherit: true,
 		isUnreleased: false,
 	},
@@ -153,7 +200,38 @@ exports.BattleItems = {
 		inherit: true,
 		isUnreleased: false,
 	},
+	rabutaberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	razzberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	rockyhelmet: {
+		inherit: true,
+		onAfterDamage: function (damage, target, source, move) {
+			if (source && source !== target && move && move.flags['contact']) {
+				this.damage(source.maxhp / 6, source, target, null, true);
+			}
+		},
+	},
+	rowapberry: {
+		inherit: true,
+		isUnreleased: false,
+		onAfterDamage: function (damage, target, source, move) {
+			if (source && source !== target && move && move.category === 'Special') {
+				if (target.eatItem()) {
+					this.damage(source.maxhp / 8, source, target, null, true);
+				}
+			}
+		},
+	},
 	sceptilite: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	spelonberry: {
 		inherit: true,
 		isUnreleased: false,
 	},
@@ -191,6 +269,14 @@ exports.BattleItems = {
 		num: 225,
 		gen: 3,
 		desc: "If holder is a Latias or a Latios, its Sp. Atk and Sp. Def are 1.5x.",
+	},
+	watmelberry: {
+		inherit: true,
+		isUnreleased: false,
+	},
+	wepearberry: {
+		inherit: true,
+		isUnreleased: false,
 	},
 	wikiberry: {
 		inherit: true,

@@ -21,6 +21,26 @@ exports.BattleFormatsData = {
 		inherit: true,
 		tier: "OU",
 	},
+	dragonite: {
+		inherit: true,
+		tier: "Uber",
+	},
+	genesect: {
+		inherit: true,
+		tier: "OU",
+	},
+	kyuremblack: {
+		inherit: true,
+		tier: "Uber",
+	},
+	landorus: {
+		inherit: true,
+		tier: "OU",
+	},
+	regigigas: {
+		inherit: true,
+		tier: "Uber",
+	},
 	slaking: {
 		inherit: true,
 		tier: "Uber",

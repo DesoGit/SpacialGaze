@@ -11,7 +11,7 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		flags: {
 			snatch: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -22,17 +22,17 @@ exports.BattleMovedex = {
 			boosts: {
 				atk: 1,
 				spa: 1,
-				spe: 1
-			}
+				spe: 1,
+			},
 		},
 		target: "Self",
-		type: "Normal"
+		type: "Normal",
 	},
 	//Fire
 	flametower: {
 		category: "Special",
 		accuracy: 100,
-		basePower: 75,
+		basePower: 80,
 		id: "flametower",
 		name: "Flame Tower",
 		isNonstandard: true,
@@ -44,12 +44,12 @@ exports.BattleMovedex = {
 		priority: 0,
 		flags: {
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		volatileStatus: 'partiallytrapped',
 		secondary: {
 			chance: 50,
-			status: 'brn'
+			status: 'brn',
 		},
 		target: "normal",
 		type: "Fire",
@@ -58,7 +58,7 @@ exports.BattleMovedex = {
 	rainspear: {
 		category: "Special",
 		accuracy: 100,
-		basePower: 50,
+		basePower: 70,
 		id: "rainspear",
 		name: "Rain Spear",
 		isNonstandard: true,
@@ -70,12 +70,12 @@ exports.BattleMovedex = {
 		priority: 1,
 		flags: {
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		weather: 'raindance',
 		secondary: {
 			chance: 20,
-			volatileStatus: 'Flinch'
+			volatileStatus: 'Flinch',
 		},
 		target: "normal",
 		type: "Water",
@@ -89,7 +89,7 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		flags: {
 			mirror: 1,
-			snatch: 1
+			snatch: 1,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -99,7 +99,7 @@ exports.BattleMovedex = {
 			this.useMove('Aromatherapy', pokemon);
 		},
 		self: {
-			heal: [1, 4]
+			heal: [1, 2],
 		},
 		pp: 5,
 		priority: 0,
@@ -138,12 +138,12 @@ exports.BattleMovedex = {
 		flags: {
 			bullet: 1,
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		self: {
 			boosts: {
-				spe: 1
-			}
+				spe: 1,
+			},
 		},
 		pp: 10,
 		priority: 0,
@@ -158,7 +158,7 @@ exports.BattleMovedex = {
 		name: "Hailstorm",
 		isNonstandard: true,
 		flags: {
-			protect: 1
+			protect: 1,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -188,14 +188,14 @@ exports.BattleMovedex = {
 		flags: {
 			recharge: 1,
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		self: {
 			volatileStatus: 'mustrecharge',
 		},
 		secondary: {
 			chance: 50,
-			status: 'par'
+			status: 'par',
 		},
 		pp: 5,
 		priority: -1,
@@ -205,13 +205,13 @@ exports.BattleMovedex = {
 	//Poison
 	nuclearwaste: {
 		category: "Status",
-		accuracy: 90,
+		accuracy: 95,
 		id: "nuclearwaste",
 		name: "Nuclear Waste",
 		isNonstandard: true,
 		flags: {
 			protect: true,
-			reflectable: true
+			reflectable: true,
 		},
 		status: 'tox',
 		onPrepareHit: function (target, source, move) {
@@ -220,7 +220,7 @@ exports.BattleMovedex = {
 			this.add('-anim', target, "Fire Blast", target);
 		},
 		boosts: {
-			atk: -1
+			atk: -1,
 		},
 		pp: 20,
 		priority: 0,
@@ -231,12 +231,12 @@ exports.BattleMovedex = {
 	terratremor: {
 		category: "Physical",
 		accuracy: 75,
-		basePower: 150,
+		basePower: 140,
 		id: "terratremor",
 		name: "Terratremor",
 		isNonstandard: true,
 		flags: {
-			protect: true
+			protect: true,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -246,7 +246,7 @@ exports.BattleMovedex = {
 		priority: 0,
 		secondary: {
 			chance: 15,
-			volatileStatus: 'Flinch'
+			volatileStatus: 'Flinch',
 		},
 		target: "normal",
 		type: "Ground",
@@ -262,38 +262,40 @@ exports.BattleMovedex = {
 			protect: 1,
 			reflectable: 1,
 			mirror: 1,
-			authentic: 1
+			authentic: 1,
 		},
 		priority: 0,
 		pp: 15,
 		onHit: function (target, source, move) {
-			if (!target.volatiles['substitute'] || move.infiltrates) this.boost({
-				evasion: -1
-			});
-			let removeTarget = {
-				reflect: 1,
-				lightscreen: 1,
-				safeguard: 1,
-				mist: 1
-			};
-			let removeAll = {
-				spikes: 1,
-				toxicspikes: 1,
-				stealthrock: 1,
-				stickyweb: 1
-			};
-			for (let targetCondition in removeTarget) {
-				if (target.side.removeSideCondition(targetCondition)) {
-					if (!removeAll[targetCondition]) continue;
-					this.add('-sideend', target.side, this.getEffect(targetCondition).name, '[from] move: Ventilation', '[of] ' + target);
+			if (!target.volatiles['substitute'] || move.infiltrates) {
+				this.boost({
+					evasion: -1,
+				});
+				let removeTarget = {
+					reflect: 1,
+					lightscreen: 1,
+					safeguard: 1,
+					mist: 1,
+				};
+				let removeAll = {
+					spikes: 1,
+					toxicspikes: 1,
+					stealthrock: 1,
+					stickyweb: 1,
+				};
+				for (let targetCondition in removeTarget) {
+					if (target.side.removeSideCondition(targetCondition)) {
+						if (!removeAll[targetCondition]) continue;
+						this.add('-sideend', target.side, this.getEffect(targetCondition).name, '[from] move: Ventilation', '[of] ' + target);
+					}
 				}
-			}
-			for (let sideCondition in removeAll) {
-				if (source.side.removeSideCondition(sideCondition)) {
-					this.add('-sideend', source.side, this.getEffect(sideCondition).name, '[from] move: Ventilation', '[of] ' + source);
+				for (let sideCondition in removeAll) {
+					if (source.side.removeSideCondition(sideCondition)) {
+						this.add('-sideend', source.side, this.getEffect(sideCondition).name, '[from] move: Ventilation', '[of] ' + source);
+					}
 				}
+				this.clearWeather();
 			}
-			this.clearWeather();
 		},
 		target: "normal",
 		type: "Flying",
@@ -313,7 +315,7 @@ exports.BattleMovedex = {
 			this.useMove('Light Screen', pokemon);
 			this.useMove('Reflect', pokemon);
 		},
-		pp: 10,
+		pp: 5,
 		target: "Self",
 		type: "Psychic",
 	},
@@ -327,7 +329,7 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		flags: {
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -338,9 +340,9 @@ exports.BattleMovedex = {
 			self: {
 				boosts: {
 					atk: 1,
-					spe: 1
-				}
-			}
+					spe: 1,
+				},
+			},
 		},
 		pp: 10,
 		target: "normal",
@@ -349,14 +351,14 @@ exports.BattleMovedex = {
 	//Rock
 	rockcannon: {
 		category: "Special",
-		basePower: 95,
+		basePower: 110,
 		accuracy: 100,
 		id: "rockcannon",
 		name: "Rock Cannon",
 		isNonstandard: true,
 		flags: {
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -364,7 +366,7 @@ exports.BattleMovedex = {
 		},
 		secondary: {
 			chance: 30,
-			volatileStatus: 'Flinch'
+			volatileStatus: 'Flinch',
 		},
 		pp: 10,
 		priority: 0,
@@ -374,7 +376,7 @@ exports.BattleMovedex = {
 	//Ghost
 	spook: {
 		category: "Special",
-		basePower: 70,
+		basePower: 80,
 		accuracy: 100,
 		id: "spook",
 		name: "Spook",
@@ -385,12 +387,12 @@ exports.BattleMovedex = {
 		},
 		flags: {
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		willCrit: true,
 		secondary: {
-			chance: 10,
-			volatileStatus: 'Flinch'
+			chance: 30,
+			volatileStatus: 'Flinch',
 		},
 		pp: 10,
 		priority: 0,
@@ -416,7 +418,7 @@ exports.BattleMovedex = {
 			if (pokemon.volatiles['lockedmove'] && pokemon.volatiles['lockedmove'].duration === 1) {
 				pokemon.removeVolatile('lockedmove');
 				this.boost({
-					atk: -2
+					atk: -2,
 				});
 			}
 		},
@@ -424,7 +426,7 @@ exports.BattleMovedex = {
 		flags: {
 			contact: 1,
 			protect: 1,
-			mirror: 1
+			mirror: 1,
 		},
 		priority: 0,
 		target: "normal",
@@ -452,6 +454,11 @@ exports.BattleMovedex = {
 			}
 		},
 		pp: 10,
+		flags: {
+			contact: 1,
+			protect: 1,
+			mirror: 1,
+		},
 		priority: 1,
 		target: "normal",
 		type: "Dark",
@@ -460,7 +467,7 @@ exports.BattleMovedex = {
 	magnorang: {
 		category: "Physical",
 		accuracy: 90,
-		basePower: 100,
+		basePower: 120,
 		id: "magnorang",
 		name: "Magnorang",
 		isNonstandard: true,
@@ -476,8 +483,12 @@ exports.BattleMovedex = {
 			}
 		},
 		pp: 10,
+		flags: {
+			protect: 1,
+			mirror: 1,
+		},
 		target: "normal",
-		type: "Steel"
+		type: "Steel",
 	},
 	//Fairy
 	majesticdust: {
@@ -489,22 +500,76 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		flags: {
 			protect: true,
-			powder: true
+			powder: true,
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Powder", target);
 		},
 		secondary: {
-			chance: 10,
-			status: 'par'
+			chance: 30,
+			status: 'par',
 		},
 		pp: 10,
 		target: "normal",
 		type: "Fairy",
 	},
-	//CUSTOM MADE CUSTOM MOVES
-
+	// CUSTOM MADE CUSTOM MOVES
+	// Ashley the Pikachu
+	rocketpunch: {
+		accuracy: 100,
+		basePower: 100,
+		category: "Special",
+		id: "rocketpunch",
+		isNonstandard: true,
+		flags: {
+			protect: true,
+		},
+		name: "Rocket Punch",
+		pp: 10,
+		priority: 1,
+		target: "Normal",
+		type: "Fire",
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Flare Blitz", source);
+			this.add('-anim', source, "Mach Punch", target);
+		},
+	},
+	// Stellation
+	teamplayer: {
+		accuracy: 100,
+		category: "Status",
+		id: "teamplayer",
+		isNonstandard: true,
+		name: "Team Player",
+		pp: 10,
+		target: "self",
+		selfSwitch: 'copyvolatile',
+		type: "Normal",
+		onHit: function (target) {
+			let stats = [];
+			for (let stat in target.boosts) {
+				if (target.boosts[stat] < 6) {
+					stats.push(stat);
+				}
+			}
+			if (stats.length) {
+				let randomStat = stats[this.random(stats.length)];
+				let boost = {};
+				boost[randomStat] = 3;
+				this.boost(boost);
+			} else {
+				return false;
+			}
+		},
+		secondary: false,
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Acupressure", source);
+			this.add('-anim', source, "Baton Pass", source);
+		},
+	},
 	//DEFAULT-MONS CUSTOM MOVES (Save incase or re-addition)
 	// SpaceGazer
 	/*spacialblast: {

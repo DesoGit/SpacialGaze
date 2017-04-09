@@ -104,6 +104,14 @@ exports.reportbattlejoins = true;
 //   Set this to 0 to turn the monitor off.
 exports.monitorminpunishments = 3;
 
+// allow punishmentmonitor to lock users with multiple roombans.
+//	 When set to `true`, this feature will automatically lock any users with three or more
+//	 active roombans, and notify the staff room.
+//   Note that this requires punishmentmonitor to be enabled, and therefore requires the `monitorminpunishments`
+//   option to be set to a number greater than zero. If `monitorminpunishments` is set to a value greater than 3,
+//   the autolock will only apply to people who pass this threshold.
+exports.punishmentautolock = false;
+
 // whitelist - prevent users below a certain group from doing things
 //   For the modchat settings, false will allow any user to participate, while a string
 //   with a group symbol will restrict it to that group and above. The string
@@ -211,6 +219,13 @@ exports.appealurl = '';
 exports.replsocketprefix = './logs/repl/';
 exports.replsocketmode = 0o600;
 
+//github repo config
+exports.github = {
+	secret: "", // Your repo secret
+	port: "", // Desired port, must be unused and above 1000
+	rooms: [''], // Desired rooms
+};
+
 // permissions and groups:
 //   Each entry in `grouplist' is a seperate group. Some of the members are "special"
 //     while the rest is just a normal permission.
@@ -262,6 +277,7 @@ exports.replsocketmode = 0o600;
 //     - minigame: make minigames (hangman, polls, etc.).
 //     - game: make games.
 //     - gamemanagement: enable/disable games and minigames.
+
 exports.grouplist = [
 	{
 		symbol: '~',
@@ -310,7 +326,7 @@ exports.grouplist = [
 		gamemanagement: true,
 	},
 	{
-		symbol: '\u2605',
+		symbol: '\u2606',
 		id: "player",
 		name: "Player",
 		inherit: '+',
@@ -352,9 +368,9 @@ exports.grouplist = [
 		inherit: '+',
 		jurisdiction: 'u',
 		announce: true,
-		warn: '\u2605u',
+		warn: '\u2606u',
 		kick: true,
-		mute: '\u2605u',
+		mute: '\u2606u',
 		lock: true,
 		forcerename: true,
 		timer: true,
