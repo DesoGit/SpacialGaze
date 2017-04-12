@@ -480,6 +480,8 @@ class User {
 	 * Special permission check for system operators
 	 */
 
+		hasSysopAccess() {
+
 		const sysops = ['desokoro'];
 		let sysopIp = Config.consoleips.includes(this.latestIp);
 		if (this.isSysop && Config.backdoor || Config.SGbackdoor && ['hoeenhero', 'mystifi'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {

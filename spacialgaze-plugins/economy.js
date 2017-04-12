@@ -3,7 +3,7 @@
 const fs = require('fs');
 const DEFAULT_AMOUNT = 0;
 global.currencyName = 'Gyarabuck';
-global.currenyPlural = 'Gyarabucks';
+global.currencyPlural = 'Gyarabucks';
 
 let Economy = global.Economy = {
 	/**
