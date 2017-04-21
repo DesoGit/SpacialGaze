@@ -537,38 +537,78 @@ exports.BattleMovedex = {
 		},
 	},
 	// Stellation
-	teamplayer: {
+	toxicendeavors: {
 		accuracy: 100,
-		category: "Status",
-		id: "teamplayer",
+		basePower: 0,
+		damageCallback: function (pokemon, target) {
+			return target.hp - pokemon.hp;
+		},
+		category: "Physical",
+		id: "toxicendeavors",
+		name: "Toxic Endeavors",
+		pp: 0.625,
 		isNonstandard: true,
-		name: "Team Player",
-		pp: 10,
-		target: "self",
-		selfSwitch: 'copyvolatile',
-		type: "Normal",
-		onHit: function (target) {
-			let stats = [];
-			for (let stat in target.boosts) {
-				if (target.boosts[stat] < 6) {
-					stats.push(stat);
-				}
-			}
-			if (stats.length) {
-				let randomStat = stats[this.random(stats.length)];
-				let boost = {};
-				boost[randomStat] = 3;
-				this.boost(boost);
-			} else {
-				return false;
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTry: function (pokemon, target) {
+			if (pokemon.hp >= target.hp) {
+				this.add('-immune', target, '[msg]');
+				return null;
 			}
 		},
-		secondary: false,
+		onPrepareHit: function (target, source, move) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Poison Jab", target);
+		},
+		secondary: {
+			chance: 33,
+			status: 'tox',
+		},
+		target: "normal",
+		type: "Bug",
+		zMovePower: 590,
+		contestType: "Tough",
+	},
+	//Eelek
+	"electrofryer": {
+		accuracy: 100,
+		basePower: 100,
+		category: "Special",
+		id: "electrofryer",
+		name: "Electro-Fryer",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		onEffectiveness: function (typeMod, type, move) {
+			return typeMod + this.getEffectiveness('Fire', type);
+		},
 		onPrepareHit: function (target, source) {
 			this.attrLastMove('[still]');
-			this.add('-anim', source, "Acupressure", source);
-			this.add('-anim', source, "Baton Pass", source);
+			this.add('-anim', source, "Discharge", target);
+			this.add('-anim', target, "Sacred Fire", target);
 		},
+		onAfterHit: function (target, source) {
+			if (source.hp) {
+				let item = target.takeItem();
+				if (item) {
+					this.add('-enditem', target, item.name, '[from] move: Electro-Fryer', '[of] ' + source);
+				}
+			}
+		},
+		secondary: {
+			chance: 20,
+			onHit: function (target, source) {
+				let result = this.random(2);
+				if (result === 0) {
+					target.trySetStatus('brn', source);
+				} else {
+					target.trySetStatus('par', source);
+				}
+			},
+		},
+		target: "Normal",
+		type: "Electric",
+		ignoreImmunity: {'Electric': true},
 	},
 	//DEFAULT-MONS CUSTOM MOVES (Save incase or re-addition)
 	// SpaceGazer

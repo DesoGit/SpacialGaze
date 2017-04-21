@@ -223,7 +223,7 @@ exports.commands = {
 	hv: function (room, user, cmd) {
 		return this.parse('/hotpatch validator');
 	},
-
+	'!regdate': true,
 	regdate: function (target, room, user, connection) {
 		if (!target) target = user.name;
 		target = toId(target);
@@ -277,6 +277,7 @@ exports.commands = {
 	},
 	spacialgazerepohelp: ["/spacialgazerepo - Links to the SpacialGaze repository on Github."],
 
+	'!seen': true,
 	seen: function (target, room, user) {
 		if (!this.runBroadcast()) return;
 		if (!target) return this.parse('/help seen');
@@ -387,4 +388,15 @@ exports.commands = {
 		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user.userid, user);
 		return this.sendReply('Your next bonus is ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 8 ? 7 : Db.DailyBonus.get(user.userid, [1, Date.now()])[0]) + ' ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
 	},
+	etour: function (target, room, user) {
+		if (!target) return this.parse("/help etour");
+		this.parse("/tour create " + target + ", elimination");
+	},
+	etourhelp: ["/etour [format] - Creates a single elimination tournament in the format provided."],
+
+	rtour: function (target, room, user) {
+		if (!target) return this.parse("/help rtour");
+		this.parse("/tour create " + target + ", roundrobin");
+	},
+	rtourhelp: ["/rtour [format] - Creates a round robin tournament in the format provided."],
 };
