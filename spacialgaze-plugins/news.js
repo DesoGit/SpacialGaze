@@ -35,7 +35,7 @@ SG.showNews = function (userid, user) {
 	if (newsDisplay.length > 0) {
 		newsDisplay = newsDisplay.join('<hr>');
 		newsDisplay += showSubButton(userid);
-		return user.send(`|pm| SG Server|${user.getIdentity()}|/raw ${newsDisplay}`);
+		return user.send(`|pm| Tsunami Server|${user.getIdentity()}|/raw ${newsDisplay}`);
 	}
 };
 
@@ -47,7 +47,7 @@ exports.commands = {
 		display: 'view',
 		view: function (target, room, user) {
 			if (!this.runBroadcast()) return;
-			let output = "<center><strong>SpacialGaze News:</strong></center>";
+			let output = "<center><strong>Tsunami News:</strong></center>";
 			output += generateNews().join('<hr>') + showSubButton(user.userid);
 			if (this.broadcasting) return this.sendReplyBox("<div class =\"infobox-limited\"" + output + "</div>");
 			return user.send('|popup||wide||html|' + output);
@@ -84,23 +84,23 @@ exports.commands = {
 		},
 		subscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before subscribing');
-			if (hasSubscribed(user.userid)) return this.errorReply("You are alreading subscribing SpacialGaze News.");
+			if (hasSubscribed(user.userid)) return this.errorReply("You are alreading subscribing Tsunami News.");
 			Db.NewsSubscribers.set(user.userid, true);
-			this.sendReply("You have subscribed SpacialGaze News.");
-			this.popupReply("|wide||html|You will receive SpacialGaze News automatically once you connect to the SpacialGaze next time.<br><hr><button class='button' name = 'send' value = '/news'>Go Back</button>");
+			this.sendReply("You have subscribed Tsunami News.");
+			this.popupReply("|wide||html|You will receive Tsunami News automatically once you connect to the Tsunami next time.<br><hr><button class='button' name = 'send' value = '/news'>Go Back</button>");
 		},
 		unsubscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before unsubscribing');
-			if (!hasSubscribed(user.userid)) return this.errorReply("You have not subscribed SpacialGaze News.");
+			if (!hasSubscribed(user.userid)) return this.errorReply("You have not subscribed Tsunami News.");
 			Db.NewsSubscribers.remove(user.userid);
-			this.sendReply("You have unsubscribed SpacialGaze News.");
-			this.popupReply("|wide||html|You will no longer automatically receive SpacialGaze News.<br><hr><button class='button' name='send' value='/news'>Go Back</button>");
+			this.sendReply("You have unsubscribed Tsunami News.");
+			this.popupReply("|wide||html|You will no longer automatically receive Tsunami News.<br><hr><button class='button' name='send' value='/news'>Go Back</button>");
 		},
 	},
-	serverannouncementshelp: ["/news view - Views current SpacialGaze news.",
+	serverannouncementshelp: ["/news view - Views current Tsunami News.",
 		"/news delete [news title] - Deletes announcement with the [title]. Requires @, &, ~",
 		"/news add [news title], [news desc] - Adds news [news]. Requires @, &, ~",
-		"/news subscribe - Subscribes to SpacialGaze News.",
-		"/news unsubscribe - Unsubscribes to SpacialGaze News.",
+		"/news subscribe - Subscribes to Tsunami News.",
+		"/news unsubscribe - Unsubscribes to Tsunami News.",
 	],
 };
