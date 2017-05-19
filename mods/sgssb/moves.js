@@ -487,15 +487,15 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		name: "Spacial Blast",
 		secondary: {
-			chance: 70,
-			status: 'par',
+			chance: 60,
+			status: 'brn',
 		},
 		pp: 10,
 		priority: 0,
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Wish", source);
-			this.add('-anim', source, "Hyper Beam", target);
+			this.add('-anim', source, "Diamond Storm", target);
 		},
 		target: "Normal",
 		type: "Fairy",
@@ -508,7 +508,7 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		name: "Frost Bite",
 		secondary: {
-			chance: 70,
+			chance: 60,
 			status: 'frz',
 		},
 		pp: 10,
@@ -563,7 +563,7 @@ exports.BattleMovedex = {
 		target: "Normal",
 		type: "Water",
 	},
-	//CelestialTater
+	// CelestialTater
 	shellbreak: {
 		category: "Status",
 		id: "shellbreak",
@@ -585,5 +585,58 @@ exports.BattleMovedex = {
 		},
 		target: "self",
 		type: "Water",
+	},
+	// VXN
+	crash: {
+		accuracy: true,
+		category: "Status",
+		id: "crash",
+		inNonstandard: true,
+		name: "Crash",
+		pp: 5,
+		priority: 0,
+		onHit: function (pokemon) {
+			pokemon.faint();
+			this.add('raw|<div class=\"broadcast-red\"><b>The server has crashed:</b><br/>TypeError: Cannot read property \'Overpowered\' of undefined at CommandContext.meme (./SpacialGaze/spacialgaze-plugins/hoeenhero/spellcheck.js:420:69)</div>');
+		},
+		onPrepareHit: function (target, source) {
+			this.add('-anim', source, "Hex", source);
+		},
+		flags: {},
+		secondary: false,
+		target: "self",
+		type: "Dragon",
+	},
+	// Insist
+	aquasubscribe: {
+		id: "aquasubscribe",
+		name: "Aqua Subscribe",
+		priority: 1,
+		self: {
+			boosts: {
+				spa: 1,
+				spe: 1,
+			},
+		},
+		flags: {
+			protect: 1,
+			mirror: 1,
+		},
+		secondary: false,
+		category: "Special",
+		onHit: function (target, source, move) {
+			this.add('c|+Insist|Subscribe to http://youtube.com/DeathlyPlays');
+		},
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Hydro Pump", target);
+		},
+		basePower: 90,
+		pp: 15,
+		accuracy: 100,
+		target: "normal",
+		type: "Water",
+		zMovePower: 140,
+		contestType: "Cool",
 	},
 };

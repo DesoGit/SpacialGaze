@@ -275,4 +275,16 @@ exports.BattleStatuses = {
 			this.add('c', '+Xavier1942', 'Nuuuuu! MY BEAUTIFUL WALL! ');
 		},
 	},
+	vxn: {
+		exists: true,
+		onStart: function () {
+			this.add('c', '+VXN', 'Get ready for TRUE overpoweredness!');
+		},
+		onSwitchOut: function (pokemon) {
+			this.add('c', '+VXN', 'Gotta go, I\'ll have fun with you later...');
+		},
+		onFaint: function (pokemon) {
+			this.add('c', '+VXN', 'w8 wut?');
+		},
+	},
 };
