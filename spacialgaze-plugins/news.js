@@ -8,25 +8,13 @@
 
 'use strict';
 
-<<<<<<< HEAD
 const notifiedUsers = {};
 
-=======
-<<<<<<< HEAD
-const notifiedUsers = {};
-
-function generateNews() {
-=======
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 let newsRequests = {};
 
 const fs = require('fs');
 
 function generateNews(user) {
-<<<<<<< HEAD
-=======
->>>>>>> 5cce6bbe8e606516d53e3f77b4a5473a1db9beb4
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 	let newsData, newsDisplay = [];
 	let keys = Db.news.keys();
 	for (let i = 0; i < keys.length; i++) {
@@ -45,24 +33,11 @@ SG.showNews = function (userid, user) {
 	if (!Db.NewsSubscribers.has(userid) || (userid in notifiedUsers)) return false;
 	let newsDisplay = generateNews();
 	if (newsDisplay.length > 0) {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 		newsDisplay = `${newsDisplay.join(`<hr>`)}${showSubButton(userid)}`;
 		notifiedUsers[userid] = setTimeout(() => {
 			delete notifiedUsers[userid];
 		}, 60 * 60 * 1000);
-<<<<<<< HEAD
 		return user.send(`|pm| Tsunami Server|${user.getIdentity()}|/raw ${newsDisplay}`);
-=======
-		return user.send(`|pm| SG Server|${user.getIdentity()}|/raw ${newsDisplay}`);
-=======
-		newsDisplay = newsDisplay.join('<hr>');
-		newsDisplay += showSubButton(userid);
-		return user.send(`|pm| Tsunami Server|${user.getIdentity()}|/raw ${newsDisplay}`);
->>>>>>> 5cce6bbe8e606516d53e3f77b4a5473a1db9beb4
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 	}
 };
 
@@ -87,22 +62,9 @@ exports.commands = {
 		display: 'view',
 		view: function (target, room, user) {
 			if (!this.runBroadcast()) return;
-<<<<<<< HEAD
 			let output = `<center><strong>Tsunami News:</strong></center>${generateNews().join(`<hr>`)}${showSubButton(user.userid)}`;
 			if (this.broadcasting) return this.sendReplyBox(`<div class="infobox-limited">${output}</div>`);
 			return user.send(`|popup||wide||html|${output}`);
-=======
-<<<<<<< HEAD
-			let output = `<center><strong>SpacialGaze News:</strong></center>${generateNews().join(`<hr>`)}${showSubButton(user.userid)}`;
-			if (this.broadcasting) return this.sendReplyBox(`<div class="infobox-limited">${output}</div>`);
-			return user.send(`|popup||wide||html|${output}`);
-=======
-			let output = "<center><strong>Tsunami News:</strong></center>";
-			output += generateNews().join('<hr>') + showSubButton(user.userid);
-			if (this.broadcasting) return this.sendReplyBox("<div class =\"infobox-limited\"" + output + "</div>");
-			return user.send('|popup||wide||html|' + output);
->>>>>>> 5cce6bbe8e606516d53e3f77b4a5473a1db9beb4
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 		},
 		remove: 'delete',
 		delete: function (target, room, user) {
@@ -136,24 +98,7 @@ exports.commands = {
 		},
 		subscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before subscribing');
-<<<<<<< HEAD
 			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are alreading subscribing Tsunami News.");
-=======
-<<<<<<< HEAD
-			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are alreading subscribing SpacialGaze News.");
-			Db.NewsSubscribers.set(user.userid, true);
-			this.sendReply("You have subscribed SpacialGaze News.");
-			this.popupReply("|wide||html|You will receive SpacialGaze News automatically once you connect to the SpacialGaze next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
-		},
-		unsubscribe: function (target, room, user) {
-			if (!user.named) return this.errorReply('You must choose a name before unsubscribing');
-			if (!Db.NewsSubscribers.has(user.userid)) return this.errorReply("You have not subscribed SpacialGaze News.");
-			Db.NewsSubscribers.remove(user.userid);
-			this.sendReply("You have unsubscribed SpacialGaze News.");
-			this.popupReply("|wide||html|You will no longer automatically receive SpacialGaze News.<br><hr><center><button class='button' name='send' value='/news'>View News</button></center>");
-=======
-			if (hasSubscribed(user.userid)) return this.errorReply("You are alreading subscribing Tsunami News.");
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 			Db.NewsSubscribers.set(user.userid, true);
 			this.sendReply("You have subscribed Tsunami News.");
 			this.popupReply("|wide||html|You will receive Tsunami News automatically once you connect to the Tsunami next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
@@ -186,10 +131,6 @@ exports.commands = {
 			saveNewsRequests();
 			SG.messageSeniorStaff('A news requested has been submitted by ' + user.name + '. ID: ' + newsId + ' Message: ' + target.trim());
 			return this.sendReply("Your request has been sent to Tsunami global authorities..");
-<<<<<<< HEAD
-=======
->>>>>>> 5cce6bbe8e606516d53e3f77b4a5473a1db9beb4
->>>>>>> 81e74a09cb0054bc508872ddc1599ca98c2d355e
 		},
 	},
 	serverannouncementshelp: ["/news view - Views current Tsunami News.",
