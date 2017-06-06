@@ -139,25 +139,14 @@ exports.commands = {
 	showhelp: ["/show - Displays user's global rank. Requires: & ~"],
 
 	credits: function (target, room, user) {
-		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>SpacialGaze Credits</b></u></font><br />" +
+		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>Tsunami Credits</b></u></font><br />" +
 			"<br />" +
 			"<u><b>Server Maintainers:</u></b><br />" +
-			"- " + SG.nameColor('Mystifi', true) + " (Owner, Sysadmin, Development)<br />" +
-			"- " + SG.nameColor('HoeenHero', true) + " (Owner, Sysadmin, Development)<br />" +
-			"- " + SG.nameColor('Desokoro', true) + " (Server Host)<br />" +
+			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
-			"- " + SG.nameColor('Opple', true) + " (Policy and Media)<br />" +
-			"- " + SG.nameColor('Kraken Mare', true) + " (Development)<br />" +
-			"- " + SG.nameColor('HiroZ', true) + " (Policy)<br />" +
-			"- " + SG.nameColor('AeonLucid', true) + " (Development)<br />" +
-			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting)<br />" +
+			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
-			"- " + SG.nameColor('VXN', true) + " (Development)<br />" +
-			"<br />" +
-			"<u><b>Retired Staff:</b></u><br />" +
-			"- " + SG.nameColor('The Run', true) + " (Former Server Owner, Development)<br />" +
-			"- " + SG.nameColor('Vulcaron', true) + " (Former Policy Leader)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
@@ -190,7 +179,7 @@ exports.commands = {
 		if (!this.can('pmall')) return false;
 		if (!target) return this.parse('/help pmall');
 
-		let pmName = ' SG Server';
+		let pmName = ' Tsunami Server';
 		Users.users.forEach(curUser => {
 			let message = '|pm|' + pmName + '|' + curUser.getIdentity() + '|' + target;
 			curUser.send(message);
@@ -204,7 +193,7 @@ exports.commands = {
 		if (!this.can('forcewin')) return false;
 		if (!target) return this.parse('/help pmallstaff');
 
-		let pmName = ' SG Server';
+		let pmName = ' Tsunami Server';
 
 		Users.users.forEach(curUser => {
 			if (!curUser.isStaff) return;
@@ -443,7 +432,7 @@ exports.commands = {
 		if (!target) return this.sendReply("/rmall [message] - Sends a pm to all users in the room.");
 		target = target.replace(/<(?:.|\n)*?>/gm, '');
 
-		let pmName = ' SG Server';
+		let pmName = ' Tsunami Server';
 
 		for (let i in room.users) {
 			let message = '|pm|' + pmName + '|' + room.users[i].getIdentity() + '| ' + target;
