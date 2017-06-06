@@ -6,7 +6,7 @@
  *
  * Handles the punishing of users on PS.
  *
- * There are four types of punishments on PS. Locks, bans, namelocks and rangelocks.
+ * There are four types of global punishments on PS. Locks, bans, namelocks and rangelocks.
  * This file contains the lists of users that have been punished (both IPs and usernames),
  * as well as the functions that handle the execution of said punishments.
  *
@@ -1098,6 +1098,8 @@ Punishments.checkLockExpiration = function (userid) {
 	const punishment = Punishments.userids.get(userid);
 
 	if (punishment) {
+		let user = Users(userid);
+		if (user && user.permalocked) return ` (never expires; you are permalocked)`;
 		let expiresIn = new Date(punishment[2]).getTime() - Date.now();
 		let expiresDays = Math.round(expiresIn / 1000 / 60 / 60 / 24);
 		if (expiresIn > 1) return ` (expires in around ${expiresDays} day${Chat.plural(expiresDays)})`;

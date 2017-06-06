@@ -197,6 +197,22 @@ exports.BattleScripts = {
 				},
 				nature: 'Modest',
 			},
+			'%Insist': {
+				species: "Ludicolo",
+				ability: "Primordial Sea",
+				item: "Life Orb",
+				gender: "M",
+				shiny: true,
+				moves: ['freezedry', 'gigadrain', 'focusblast'],
+				baseSignatureMove: "aquasubscribe",
+				signatureMove: "Aqua Subscribe",
+				evs: {
+					spa: 252,
+					spe: 252,
+					hp: 4,
+				},
+				nature: "Timid",
+			},
 			'%Serperiorater': {
 				species: 'Serperior',
 				ability: 'Sturdy',
@@ -419,6 +435,21 @@ exports.BattleScripts = {
 					hp: 252,
 				},
 				nature: 'Adamant',
+			},
+			'+VXN': {
+				species: "Rayquaza",
+				ability: "Wonder Guard",
+				item: "Normalium Z",
+				gender: "M",
+				moves: ['Splash', 'Happy Hour', 'Celebrate',
+				],
+				signatureMove: "Crash",
+				evs: {
+					atk: 252,
+					spe: 252,
+					spd: 4,
+				},
+				nature: "Jolly",
 			},
 		};
 		// convert moves to ids.

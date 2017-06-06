@@ -2,11 +2,13 @@
  * Miscellaneous commands
  *
  * Fixed/Improved upon by: The Run, HoeenHero, Mystifi and Lord Haji.
- *
  * Some of this code was borrowed from panpawn/jd/other contributors; as
  * such, credits go to them as well.
+ * @license MIT license
  */
 'use strict';
+
+const https = require('https');
 
 function clearRoom(room) {
 	let len = (room.log && room.log.length) || 0;
@@ -147,6 +149,11 @@ exports.commands = {
 			"<u><b>Major Contributors:</b></u><br />" +
 			"- " + SG.nameColor('Opple', true) + " (Policy and Media)<br />" +
 			"- " + SG.nameColor('Kraken Mare', true) + " (Development)<br />" +
+			"- " + SG.nameColor('HiroZ', true) + " (Policy)<br />" +
+			"- " + SG.nameColor('AeonLucid', true) + " (Development)<br />" +
+			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting)<br />" +
+			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
+			"- " + SG.nameColor('VXN', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Retired Staff:</b></u><br />" +
 			"- " + SG.nameColor('The Run', true) + " (Former Server Owner, Development)<br />" +
@@ -154,7 +161,6 @@ exports.commands = {
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
-			"- Our Server Event Leaders (" + SG.nameColor('Kraken Mare', true) + ", " + SG.nameColor('CelestialTater', true) + ")<br />" +
 			"- Our Regular Users<br />";
 		user.popup(popup);
 	},
@@ -223,7 +229,7 @@ exports.commands = {
 	hv: function (room, user, cmd) {
 		return this.parse('/hotpatch validator');
 	},
-
+	'!regdate': true,
 	regdate: function (target, room, user, connection) {
 		if (!target) target = user.name;
 		target = toId(target);
@@ -277,6 +283,7 @@ exports.commands = {
 	},
 	spacialgazerepohelp: ["/spacialgazerepo - Links to the SpacialGaze repository on Github."],
 
+	'!seen': true,
 	seen: function (target, room, user) {
 		if (!this.runBroadcast()) return;
 		if (!target) return this.parse('/help seen');
@@ -333,8 +340,9 @@ exports.commands = {
 		target = target.split(',');
 		if (target.length < 2) return this.parse('/help usetoken');
 		target[0] = toId(target[0]);
+		if (target[0] === 'intro') target[0] = 'disableintroscroll';
 		let msg = '';
-		if (['avatar', 'declare', 'icon', 'color', 'emote', 'title'].indexOf(target[0]) === -1) return this.parse('/help usetoken');
+		if (['avatar', 'declare', 'icon', 'color', 'emote', 'title', 'disableintroscroll'].indexOf(target[0]) === -1) return this.parse('/help usetoken');
 		if (!user.tokens || !user.tokens[target[0]]) return this.errorReply('You need to buy this from the shop first.');
 		target[1] = target[1].trim();
 
@@ -372,13 +380,23 @@ exports.commands = {
 			msg += '<button class="button" name="send" value="/emote add, ' + target[1] + ', ' + target[2] + '">Add emote</button></center>';
 			delete user.tokens[target[0]];
 			return SG.messageSeniorStaff(msg);
+		case 'disableintroscroll':
+			if (!target[1]) return this.errorReply('/usetoken disableintroscroll, [room]');
+			let roomid = toId(target[1]);
+			if (!Rooms(roomid)) return this.errorReply(`${roomid} is not a room.`);
+			if (Db.disabledScrolls.has(roomid)) return this.errorReply(`${Rooms(roomid).title} has already roomintro scroll disabled.`);
+			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeemed roomintro scroll disabler token.<br/>';
+			msg += '<button class="button" name="send" value="/disableintroscroll ' + target[1] + '">Disable Intro Scrool for <b>' + Rooms(roomid).title + '</b></button></center>';
+			delete user.tokens[target[0]];
+			return SG.messageSeniorStaff(msg);
 		default:
 			return this.errorReply('An error occured in the command.'); // This should never happen.
 		}
 	},
 	usetokenhelp: ['/usetoken [token], [argument(s)] - Redeem a token from the shop. Accepts the following arguments: ',
 		      '/usetoken avatar, [image] | /usetoken declare, [message] | /usetoken color, [hex code]',
-		      '/usetoken icon [image] | /usetoken title, [name], [hex code] | /usetoken emote, [name], [image]'],
+		      '/usetoken icon [image] | /usetoken title, [name], [hex code] | /usetoken emote, [name], [image]',
+		      '/usetoken disableintroscroll [room name]'],
 
 	bonus: 'dailybonus',
 	checkbonus: 'dailybonus',
@@ -386,5 +404,95 @@ exports.commands = {
 		let nextBonus = Date.now() - Db.DailyBonus.get(user.userid, [1, Date.now()])[1];
 		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user.userid, user);
 		return this.sendReply('Your next bonus is ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 8 ? 7 : Db.DailyBonus.get(user.userid, [1, Date.now()])[0]) + ' ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
+	},
+	etour: function (target, room, user) {
+		if (!target) return this.parse("/help etour");
+		this.parse("/tour create " + target + ", elimination");
+	},
+	etourhelp: ["/etour [format] - Creates a single elimination tournament in the format provided."],
+
+	rtour: function (target, room, user) {
+		if (!target) return this.parse("/help rtour");
+		this.parse("/tour create " + target + ", roundrobin");
+	},
+	rtourhelp: ["/rtour [format] - Creates a round robin tournament in the format provided."],
+
+	disableintroscroll: function (target, room, user) {
+		if (!this.can('roomowner')) return false;
+		if (!target) return this.errorReply("No Room Specified");
+		target = toId(target);
+		if (!Rooms(target)) return this.errorReply(`${target} is not a room`);
+		if (Db.disabledScrolls.has(target)) return this.errorReply(`${Rooms(target).title} has roomintro scroll disabled.`);
+		Db.disabledScrolls.set(target, true);
+	},
+	disableintroscrollhelp: ["/disableintroscroll [room] - Disables scroll bar preset in the room's roomintro."],
+	enableintroscroll: function (target, room, user) {
+		if (!this.can('roomowner')) return false;
+		if (!target) return this.errorReply("No Room Specified");
+		target = toId(target);
+		if (!Rooms(target)) return this.errorReply(`${target} is not a room`);
+		if (!Db.disabledScrolls.has(target)) return this.errorReply(`${Rooms(target).title} has roomintro scroll enabled.`);
+		Db.disabledScrolls.remove(target);
+	},
+	enableintroscrollhelp: ["/enableintroscroll [room] - Enables scroll bar preset in the room's roomintro."],
+
+	pmroom: 'rmall',
+	roompm: 'rmall',
+	rmall: function (target, room, user) {
+		if (!this.can('declare', null, room)) return this.errorReply("/rmall - Access denied.");
+		if (!target) return this.sendReply("/rmall [message] - Sends a pm to all users in the room.");
+		target = target.replace(/<(?:.|\n)*?>/gm, '');
+
+		let pmName = ' SG Server';
+
+		for (let i in room.users) {
+			let message = '|pm|' + pmName + '|' + room.users[i].getIdentity() + '| ' + target;
+			room.users[i].send(message);
+		}
+		this.privateModCommand('(' + Chat.escapeHTML(user.name) + ' mass room PM\'ed: ' + target + ')');
+	},
+
+	fj: 'forcejoin',
+	forcejoin: function (target, room, user) {
+		if (!user.can('root')) return false;
+		if (!target) return this.parse('/help forcejoin');
+		let parts = target.split(',');
+		if (!parts[0] || !parts[1]) return this.parse('/help forcejoin');
+		let userid = toId(parts[0]);
+		let roomid = toId(parts[1]);
+		if (!Users.get(userid)) return this.sendReply("User not found.");
+		if (!Rooms.get(roomid)) return this.sendReply("Room not found.");
+		Users.get(userid).joinRoom(roomid);
+	},
+	forcejoinhelp: ["/forcejoin [target], [room] - Forces a user to join a room"],
+
+	//Credits to OCPU for this run play function
+	'!dub': true,
+	dub: 'dubtrack',
+	music: 'dubtrack',
+	radio: 'dubtrack',
+	dubtrackfm: 'dubtrack',
+	dubtrack: function (target, room, user) {
+		if (!this.runBroadcast()) return;
+		let nowPlaying = "";
+		let options = {
+			host: 'api.dubtrack.fm',
+			port: 443,
+			path: '/room/lavender-radio-tower',
+			method: 'GET',
+		};
+		https.get(options, res => {
+			let data = '';
+			res.on('data', chunk => {
+				data += chunk;
+			}).on('end', () => {
+				if (data.charAt(0) === '{') {
+					data = JSON.parse(data);
+					if (data['data'] && data['data']['currentSong']) nowPlaying = "<br /><b>Now Playing:</b> " + Chat.escapeHTML(data['data']['currentSong'].name);
+				}
+				this.sendReplyBox('Join our dubtrack.fm room <a href="https://www.dubtrack.fm/join/lavender-radio-tower">here!</a>' + nowPlaying);
+				room.update();
+			});
+		});
 	},
 };

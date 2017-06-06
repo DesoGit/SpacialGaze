@@ -118,9 +118,10 @@ exports.commands = {
 		}
 
 		if (!this.can('makeroom')) return false;
+		let req = Db.rooms.get(userid);
+		if (req && req.blacklisted) return this.errorReply(`${name} is banned from owning rooms.`);
 
 		if (!room.auth) room.auth = room.chatRoomData.auth = {};
-
 		room.auth[userid] = '#';
 		room.chatRoomData.founder = userid;
 		room.founder = userid;
@@ -165,6 +166,8 @@ exports.commands = {
 		if (!user.can('makeroom')) {
 			if (user.userid !== room.founder) return false;
 		}
+		let req = Db.rooms.get(userid);
+		if (req && req.blacklisted) return this.errorReply(`${name} is banned from owning rooms.`);
 
 		if (!room.auth) room.auth = room.chatRoomData.auth = {};
 
@@ -404,8 +407,8 @@ exports.commands = {
 	away: function (target, room, user, connection, cmd) {
 		if (!user.isAway && user.name.length > 19 && !user.can('lock')) return this.sendReply("Your username is too long for any kind of use of this command.");
 		if (!this.canTalk()) return false;
-
-		target = target ? target.replace(/[^a-zA-Z0-9]/g, '') : 'AWAY';
+		target = toId(target);
+		if (/^\s*$/.test(target)) target = 'away';
 		if (cmd !== 'away') target = cmd;
 		let newName = user.name;
 		let status = parseStatus(target, true);
