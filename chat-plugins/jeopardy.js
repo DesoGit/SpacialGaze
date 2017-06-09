@@ -36,11 +36,7 @@ class Jeopardy extends Rooms.RoomGame {
 
 	destroy() {
 		clearTimeout(this.timeout);
-		delete this.room.game;
-		this.room = null;
-		for (let i in this.players) {
-			this.players[i].destroy();
-		}
+		super.destroy();
 	}
 
 	makePlayer(user) {
@@ -252,8 +248,8 @@ class Jeopardy extends Rooms.RoomGame {
 	}
 
 	hasRemainingQuestion() {
-		for (let i = 0; i < this.categoryCount; i++) {
-			for (let j = 0; j < this.questionCount; j++) {
+		for (let i = 0; i < this.questionCount; i++) {
+			for (let j = 0; j < this.categoryCount; j++) {
 				if (!this.questions[i][j].answered) return true;
 			}
 		}

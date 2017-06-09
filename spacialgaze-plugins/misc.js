@@ -8,6 +8,8 @@
  */
 'use strict';
 
+const https = require('https');
+
 function clearRoom(room) {
 	let len = (room.log && room.log.length) || 0;
 	let users = [];
@@ -137,25 +139,21 @@ exports.commands = {
 	showhelp: ["/show - Displays user's global rank. Requires: & ~"],
 
 	credits: function (target, room, user) {
-		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>SpacialGaze Credits</b></u></font><br />" +
+		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>Tsunami Credits</b></u></font><br />" +
 			"<br />" +
 			"<u><b>Server Maintainers:</u></b><br />" +
-			"- " + SG.nameColor('Mystifi', true) + " (Owner, Sysadmin, Development)<br />" +
-			"- " + SG.nameColor('HoeenHero', true) + " (Owner, Sysadmin, Development)<br />" +
-			"- " + SG.nameColor('Desokoro', true) + " (Server Host)<br />" +
+			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
+<<<<<<< HEAD
+			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
+=======
 			"- " + SG.nameColor('Opple', true) + " (Policy and Media)<br />" +
 			"- " + SG.nameColor('Kraken Mare', true) + " (Development)<br />" +
 			"- " + SG.nameColor('HiroZ', true) + " (Policy)<br />" +
-			"- " + SG.nameColor('AeonLucid', true) + " (Development)<br />" +
 			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting)<br />" +
+>>>>>>> d0c11b36c3af0d1230f2de4b248216c4d3ec8ab3
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
-			"- " + SG.nameColor('VXN', true) + " (Development)<br />" +
-			"<br />" +
-			"<u><b>Retired Staff:</b></u><br />" +
-			"- " + SG.nameColor('The Run', true) + " (Former Server Owner, Development)<br />" +
-			"- " + SG.nameColor('Vulcaron', true) + " (Former Policy Leader)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
@@ -188,7 +186,7 @@ exports.commands = {
 		if (!this.can('pmall')) return false;
 		if (!target) return this.parse('/help pmall');
 
-		let pmName = ' SG Server';
+		let pmName = ' Tsunami Server';
 		Users.users.forEach(curUser => {
 			let message = '|pm|' + pmName + '|' + curUser.getIdentity() + '|' + target;
 			curUser.send(message);
@@ -202,7 +200,7 @@ exports.commands = {
 		if (!this.can('forcewin')) return false;
 		if (!target) return this.parse('/help pmallstaff');
 
-		let pmName = ' SG Server';
+		let pmName = ' Tsunami Server';
 
 		Users.users.forEach(curUser => {
 			if (!curUser.isStaff) return;
@@ -433,4 +431,64 @@ exports.commands = {
 		Db.disabledScrolls.remove(target);
 	},
 	enableintroscrollhelp: ["/enableintroscroll [room] - Enables scroll bar preset in the room's roomintro."],
+
+	pmroom: 'rmall',
+	roompm: 'rmall',
+	rmall: function (target, room, user) {
+		if (!this.can('declare', null, room)) return this.errorReply("/rmall - Access denied.");
+		if (!target) return this.sendReply("/rmall [message] - Sends a pm to all users in the room.");
+		target = target.replace(/<(?:.|\n)*?>/gm, '');
+
+		let pmName = ' Tsunami Server';
+
+		for (let i in room.users) {
+			let message = '|pm|' + pmName + '|' + room.users[i].getIdentity() + '| ' + target;
+			room.users[i].send(message);
+		}
+		this.privateModCommand('(' + Chat.escapeHTML(user.name) + ' mass room PM\'ed: ' + target + ')');
+	},
+
+	fj: 'forcejoin',
+	forcejoin: function (target, room, user) {
+		if (!user.can('root')) return false;
+		if (!target) return this.parse('/help forcejoin');
+		let parts = target.split(',');
+		if (!parts[0] || !parts[1]) return this.parse('/help forcejoin');
+		let userid = toId(parts[0]);
+		let roomid = toId(parts[1]);
+		if (!Users.get(userid)) return this.sendReply("User not found.");
+		if (!Rooms.get(roomid)) return this.sendReply("Room not found.");
+		Users.get(userid).joinRoom(roomid);
+	},
+	forcejoinhelp: ["/forcejoin [target], [room] - Forces a user to join a room"],
+
+	//Credits to OCPU for this run play function
+	'!dub': true,
+	dub: 'dubtrack',
+	music: 'dubtrack',
+	radio: 'dubtrack',
+	dubtrackfm: 'dubtrack',
+	dubtrack: function (target, room, user) {
+		if (!this.runBroadcast()) return;
+		let nowPlaying = "";
+		let options = {
+			host: 'api.dubtrack.fm',
+			port: 443,
+			path: '/room/lavender-radio-tower',
+			method: 'GET',
+		};
+		https.get(options, res => {
+			let data = '';
+			res.on('data', chunk => {
+				data += chunk;
+			}).on('end', () => {
+				if (data.charAt(0) === '{') {
+					data = JSON.parse(data);
+					if (data['data'] && data['data']['currentSong']) nowPlaying = "<br /><b>Now Playing:</b> " + Chat.escapeHTML(data['data']['currentSong'].name);
+				}
+				this.sendReplyBox('Join our dubtrack.fm room <a href="https://www.dubtrack.fm/join/lavender-radio-tower">here!</a>' + nowPlaying);
+				room.update();
+			});
+		});
+	},
 };
