@@ -145,7 +145,14 @@ exports.commands = {
 			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
+<<<<<<< HEAD
 			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
+=======
+			"- " + SG.nameColor('Opple', true) + " (Policy and Media)<br />" +
+			"- " + SG.nameColor('Kraken Mare', true) + " (Development)<br />" +
+			"- " + SG.nameColor('HiroZ', true) + " (Policy)<br />" +
+			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting)<br />" +
+>>>>>>> d0c11b36c3af0d1230f2de4b248216c4d3ec8ab3
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
