@@ -100,4 +100,59 @@ exports.BattleAbilities = {
 			}
 		},
 	},
+	wavecall: {
+		onModifyAtkPriority: 5,
+		onModifyAtk: function (atk, pokemon, move, attacker) {
+			if (pokemon.status && move.type === 'Water' || move.type === 'Water' && attacker.hp <= attacker.maxhp / 2) {
+				return this.chainModify(2);
+			}
+		},
+		id: "wavecall",
+		name: "Wave Call",
+	},
+	no: {
+		onDamage: function (damage, target, source, effect) {
+			if (effect.effectType === 'Move') {
+				if (this.random(2) === 0) {
+					this.add('-immune', target, '[msg]', '[from] ability: No');
+					return null;
+				}
+			}
+		},
+		id: "no",
+		name: "No",
+	},
+	//Kraken Mare
+	krakensboost: {
+		id: "krakensboost",
+		name: "Kraken's Boost",
+		onResidual: function (pokemon) {
+			let stats = [];
+			let boost = {};
+			for (let statPlus in pokemon.boosts) {
+				if (pokemon.boosts[statPlus] < 6) {
+					stats.push(statPlus);
+				}
+			}
+			let randomStat = stats.length ? stats[this.random(stats.length)] : "";
+			if (randomStat) boost[randomStat] = 2;
+
+			stats = [];
+			for (let statMinus in pokemon.boosts) {
+				if (pokemon.boosts[statMinus] > -6 && statMinus !== randomStat) {
+					stats.push(statMinus);
+				}
+			}
+			randomStat = stats.length ? stats[this.random(stats.length)] : "";
+			if (randomStat) boost[randomStat] = -1;
+
+			this.boost(boost);
+		},
+		onModifyAccuracy: function (accuracy, target, source, move) {
+			if (move && (source === this.effectData.target || target === this.effectData.target)) {
+				return true;
+			}
+			return accuracy;
+		},
+	},
 };
