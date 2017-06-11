@@ -8,6 +8,27 @@
  */
 'use strict';
 
+let fs = require('fs');
+
+let monData;
+
+try {
+	monData = fs.readFileSync("data/sgssb-data.txt").toString().split("\n\n");
+} catch (e) {
+	console.error(e);
+}
+
+function getMonData(target) {
+	let returnData = null;
+	monData.forEach(function (data) {
+		if (toId(data.split("\n")[0].split(" - ")[0] || " ") === target) {
+			returnData = data.split("\n").map(function (line) {
+				return Chat.escapeHTML(line);
+			}).join("<br />");
+		}
+	});
+	return returnData;
+}
 const https = require('https');
 
 function clearRoom(room) {
@@ -26,6 +47,18 @@ function clearRoom(room) {
 			Users(users[len]).joinRoom(room, Users(users[len]).connections[0]);
 		}
 	}, 1000);
+}
+
+function getLinkId(msg) {
+	msg = msg.split(' ');
+	for (let i = 0; i < msg.length; i++) {
+		if ((/youtu\.be/i).test(msg[i])) {
+			let temp = msg[i].split('/');
+			return temp[temp.length - 1];
+		} else if ((/youtube\.com/i).test(msg[i])) {
+			return msg[i].substring(msg[i].indexOf("=") + 1).replace(".", "");
+		}
+	}
 }
 
 exports.commands = {
@@ -145,14 +178,7 @@ exports.commands = {
 			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
-<<<<<<< HEAD
 			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
-=======
-			"- " + SG.nameColor('Opple', true) + " (Policy and Media)<br />" +
-			"- " + SG.nameColor('Kraken Mare', true) + " (Development)<br />" +
-			"- " + SG.nameColor('HiroZ', true) + " (Policy)<br />" +
-			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting)<br />" +
->>>>>>> d0c11b36c3af0d1230f2de4b248216c4d3ec8ab3
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
@@ -432,6 +458,15 @@ exports.commands = {
 	},
 	enableintroscrollhelp: ["/enableintroscroll [room] - Enables scroll bar preset in the room's roomintro."],
 
+	sgssb: function (target, room, user) {
+		if (!this.runBroadcast()) return false;
+		if (!target || target === 'help') return this.parse('/help sgssb');
+		let targetData = getMonData(toId(target));
+		if (!targetData) return this.errorReply("The staffmon '" + toId(target) + "' could not be found.");
+		return this.sendReplyBox(targetData);
+	},
+	sgssbhelp: ["/sgssb (staffmon name) - Gives details on a staffmon from SGSSB."],
+
 	pmroom: 'rmall',
 	roompm: 'rmall',
 	rmall: function (target, room, user) {
@@ -490,5 +525,46 @@ exports.commands = {
 				room.update();
 			});
 		});
+	},
+	'!youtube': true,
+	yt: 'youtube',
+	youtube: function (target, room, user) {
+		if (!this.runBroadcast()) return false;
+		if (!target) return false;
+		let params_spl = target.split(' '), g = ' ';
+		for (let i = 0; i < params_spl.length; i++) {
+			g += '+' + params_spl[i];
+		}
+		g = g.substr(1);
+
+		let reqOpts = {
+			hostname: 'www.googleapis.com',
+			method: 'GET',
+			path: '/youtube/v3/search?part=snippet&q=' + g + '&type=video&key=AIzaSyA4fgl5OuqrgLE1B7v8IWYr3rdpTGkTmns',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		let self = this;
+		let data = '';
+		let req = require('https').request(reqOpts, function (res) {
+			res.on('data', function (chunk) {
+				data += chunk;
+			});
+			res.on('end', function (chunk) {
+				let d = JSON.parse(data);
+				if (d.pageInfo.totalResults === 0) {
+					room.add('No videos found');
+					room.update();
+					return false;
+				}
+				let id = getLinkId(target);
+				const image = '<button style="background: none; border: none;"><img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg?custom=true&w=168&h=94&stc=true&jpg444=true&jpgq=90&sp=68&sigh=tbq7TDTjFXD_0RtlFUMGz-k3JiQ" height="180" width="180"></button>';
+				self.sendReplyBox('<center>' + image + '<br><a href="https://www.youtube.com/watch?v=' + d.items[0].id.videoId + '"><b> ' + d.items[0].snippet.title + '</b></center>');
+				room.update();
+			});
+		});
+		req.end();
 	},
 };

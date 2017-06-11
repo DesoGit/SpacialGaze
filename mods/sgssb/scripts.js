@@ -72,14 +72,14 @@ exports.BattleScripts = {
 				nature: 'Adamant',
 			},
 			'&Kraken Mare': {
-				species: 'Gardevoir',
-				ability: 'Moody',
+				species: 'Gardevoir-Mega',
+				ability: 'krakensboost',
 				shiny: true,
-				item: 'Gardevoirite',
+				item: 'Focus Sash',
 				gender: 'F',
 				moves: ['Moonblast', 'Calm Mind', 'Psychic',
 				],
-				signatureMove: 'Mega Rage',
+				signatureMove: 'Revenge of Kraken Mare',
 				evs: {
 					hp: 248,
 					spa: 252,
@@ -104,7 +104,7 @@ exports.BattleScripts = {
 			},
 			'@Desokoro': {
 				species: 'Gyarados',
-				ability: 'Guts',
+				ability: 'Wave Call',
 				item: 'Leftovers',
 				gender: 'M',
 				moves: ['Substitute', 'Dragon Dance', 'Bounce',
@@ -269,7 +269,7 @@ exports.BattleScripts = {
 					spd: 252,
 					hp: 4,
 				},
-				nature: 'Adamant',
+				nature: 'Modest',
 			},
 			// Global Voices:
 			'+Admewn': {
@@ -361,7 +361,7 @@ exports.BattleScripts = {
 			},
 			'+VXN': {
 				species: "Rayquaza",
-				ability: "Wonder Guard",
+				ability: "No",
 				item: "Normalium Z",
 				gender: "M",
 				moves: ['Splash', 'Happy Hour', 'Celebrate',
