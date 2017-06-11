@@ -1537,4 +1537,17 @@ exports.Formats = [
 		debug: true,
 		ruleset: ['Pokemon', 'HP Percentage Mod', 'Cancel Mod'],
 	},
+	// Tsunami Metagames
+	///////////////////////////////////////////////////////////////////
+
+	{
+		name: "Tsumeta (BETA)",
+		desc: ["Desc coming soon."],
+		section: "Tsunami Metagames",
+		column: 5,
+
+		mod: 'tsumeta',
+		ruleset: ['OU']
+	},
+
 ];
