@@ -21,18 +21,14 @@ exports.BattleAbilities = {
 			switch (item.id) {
 				case 'sitrusberry':
 					return this.heal(pokemon.maxhp / 2);
-					break;
 				case 'oranberry':
-					return this.heal(pokemon.maxhp + 20);
-					break;
-
+					return this.heal(pokemon.hp + 20);
 				case 'figyberry':
 				case 'wikiberry':
 				case 'magoberry':
 				case 'iapapaberry':
 				case 'aguavberry':
 					return this.heal(pokemon.maxhp / 4);
-					break;
 				case 'occaberry':
 				case 'passhoberry':
 				case 'wacanberry':
@@ -51,7 +47,6 @@ exports.BattleAbilities = {
 				case 'colburberry':
 				case 'babiriberry':
 					return this.chainModify(0.25);
-					break;
 				default:
 					return this.chainModify(1); //Do nothing different
 			}
