@@ -5,12 +5,11 @@ exports.BattleScripts = {
 	randomSeasonalRegStaffTeam: function (side) {
 		let team = [];
 		let variant = this.random(2);
-
 		let sets = {
 			// Admins.
 			'~HoeenHero': {
 				species: 'Ludicolo',
-				ability: 'Swift Swim',
+				ability: 'Programmer\'s Domain',
 				item: 'Leftovers',
 				gender: 'M',
 				moves: [
@@ -151,7 +150,7 @@ exports.BattleScripts = {
 				nature: 'Modest',
 			},
 			// Global Drivers:
-			'%Vacuo': {
+			'%Clue': {
 				species: 'Magnezone',
 				ability: 'Levitate',
 				item: 'Choice Specs',
