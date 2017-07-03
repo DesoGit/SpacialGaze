@@ -1480,7 +1480,7 @@ exports.Formats = [
 	///////////////////////////////////////////////////////////////////
 
 	{
-		name: "Tsumeta (BETA)",
+		name: "[Gen 7] TsuMeta (BETA)",
 		desc: ["Desc coming soon."],
 		section: "Tsunami Metagames",
 		column: 5,
@@ -1488,5 +1488,4 @@ exports.Formats = [
 		mod: 'tsumeta',
 		ruleset: ['OU']
 	},
-
 ];
