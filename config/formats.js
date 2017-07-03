@@ -1481,11 +1481,13 @@ exports.Formats = [
 
 	{
 		name: "[Gen 7] TsuMeta (BETA)",
-		desc: ["Desc coming soon."],
+		desc: [
+			"&bullet; <a href=\"http://tsunamips.weebly.com/tsumeta.html\">TsuMeta Information</a>",
+		],
 		section: "Tsunami Metagames",
 		column: 5,
 
 		mod: 'tsumeta',
-		ruleset: ['OU']
+		ruleset: ['[Gen 7] OU'],
 	},
 ];
