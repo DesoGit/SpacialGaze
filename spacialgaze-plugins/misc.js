@@ -179,6 +179,8 @@ exports.commands = {
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
 			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
+			"- " + SG.nameColor('Clue', true) + " (Policy and Media)<br />" +
+		    	"- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
