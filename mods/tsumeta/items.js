@@ -412,4 +412,33 @@ exports.BattleItems = {
 		gen: 4,
 		desc: "Halves damage taken from a supereffective Fairy-type attack. Single use.",
 	},
+	"souldew": {
+		id: "souldew",
+		name: "Soul Dew",
+		spritenum: 459,
+		fling: {
+			basePower: 30,
+		},
+		onModifySpAPriority: 1,
+		onModifySpA: function (spa, pokemon) {
+			if (pokemon.hasType('Psychic')) {
+				return this.chainModify([0x1333, 0x1000]);
+			}
+		},
+		onModifySpDPriority: 2,
+		onModifySpD: function (spd, pokemon) {
+			if (pokemon.hasType('Psychic')) {
+				return this.chainModify([0x1333, 0x1000]);
+			}
+		},
+		onBasePowerPriority: 6,
+		onBasePower: function (basePower, user, target, move) {
+			if (move && (user.baseTemplate.num === 380 || user.baseTemplate.num === 381) && (move.type === 'Psychic' || move.type === 'Dragon')) {
+				return this.chainModify([0x1333, 0x1000]);
+			}
+		},
+		num: 225,
+		gen: 3,
+		desc: "If holder's a Psychic Type, its Special Attack and Special Defense is raised by 1.2x. If holder's a Latias/Latios, its Dragon- and Psychic-type moves have 1.2x power.",
+	},
 };
