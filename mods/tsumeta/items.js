@@ -454,7 +454,7 @@ exports.BattleItems = {
 		},
 		desc: "Light Ball now increases the Attack, Special Attack and Speed of all Electric type Pokemon by 1.1x. If the holder is anyone in the Pikachu evolution line, Plusle/Minun, Pachirisu, Emolga or Dedenne, all of their attacks do 1.4x extra damage.",
 	},
-	"lightball": {
+	"thickclub": {
 		inherit: true,
 		onModifySpAPriority: 1,
 		onModifySpA: function (spa, pokemon) {
