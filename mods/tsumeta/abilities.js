@@ -24,9 +24,13 @@ exports.BattleAbilities = {
 				case 'oranberry':
 					return this.heal(pokemon.hp + 20);
 				case 'figyberry':
+					return this.heal(pokemon.maxhp / 4);
 				case 'wikiberry':
+					return this.heal(pokemon.maxhp / 4);
 				case 'magoberry':
+					return this.heal(pokemon.maxhp / 4);
 				case 'iapapaberry':
+					return this.heal(pokemon.maxhp / 4);
 				case 'aguavberry':
 					return this.heal(pokemon.maxhp / 4);
 				case 'occaberry':

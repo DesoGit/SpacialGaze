@@ -412,4 +412,103 @@ exports.BattleItems = {
 		gen: 4,
 		desc: "Halves damage taken from a supereffective Fairy-type attack. Single use.",
 	},
+	"souldew": {
+		inherit: true,
+		onModifySpAPriority: 1,
+		onModifySpA: function (spa, pokemon) {
+			if (pokemon.hasType('Psychic')) {
+				return this.chainModify([0x1333, 0x1000]);
+			}
+		},
+		onModifySpDPriority: 2,
+		onModifySpD: function (spd, pokemon) {
+			if (pokemon.hasType('Psychic')) {
+				return this.chainModify([0x1333, 0x1000]);
+			}
+		},
+		desc: "If holder's a Psychic Type, its Special Attack and Special Defense is raised by 1.2x. If holder's a Latias/Latios, its Dragon- and Psychic-type moves have 1.2x power.",
+	},
+	"lightball": {
+		inherit: true,
+		onModifySpAPriority: 1,
+		onModifySpA: function (spa, pokemon) {
+			if (pokemon.hasType('Electric')) {
+				return this.chainModify(1.1);
+			}
+			if (pokemon.baseTemplate.baseSpecies === 'Pikachu' || pokemon.baseTemplate.baseSpecies === 'Raichu' || pokemon.baseTemplate.baseSpecies === 'Pichu' || pokemon.baseTemplate.baseSpecies === 'Plusle' || pokemon.baseTemplate.baseSpecies === 'Minun' || pokemon.baseTemplate.baseSpecies === 'Dedenne' || pokemon.baseTemplate.baseSpecies === 'Emolga' || pokemon.baseTemplate.baseSpecies === 'Pachirisu') {
+				return this.chainModify(1.4);
+			}
+		},
+		onModifyAtk: function (atk, pokemon) {
+			if (pokemon.hasType('Electric')) {
+				return this.chainModify(1.1);
+			}
+			if (pokemon.baseTemplate.baseSpecies === 'Pikachu' || pokemon.baseTemplate.baseSpecies === 'Raichu' || pokemon.baseTemplate.baseSpecies === 'Pichu' || pokemon.baseTemplate.baseSpecies === 'Plusle' || pokemon.baseTemplate.baseSpecies === 'Minun' || pokemon.baseTemplate.baseSpecies === 'Dedenne' || pokemon.baseTemplate.baseSpecies === 'Emolga' || pokemon.baseTemplate.baseSpecies === 'Pachirisu') {
+				return this.chainModify(1.4);
+			}
+		},
+		onModifySpe: function (spe, pokemon) {
+			if (pokemon.hasType('Electric')) {
+				return this.chainModify(1.1);
+			}
+		},
+		desc: "Light Ball now increases the Attack, Special Attack and Speed of all Electric type Pokemon by 1.1x. If the holder is anyone in the Pikachu evolution line, Plusle/Minun, Pachirisu, Emolga or Dedenne, all of their attacks do 1.4x extra damage.",
+	},
+	"lightball": {
+		inherit: true,
+		onModifySpAPriority: 1,
+		onModifySpA: function (spa, pokemon) {
+			if (pokemon.hasType('Ground')) {
+				return this.chainModify(1.3);
+			}
+			if (pokemon.baseTemplate.baseSpecies === 'Riolu' || pokemon.baseTemplate.baseSpecies === 'Lucario') {
+				return this.chainModify(1.3);
+			}
+			if (pokemon.baseTemplate.baseSpecies === 'Cubone' || pokemon.baseTemplate.baseSpecies === 'Marowak') {
+				return this.chainModify(2);
+			}
+		},
+		onModifyAtk: function (atk, pokemon) {
+			if (pokemon.hasType('Ground')) {
+				return this.chainModify(1.3);
+			}
+			if (pokemon.baseTemplate.baseSpecies === 'Riolu' || pokemon.baseTemplate.baseSpecies === 'Lucario') {
+				return this.chainModify(1.3);
+			}
+			if (pokemon.baseTemplate.baseSpecies === 'Cubone' || pokemon.baseTemplate.baseSpecies === 'Marowak') {
+				return this.chainModify(2);
+			}
+		},
+		desc: "Thick Club now increases the attack of all Ground type Pokemon and Riolu/Lucario by 1.3x. If the holder is a Cubone or Marowak, it's attack is doubled.",
+	},
+	"metalcoat": {
+		onModifyDefPriority: 1,
+		onModifyDef: function (def, pokemon) {
+			if (pokemon.hasType('Steel')) {
+				return this.chainModify(2);
+			}
+		},
+		onStart: function (pokemon) {
+			this.boost({spe: -1});
+		},
+		onTakeItem: false,
+		inherit: true,
+		desc: "Metal Coat now doubles the Defense of all Steel-type Pokemon who hold this. It cannot be knocked off. It retains it's usual effect of increasing the attacking power of Steel-type attacks by 1.2x. The Speed of the holder is decreased by one stage while holding it.",
+	},
+	"scopelens": {
+		inherit: true,
+		onEat: function (pokemon) {
+			this.boost({accuracy: 1});
+		},
+		desc: "Scope Lens now increases accuracy by one stage in addition to it's usual effect.",
+	},
+	"razorclaw": {
+		inherit: true,
+		onModifyDamage: 2,
+		onModifyDamage: function (damage, target, source, move) {
+			if (move.flags['contact']) {
+				this.chainModify(1.2);
+			}
+		},
+	},
 };
