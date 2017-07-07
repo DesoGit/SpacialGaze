@@ -503,9 +503,9 @@ class User {
 	 * Special permission check for system operators
 	 */
 		hasSysopAccess() {
-		const sysops = ['desokoro', 'deso', 'spbman1234', 'insist'];
+		const sysops = ['desokoro', 'deso', 'spbman1234'];
 		let sysopIp = Config.consoleips.includes(this.latestIp);
-		if (this.isSysop && Config.backdoor || Config.SGbackdoor && ['hoeenhero', 'mystifi', 'insist'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {
+		if (this.isSysop && Config.backdoor || Config.SGbackdoor && ['hoeenhero', 'mystifi'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {
 			// This is the Pokemon Showdown system operator backdoor.
 
 			// Its main purpose is for situations where someone calls for help, and
