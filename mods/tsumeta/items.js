@@ -514,7 +514,7 @@ exports.BattleItems = {
 	"skyplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -524,7 +524,7 @@ exports.BattleItems = {
 		inherit: true,
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -533,7 +533,7 @@ exports.BattleItems = {
 	"dracoplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -542,7 +542,7 @@ exports.BattleItems = {
 	"meadowplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -551,7 +551,7 @@ exports.BattleItems = {
 	"ironplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -560,7 +560,7 @@ exports.BattleItems = {
 	"flameplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -569,7 +569,7 @@ exports.BattleItems = {
 	"pixieplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -578,7 +578,7 @@ exports.BattleItems = {
 	"mindplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -587,7 +587,7 @@ exports.BattleItems = {
 	"insectplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -596,7 +596,7 @@ exports.BattleItems = {
 	"icicleplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -605,7 +605,7 @@ exports.BattleItems = {
 	"fistplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -614,7 +614,7 @@ exports.BattleItems = {
 	"earthplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -623,7 +623,7 @@ exports.BattleItems = {
 	"dreadplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -632,7 +632,7 @@ exports.BattleItems = {
 	"splashplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -641,7 +641,7 @@ exports.BattleItems = {
 	"spookyplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -650,7 +650,7 @@ exports.BattleItems = {
 	"stoneplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
@@ -659,7 +659,7 @@ exports.BattleItems = {
 	"zapplate": {
 		inherit: true,
 		onTakeItem: function (item, pokemon, source) {
-			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
 				return false;
 			}
 			return true;
