@@ -68,57 +68,62 @@ You can view a faction's profile using /faction profile (name) [if no name is sp
 In a faction profile, you can see the owner (Leader), Nobles and Commoners, the total usercount, the faction slogan and their collective win total (including a breakdown of how many wins a faction member has representing the faction).
 --------------------------------------------------------------------------------------------------------------------
 */
+'use strict';
 
 const fs = require('fs');
+
 let factions = {};
+
 try {
-    factions = JSON.parse(fs.readFileSync('config/factions.json'));
+	factions = JSON.parse(fs.readFileSync('config/factions.json'));
 } catch (e) {
-    fs.writeFileSync('config/factions.json', '{}');
+	fs.writeFileSync('config/factions.json', '{}');
 }
 
 function writeFactions(obj) {
-    fs.writeFileSync('config/factions.json', obj);
-    return true;
+	fs.writeFileSync('config/factions.json', obj);
+	return true;
 }
-    
+	
 exports.commands = {
-    faction: {
-        create: function (target, room, user) {
-            if (!user.autoconfirmed) return this.sendReply('You must be autoconfirmed to create a faction.');
-            if (!user.can('broadcast')) return this.sendReply('You must be global voice to create a faction.');
-            let targets = target.split(',');
-            if (targets.length != 3) return this.parse('/factionhelp');
-            if (targets[0].length > 20) return this.sendReply('Name cannot exceed 20 characters.');
-            if (targets[1].length > 150) return this.sendReply('Description cannot exceed 150 characters.');
-            if (targets[2].length != 4) return this.sendReply('tag must be exactly 4 characters long.');
-            let curFactions = Object.getOwnPropertyNames(factions);
-            let pass = true;
-            if (!factions) {
-                return this.sendReply('debugerror 1');
-            } else {
-                for (let i in curFactions) {
-                    if (toId(curFactions[i]) == toId(target[0])) pass = false;
-                }
-                if (pass) {
-                    factions[ToId(target[0])] = {
-                        name: target[0],
-                        desc: target[1],
-                        tag: target[2],
-                        members: {}
-                    };
-                    let status = writeFactions(factions);
-                    if (status) {
-                        return this.sendReply('debugerror3');
-                    } else return this.sendReply('success!');
-                } else return this.sendReply('Specified faction already exists');
-            }
-        },
-    },
-    
-    factionhelp: function (target, room, user) {
-        let factionHelp = 'Faction Guide can be found <a href=http://pastebin.com/3Wqzzghp>here</a>.'
-        this.sendReplyBox(factionHelp);
-        
-    },
+	faction: {
+		create: function (target, room, user) {
+			if (!user.can('broadcast')) return this.sendReply('You must be global voice to create a faction.');
+			let targets = target.split(',');
+			if (targets.length != 3) return this.parse('/factionhelp');
+			if (targets[0].length > 20) return this.sendReply('Name cannot exceed 20 characters.');
+			if (targets[1].length > 150) return this.sendReply('Description cannot exceed 150 characters.');
+			if (targets[2].length != 4) return this.sendReply('Tag must be exactly 4 characters long.');
+			let curFactions = Object.getOwnPropertyNames(factions);
+			let pass = true;
+			if (!factions) {
+				return this.sendReply('debugerror 1');
+			} else {
+				for (let i in curFactions) {
+					if (toId(curFactions[i]) == toId(target[0])) pass = false;
+				}
+				if (pass) {
+					factions[ToId(target[0])] = {
+						name: target[0],
+						desc: target[1],
+						tag: target[2],
+						members: {},
+					};
+					let status = writeFactions(factions);
+					if (status) {
+						return this.sendReply('debugerror3');
+					} else return this.sendReply('Success!');
+				} else return this.sendReply('Specified faction already exists.');
+			}
+		},
+	},
+
+	join: function (target, room, user) {
+		if (!this.canTalk()) return this.errorReply("You cannot join a faction while unable to talk.");
+	},
+
+	factionhelp: function (target, room, user) {
+		let factionHelp = 'Faction Guide can be found <a href=http://pastebin.com/3Wqzzghp>here</a>.'
+		this.sendReplyBox(factionHelp);
+	},
 };
