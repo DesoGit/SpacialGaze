@@ -211,4 +211,8 @@ exports.BattleAbilities = {
 			}
 		},
 	},
+	"multitype": {
+		inherit: true,
+		shortDesc: "If this Pokemon is an Arceus or Dunsparce, its type changes to match its held Plate or Z-Crystal.",
+	},
 };
