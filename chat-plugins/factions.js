@@ -118,10 +118,6 @@ exports.commands = {
 		},
 	},
 
-	join: function (target, room, user) {
-		if (!this.canTalk()) return this.errorReply("You cannot join a faction while unable to talk.");
-	},
-
 	factionhelp: function (target, room, user) {
 		let factionHelp = 'Faction Guide can be found <a href=http://pastebin.com/3Wqzzghp>here</a>.'
 		this.sendReplyBox(factionHelp);
