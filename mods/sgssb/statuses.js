@@ -78,7 +78,7 @@ exports.BattleStatuses = {
 			this.add('c', '~HoeenHero', 'Do I have to? I\'m in the middle of programming.');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '~Hoeenhero', 'I can\'t battle now, i\'m too busy.');
+			this.add('c', '~HoeenHero', 'I can\'t battle now, i\'m too busy.');
 		},
 		onFaint: function (pokemon) {
 			this.add('c', '~HoeenHero', 'Hey! Thats more hax than I get to use >:(');
@@ -87,13 +87,13 @@ exports.BattleStatuses = {
 	hiroz: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '&HiroZ', 'Your wing isn\'t able to fly anywhere!');
+			this.add('c', '+HiroZ', 'Your wing isn\'t able to fly anywhere!');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '&HiroZ', 'Crawl like the insect you are, I\'ll be back!');
+			this.add('c', '+HiroZ', 'Crawl like the insect you are, I\'ll be back!');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '&HiroZ', 'Argh... scumbag...');
+			this.add('c', '+HiroZ', 'Argh... scumbag...');
 		},
 	},
 	admewn: {
@@ -111,13 +111,13 @@ exports.BattleStatuses = {
 	vulcaron: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '%Vulcaron', 'I will scorch you with 628 blue flames!!! ...I\'m really bad at this.');
+			this.add('c', '+Vulcaron', 'I will scorch you with 628 blue flames!!! ...I\'m really bad at this.');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '%Vulcaron', 'I\'ll be back, I have a lot of free time');
+			this.add('c', '+Vulcaron', 'I\'ll be back, I have a lot of free time');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '%Vulcaron', 'The flames are dowsed.');
+			this.add('c', '+Vulcaron', 'The flames are dowsed.');
 		},
 	},
 	mystifi: {
@@ -134,13 +134,13 @@ exports.BattleStatuses = {
 	krakenmare: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '&Kraken Mare', 'Today, I prove Gardevoir as the best Pokmeon!');
+			this.add('c', '~Kraken Mare', 'Today, I prove Gardevoir as the best Pokmeon!');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '&Kraken Mare', 'I shall spare you today, young one!');
+			this.add('c', '~Kraken Mare', 'I shall spare you today, young one!');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '&Kraken Mare', 'Even though I fall, I\'m sure I took a few down with me.');
+			this.add('c', '~Kraken Mare', 'Even though I fall, I\'m sure I took a few down with me.');
 		},
 	},
 	almightybronzong: {
@@ -169,13 +169,13 @@ exports.BattleStatuses = {
 	mimiroppu: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '@Mimiroppu', 'Mimiroppu, charm up~');
+			this.add('c', '+Mimiroppu', 'Mimiroppu, charm up~');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '@Mimiroppu', 'I\'ll be back soon bitches');
+			this.add('c', '+Mimiroppu', 'I\'ll be back soon bitches');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '@Mimiroppu', 'Sorry \'bout it...');
+			this.add('c', '+Mimiroppu', 'Sorry \'bout it...');
 		},
 	},
 	bdh93: {
@@ -193,27 +193,27 @@ exports.BattleStatuses = {
 	c733937123: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '@C733937 123', 'Hello opponent, Welcome to Spacial Bros, I, C733937 123, shall defeat you.....hopefully.');
+			this.add('c', '&C733937 123', 'Hello opponent, Welcome to Spacial Bros, I, C733937 123, shall defeat you.....hopefully.');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '@C733937 123', '*laughs* Now you have to defeat a stronger ally....and have to still face me later where I can have a better chance at *distorted voice* KiLlInG YoU To wIn!!!');
+			this.add('c', '&C733937 123', '*laughs* Now you have to defeat a stronger ally....and have to still face me later where I can have a better chance at *distorted voice* KiLlInG YoU To wIn!!!');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '@C733937 123', 'What, I...got defeated by some lousy fighter like you??? Well...Good luck next time we fight for both of us....but why did I lose?');
+			this.add('c', '&C733937 123', 'What, I...got defeated by some lousy fighter like you??? Well...Good luck next time we fight for both of us....but why did I lose?');
 		},
 	},
 	spacialbot: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '%Spacial Bot', '``Bot rebooting...``');
-			this.add('c', '%Spacial Bot', '``Rebooting complete. Engaging in battle.``');
+			this.add('c', '*Spacial Bot', '``Bot rebooting...``');
+			this.add('c', '*Spacial Bot', '``Rebooting complete. Engaging in battle.``');
 		},
 		onSwitchOut: function (pokemon) {
 			this.add('c', '+The Run', '.battleswitchout');
-			this.add('c', '%Spacial Bot', '``var returnMessage = alert("Will return with more power.")``');
+			this.add('c', '*Spacial Bot', '``var returnMessage = alert("Will return with more power.")``');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '%Spacial Bot', 'I blame my creator for my loss. ``process.exit(1)``');
+			this.add('c', '*Spacial Bot', 'I blame my creator for my loss. ``process.exit(1)``');
 		},
 	},
 	auction: {

@@ -253,6 +253,7 @@ exports.commands = {
 	hv: function (room, user, cmd) {
 		return this.parse('/hotpatch validator');
 	},
+
 	'!regdate': true,
 	regdate: function (target, room, user, connection) {
 		if (!target) target = user.name;
@@ -298,6 +299,7 @@ exports.commands = {
 		return this.sendReplyBox('There ' + (names.length === 1 ? 'is' : 'are') + ' <font color="#24678d"><b>' + names.length + '</b></font> ' + (names.length === 1 ? 'user' : 'users') + ' with the rank <font color="#24678d"><b>' + Config.groups[target].name + '</b></font> currently online.<br />' + names.join(', '));
 	},
 
+	'!spacialgazerepo': true,
 	sg: 'spacialgazerepo',
 	sgr: 'spacialgazerepo',
 	repo: 'spacialgazerepo',
@@ -417,10 +419,12 @@ exports.commands = {
 			return this.errorReply('An error occured in the command.'); // This should never happen.
 		}
 	},
-	usetokenhelp: ['/usetoken [token], [argument(s)] - Redeem a token from the shop. Accepts the following arguments: ',
-		      '/usetoken avatar, [image] | /usetoken declare, [message] | /usetoken color, [hex code]',
-		      '/usetoken icon [image] | /usetoken title, [name], [hex code] | /usetoken emote, [name], [image]',
-		      '/usetoken disableintroscroll [room name]'],
+	usetokenhelp: [
+		'/usetoken [token], [argument(s)] - Redeem a token from the shop. Accepts the following arguments: ',
+		'/usetoken avatar, [image] | /usetoken declare, [message] | /usetoken color, [hex code]',
+		'/usetoken icon [image] | /usetoken title, [name], [hex code] | /usetoken emote, [name], [image]',
+		'/usetoken disableintroscroll [room name]'
+	],
 
 	bonus: 'dailybonus',
 	checkbonus: 'dailybonus',
@@ -429,6 +433,7 @@ exports.commands = {
 		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user.userid, user);
 		return this.sendReply('Your next bonus is ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 8 ? 7 : Db.DailyBonus.get(user.userid, [1, Date.now()])[0]) + ' ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
 	},
+
 	etour: function (target, room, user) {
 		if (!target) return this.parse("/help etour");
 		this.parse("/tour create " + target + ", elimination");
@@ -449,6 +454,7 @@ exports.commands = {
 		if (Db.disabledScrolls.has(target)) return this.errorReply(`${Rooms(target).title} has roomintro scroll disabled.`);
 		Db.disabledScrolls.set(target, true);
 	},
+
 	disableintroscrollhelp: ["/disableintroscroll [room] - Disables scroll bar preset in the room's roomintro."],
 	enableintroscroll: function (target, room, user) {
 		if (!this.can('roomowner')) return false;
@@ -460,6 +466,7 @@ exports.commands = {
 	},
 	enableintroscrollhelp: ["/enableintroscroll [room] - Enables scroll bar preset in the room's roomintro."],
 
+	'!sgssb': true,
 	sgssb: function (target, room, user) {
 		if (!this.runBroadcast()) return false;
 		if (!target || target === 'help') return this.parse('/help sgssb');
@@ -528,6 +535,7 @@ exports.commands = {
 			});
 		});
 	},
+<<<<<<< HEAD
 	'!youtube': true,
 	yt: 'youtube',
 	youtube: function (target, room, user) {
@@ -568,5 +576,12 @@ exports.commands = {
 			});
 		});
 		req.end();
+=======
+
+	'!discord': true,
+	discord: function () {
+		if (!this.runBroadcast()) return;
+		this.sendReplyBox("<a href=\"https://discord.gg/cwfAqdN\">The Official SpacialGaze Discord</a>");
+>>>>>>> 682bd3c62dff04f1fee8f2db7ac79264a486f24c
 	},
 };
