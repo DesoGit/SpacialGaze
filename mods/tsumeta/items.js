@@ -497,7 +497,7 @@ exports.BattleItems = {
 	},
 	"scopelens": {
 		inherit: true,
-		onEat: function (pokemon) {
+		onStart: function (pokemon) {
 			this.boost({accuracy: 1});
 		},
 		desc: "Scope Lens now increases accuracy by one stage in addition to it's usual effect.",
