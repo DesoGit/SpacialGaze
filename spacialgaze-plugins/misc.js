@@ -535,7 +535,13 @@ exports.commands = {
 			});
 		});
 	},
-<<<<<<< HEAD
+
+	'!discord': true,
+	discord: function () {
+		if (!this.runBroadcast()) return;
+		this.sendReplyBox("<a href=\"https://discord.gg/qRvnKBJ\">The Official Tsunami Discord</a>");
+	},
+
 	'!youtube': true,
 	yt: 'youtube',
 	youtube: function (target, room, user) {
@@ -576,12 +582,5 @@ exports.commands = {
 			});
 		});
 		req.end();
-=======
-
-	'!discord': true,
-	discord: function () {
-		if (!this.runBroadcast()) return;
-		this.sendReplyBox("<a href=\"https://discord.gg/cwfAqdN\">The Official SpacialGaze Discord</a>");
->>>>>>> 682bd3c62dff04f1fee8f2db7ac79264a486f24c
 	},
 };
