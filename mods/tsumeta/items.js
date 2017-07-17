@@ -497,7 +497,7 @@ exports.BattleItems = {
 	},
 	"scopelens": {
 		inherit: true,
-		onEat: function (pokemon) {
+		onStart: function (pokemon) {
 			this.boost({accuracy: 1});
 		},
 		desc: "Scope Lens now increases accuracy by one stage in addition to it's usual effect.",
@@ -509,6 +509,160 @@ exports.BattleItems = {
 			if (move.flags['contact']) {
 				this.chainModify(1.2);
 			}
+		},
+	},
+	"skyplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"toxicplate": {
+		inherit: true,
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"dracoplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"meadowplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"ironplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"flameplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"pixieplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"mindplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"insectplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"icicleplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"fistplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"earthplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"dreadplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"splashplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"spookyplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"stoneplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
+		},
+	},
+	"zapplate": {
+		inherit: true,
+		onTakeItem: function (item, pokemon, source) {
+			if ((source && source.baseTemplate.num === 493) || pokemon.baseTemplate.num === 493 || (source && source.baseTemplate.num === 206) || pokemon.baseTemplate.num === 206) {
+				return false;
+			}
+			return true;
 		},
 	},
 };
