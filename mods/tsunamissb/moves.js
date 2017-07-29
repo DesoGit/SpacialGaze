@@ -64,6 +64,9 @@ exports.BattleMovedex = {
 			chance: 35,
 			volatileStatus: 'flinch',
 		},
+		onHit: function (target) { 
+			this.add('c|~Desokoro|You best hope the waves I ride have mercy on your soul!');
+		},
 		pp: 5,
 		priority: 0,
 		onPrepareHit: function (target, source, move) {
@@ -323,6 +326,9 @@ exports.BattleMovedex = {
 			chance: 25,
 			volatileStatus: 'flinch',
 		},
+		onHit: function (target) { 
+			this.add('c|*Stabby the Krabby|Stabby Stabby!');
+		},
 		pp: 5,
 		priority: 1,
 		multihit: [2, 2],
@@ -351,6 +357,9 @@ exports.BattleMovedex = {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Bulk Up", source);
 			this.add('-anim', source, "Safeguard", source);
+		},
+		onHit: function (target) { 
+			this.add('c|*Tidal Wave Bot|Initiating Sustainability Protocol...standby.');
 		},
 		heal: [1, 2],
 		flags: {},
