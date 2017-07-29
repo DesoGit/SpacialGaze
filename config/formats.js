@@ -2892,7 +2892,7 @@ exports.Formats = [
 		//Base of SSB code from SpacialGaze and its contributors. 
 		name: "[Gen 7] Tsu Super Staff Bros",
 		desc: ["Tsunami staff fight it out in pokemon form to see who is the best!"],
-		mod: 'tsussb',
+		mod: 'tsunamissb',
 		team: 'randomTsuStaff',
 		ruleset: ['HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod'],
 		onBegin: function () {
