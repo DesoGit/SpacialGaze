@@ -1,0 +1,169 @@
+~Desokoro
+(Gyarados, Shiny)
+@ Leftovers
+EVs: 252 Atk / 4 HP / 252 Spe
+Adamant Nature
+Ability: Wave Call
+    -If either the user is statused or its HP is below 1/2 of its max HP, the user's Water type moves & Speed get boosted by 2x. Also takes .1x Electric damage for two turns on switch in.
+Moves: Dragon Dance, Bounce and Substitute.
+Signature Move: Tsunami Crash
+	-Water Type, Physical, 150 BP, 8 PP and 35% chance to flinch the target.
+Notes:Quite stronger with buffs to counter issues. Finally living up to what it should with Tsunami's owner's name on it.
+Rank: TBD
+
+~Mosmero
+(Gastly)
+@ Life Orb
+EVs: 252 Spa / 252 Spe / 4 HP
+Modest Nature
+Ability: Mosmic Power
+    -Boosts user's Special and Spe by 3 stages on switch in. Also uses Magnet Rise on entry.
+Moves: Shadow Ball, Sludge Bomb, Giga Drain
+Signature Move: Mosmero Beam
+	-Ghost type, 130 BP, 80% Accuracy, 30% chance to Burn, Paralyze, Freeze. 30% to also Flinch or Confuse.
+Notes: Signature Move is not worth the time to use, just go for the quick kills.
+Rank: TBD
+
+~Tsunami Prince
+(Darkrai)
+@ Darkiniumz
+EVs: 252 SpA / 252 Spe / 6 HP
+Timid Nature
+Ability: Death Boost
+    -Simple + Also puts enemy pokemon to sleep.
+Moves: Nightmare, Dark Pulse, Shadow Ball
+Signature Move: Overpower
+	-Boosts all stats by 1 stage. Puts enemy to sleep.
+Notes: Usually can take care of most threats right away without using Overpower at all. Remember than Overpower will fail, if enemy is already asleep.
+Rank: TBD
+
+~HoeenHero
+(Ludicolo)
+@ Leftovers
+EVs: 252 SpA / 252 Spe / 4 HP
+Modest Nature
+Ability: Programmer's Domain
+    -Primordial Sea, Swift Swim, Adaptability, and Rain Dish.
+Moves: Scald/Hydro Pump, Giga Drain and Ice Beam.
+Signature Move: Scripting
+	-Psychic type, Status, 10 PP, Confuses target, and boosts the user's SpA by 2 stages and SpD for 1 stage.
+Notes: Quite a useful 'mon, make sure to use Scripting when possible.
+Rank: TBD
+
+&MechSteelix
+(Steelix-Mega)
+@ Lum Berry
+Evs: 252 HP / 4 Atk / 252 Def
+Impish Nature
+Ability: Sandbox
+    -Sets up Trick Room, Sandstorm, Reflect, Light Screen & Gravity on switch in.
+Moves: Curse, Sleep Talk, Earthquake
+Signature Move: Deep Sleep
+    -Rest & +3 SpD boost.
+Notes: Quite a nice wall, especially effective while Sandbox is active. Gets quite weakened by the loss of Sandbox ability, but still can fight well.
+Rank: TBD
+
+@Admewn
+(Mew)
+@ Expert Belt
+EVs: 252 SpA / 4 HP / 252 Spe
+Timid Nature
+Ability: Protean
+Moves: Energy Ball, Oblivion Wing and Shadow Ball.
+Signature Move: Mewtation
+	-Dark Type, Special, 90 BP, 10 PP and transforms user into a Dark Type.
+Notes: Use Type changing to your advantage as much as possible.
+Rank: TBD
+
+@CubsFan38
+(Mamoswine)
+@ Life Orb
+EVs: 4 HP / 252 Atk / 252 Spe
+Jolly Nature
+Ability: Chilly Penguinn
+    -If it by a ice type move, +1 stage to all stats.
+Moves: Ice Shard, Knock Off, Earthquake
+Signature Move: Penguin's Shower
+    -120 power, 10 pp, 95% accuracy, 50% chance to freeze opponent
+Notes: Can do a good amount of damage to some of the strongest in this meta.
+Rank: TBD
+
+@TheRittz
+(Venusaur-Mega)
+@Black Sludge
+EVs: 252 HP / 128 Def / 128 SpD
+Calm Nature
+Ability: Paradoxical Prowess
+    -Sets up Safeguard, Lucky Chant, has same effects of Magic Guard, has same effects of Sticky Hold, has same effects of Rock Solid, and has same effects of Oblivious
+Moves: Substitute, Leech Seed, Toxic
+Signature Move: Everlasting Annoyingness
+    -Uses the move Ingrain & Special Bullet Seed move that drains 10% HP each hit (2-5 hits).
+Notes: Finally nerfed, but still quite good. Feel the annoyingness! (Yes, its meant to spam that phrase. Have fun mate.)
+Rank: TBD
+
+%Kraken Mare
+(Gardevoir-Mega, Shiny)
+@ Focus Sash
+EVs: 248 HP / 8 Def / 252 SpA
+Modest Nature
+Ability: Kraken's Boosts
+    -No Guard and Moody.
+Moves: Moonblast, Calm Mind and Psychic.
+Signature Move: Revenge of Kraken Mare
+	-Water Type, Special, 77,000 BP, Always hits, Self-Destruct and +5 Priority.
+Notes: Take out anyone that is set up in one shot with Revenge of Kraken Mare.
+Rank: TBD
+
+*Tidal Wave Bot
+(Magikarp, Steel/Electric Typing, Shiny)
+@ Temp. Name (Name TBD at a later date.)
+    Eviolite + Life Orb
+EVs: 4 HP / 252 Atk / 252 SpA
+Adament Nature
+Ability: Loading...
+    -Uses Magnet Rise & +4 Attack and +2 Speed on entry.
+Moves: Wild Charge, Gear Grind, Gear Shift
+Signature Move: Server Guardian
+    -Recover & +2 boosts to both Def & SpD.
+Notes: Able to hit quick and hard from the start, but if you can, set up.
+Rank: TBD
+
+*Stabby the Krabby
+(Krabby)
+@ Eviolite
+EVs: 6 HP / 252 Atk / 252 Spe
+Adament Nature
+Ability: Ready to Stab
+    -On entry, +2 Attack and Speed.
+Moves: Crabhammer, Swords Dance, Knock Off
+Signature Move: Stab Stab
+    -Steel Type, 100 BP, Always Hits, Attacks Twice, 25% chance to flinch.
+Notes: Stabby Stabby! ||| "My signature move should be 100% chance to OKHO instead of what it is now." -Stabby the Krabby
+Rank: TBD
+
++C733937123
+(Chesnaught, Grass/Steel Typing)
+@ Shining Blade and Glowing Armour
+    -1.5x all stats other than Speed. Speed .5x. No STAB bonus while holding this item.
+EVs 252 Atk / 128 SpD / 128 Spe
+Adament Nature
+Ability: Paladin Armour
+    -Multiscale + Magic Bounce + Magic Guard + Guts + Quick Feet
+Moves: Leaf Blade, Smart Strike, Sacred Sword
+Signature Move: Paladin Strike
+    -Two Turn Attack. First Turn: Spiky Shield + Kings Shield, Second Turn: Steel Type, Physical, 130 BP, 15 PP. Higher Crit Rate, and ignores stat changes on opponent.
+Notes: Under Construction
+Rank: Under Construction
+
++xcmr
+(Meowth)
+@ Eviolite
+EVs 252 Atk / 4 SpD / 252 Spe
+Jolly Nature
+Ability: Feline Fury
+    -Scrappy & +3 Attack on switch in.
+Moves: U-turn, Fake Out, Knock Off,
+Signature Move: Kitty Crush
+    -Hits all types neutral, Normal Type, 95 BP, 95% accuracy, +1 to both Def & SpD on use.
+Notes: Soild counter to most with its Scrappy and Kitty Crush combo.
+Rank: TBD
