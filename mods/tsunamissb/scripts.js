@@ -239,8 +239,6 @@ exports.BattleScripts = {
  				}
  			}
  			let set = sets[pool[i]];
-			let name = this.sampleNoReplace(pool);
-			let set = sets[name];
 			set.level = 100;
 			set.name = pool[i];
 			if (!set.ivs) {
