@@ -116,7 +116,7 @@ Rank: TBD
 
 *Tidal Wave Bot
 (Magikarp, Steel/Electric Typing, Shiny)
-@ Temp. Name (Name TBD at a later date.)
+@ Guardian's Amulet
     Eviolite + Life Orb
 EVs: 4 HP / 252 Atk / 252 SpA
 Adament Nature
