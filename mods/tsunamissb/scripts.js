@@ -153,7 +153,7 @@ exports.BattleScripts = {
 			'*Tidal Wave Bot': {
 				species: 'Magikarp',
 				ability: 'Loading...',
-				item: 'Temp. Name',
+				item: 'Guardian\'s Amulet',
 				shiny: true,
 				moves: ['Wild Charge', 'Shift Gear', 'Gear Grind'
 				],
