@@ -97,7 +97,7 @@ exports.BattleStatuses = {
 	tsunamiprince: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '~Tsunami Prince', 'You think I came for the battle, when it\'s really your soul i want.');
+			this.add('c', '~Tsunami Prince', 'You think I came for the battle, when it\'s really your soul I want.');
 		},
 		onSwitchOut: function (pokemon) {
 			this.add('c', '~Tsunami Prince', 'Don\'t worry, I\'ll be back. I will miss putting you in pain too much to not return.');
