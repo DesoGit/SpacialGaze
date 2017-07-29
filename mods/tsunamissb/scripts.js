@@ -3,9 +3,9 @@
 
 exports.BattleScripts = {
 	randomTsuStaffTeam: function (side) {
+		let userid = toId(side.name);
 		let team = [];
 		let variant = this.random(2);
-
 		let sets = {
 			// Admins:
 			'~Desokoro': {
@@ -198,6 +198,7 @@ exports.BattleScripts = {
 				nature: 'Jolly',
 			},
 			/******************
+			Waiting for move to be ready.
 			'+C733937123':{
 				species: 'Chesnaught',
 				ability: 'Paladin Armour',
@@ -224,12 +225,24 @@ exports.BattleScripts = {
 		}
 
 		// Generate the team randomly.
-		let pool = Object.keys(sets);
+		let pool = Dex.shuffle(Object.keys(sets));
 		for (let i = 0; i < 6; i++) {
+			if (i === 1) {
+ 				let monIds = pool.slice(0, 6).map(function (p) {
+ 					return toId(p);
+ 				});
+ 				for (let mon in sets) {
+ 					if (toId(mon) === userid && monIds.indexOf(userid) === -1) {
+ 						pool[1] = mon;
+ 						break;
+ 					}
+ 				}
+ 			}
+ 			let set = sets[pool[i]];
 			let name = this.sampleNoReplace(pool);
 			let set = sets[name];
 			set.level = 100;
-			set.name = name;
+			set.name = pool[i];
 			if (!set.ivs) {
 				set.ivs = {
 					hp: 31,
