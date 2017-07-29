@@ -13,7 +13,7 @@ let fs = require('fs');
 let monData;
 
 try {
-	monData = fs.readFileSync("data/sgssb-data.txt").toString().split("\n\n");
+	monData = fs.readFileSync("data/tsussb-data.txt").toString().split("\n\n");
 } catch (e) {
 	console.error(e);
 }
@@ -466,15 +466,15 @@ exports.commands = {
 	},
 	enableintroscrollhelp: ["/enableintroscroll [room] - Enables scroll bar preset in the room's roomintro."],
 
-	'!sgssb': true,
-	sgssb: function (target, room, user) {
+	'!tsussb': true,
+	tsussb: function (target, room, user) {
 		if (!this.runBroadcast()) return false;
-		if (!target || target === 'help') return this.parse('/help sgssb');
+		if (!target || target === 'help') return this.parse('/help tsussb');
 		let targetData = getMonData(toId(target));
 		if (!targetData) return this.errorReply("The staffmon '" + toId(target) + "' could not be found.");
 		return this.sendReplyBox(targetData);
 	},
-	sgssbhelp: ["/sgssb (staffmon name) - Gives details on a staffmon from SGSSB."],
+	tsussbhelp: ["/tsussb (staffmon name) - Gives details on a staffmon from Tsunami SSB."],
 
 	pmroom: 'rmall',
 	roompm: 'rmall',
