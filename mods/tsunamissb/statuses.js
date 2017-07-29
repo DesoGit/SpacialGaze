@@ -6,7 +6,7 @@ exports.BattleStatuses = {
 			this.add('c', '~HoeenHero', 'Do I have to? I\'m in the middle of programming.');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '~Hoeenhero', 'I can\'t battle now, i\'m too busy.');
+			this.add('c', '~Hoeenhero', 'I can\'t battle now, I\'m too busy.');
 		},
 		onFaint: function (pokemon) {
 			this.add('c', '~HoeenHero', 'Hey! Thats more hax than I get to use >:(');
@@ -27,8 +27,8 @@ exports.BattleStatuses = {
 	krakenmare: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '%Kraken Mare', 'I\â€™m looking forward to this.');
-			this.add('c', '%Kraken Mare', 'It\â€™s foolish to come against me.');
+			this.add('c', '%Kraken Mare', 'I\'m looking forward to this.');
+			this.add('c', '%Kraken Mare', 'It\'s foolish to come against me.');
 			this.add('c', '%Kraken Mare', 'NOW, you will feel TRUE pain!');
 		},
 		onSwitchOut: function (pokemon) {
@@ -58,7 +58,7 @@ exports.BattleStatuses = {
 			this.add('c', '~Mosmero', 'And with that, it was me, the Mos.');
 		},
 		onFaint: function (pokemon) {
-			this.add('c', '~Mosmero', 'Can\'t you come up with something creative for once, Vauco?');
+			this.add('c', '~Mosmero', 'Can\'t you come up with something creative for once, Vacuo?');
 		},
 	},
 	cubsfan38: {
@@ -97,10 +97,10 @@ exports.BattleStatuses = {
 	tsunamiprince: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '~Tsunami Prince', 'You think i came for the battle, when it\'s really your soul i want.');
+			this.add('c', '~Tsunami Prince', 'You think I came for the battle, when it\'s really your soul i want.');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '~Tsunami Prince', 'Don\'t worry, i\'ll be back. I will miss putting you in pain too much to not return.');
+			this.add('c', '~Tsunami Prince', 'Don\'t worry, I\'ll be back. I will miss putting you in pain too much to not return.');
 		},
 		onFaint: function (pokemon) {
 			this.add('c', '~Tsunami Prince', 'Death falls upon us all, however now is my time to die. You\'ll be happy to know that yours isn\'t far from now.');
@@ -118,16 +118,40 @@ exports.BattleStatuses = {
 			this.add('c', '+xcmr', 'What!? That was a high roll!');
 		},
 	},
-  desokoro: {
-  exists: true,
-  onStart: function () { 
-   this.add('c', '~Desokoro', 'The divine one has arrived to give you a smackdown of epic proportions.');
-   },
+	desokoro: {
+	  	exists: true,
+  		onStart: function () {
+			this.add('c', '~Desokoro', 'The divine one has arrived to give you a smackdown of epic proportions.');
+		},
    		onSwitchOut: function (pokemon) {
 			this.add('c', '~Desokoro', 'I\'ll be back!');
 		},
 		onFaint: function (pokemon) {
 			this.add('c', '~Desokoro', 'You may have vanquished me today, but beware of the future. I shall not be gone long.');
+		},
+	},
+	tidalwavebot: {
+		exists: true,
+		onStart: function () {
+			this.add('c', '*Tidal Wave Bot', 'Threat Detected: Must deploy the Ban Hammer');
+		},
+		onSwitchOut: function (pokemon) {
+			this.add('c', '*Tidal Wave Bot', 'Tidal Wave Bot powered down');
+		},
+		onFaint: function (pokemon) {
+			this.add('c', '*Tidal Wave Bot', 'Emergency shutdown: Battery life depleted. Must recharge.');
+		},
+	},
+	stabbythekrabby: {
+		exists: true,
+		onStart: function () {
+			this.add('c', '*Stabby the Krabby', 'Get ready to be stabbed!');
+		},
+		onSwitchOut: function (pokemon) {
+			this.add('c', '*Stabby the Krabby', 'Alright, I\'ll be back to stab you later. Got someone else to deal with first.');
+		},
+		onFaint: function (pokemon) {
+			this.add('c', '*Stabby the Krabby', 'Impossible...');
 		},
 	},
 };
