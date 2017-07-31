@@ -110,15 +110,8 @@ SG.giveDailyReward = function (user) {
 	for (let ip in user.ips) {
 		Db.DailyBonus.set(ip, [(reward + 1 < 8 ? reward + 1 : 1), Date.now()]);
 	}
-<<<<<<< HEAD
-	let reward = Db.DailyBonus.get(userid)[0];
-	Economy.writeMoney(userid, reward);
-	for (let i = 0; i < alts.length; i++) Db.DailyBonus.set(alts[i], [(Db.DailyBonus.get(alts[i])[0] + 1), Date.now()]);
-	user.send('|popup||wide||html| <center><u><b><font size="3">Tsunami Daily Bonus</font></b></u><br>You have been awarded ' + reward + ' Gyarabucks.<br>' + showDailyRewardAni(reward) + '<br>Because you have connected to the server for the past ' + reward + ' Days.</center>');
-=======
 	Economy.writeMoney(user.userid, reward);
-	user.send('|popup||wide||html| <center><u><b><font size="3">SpacialGaze Daily Bonus</font></b></u><br>You have been awarded ' + reward + ' Stardust.<br>' + showDailyRewardAni(reward) + '<br>Because you have connected to the server for the past ' + (reward === 1 ? 'Day' : reward + ' Days') + '.</center>');
->>>>>>> 48dbb2caabe8b39a40334036f3d95cdedd51e122
+	user.send('|popup||wide||html| <center><u><b><font size="3">Tsunami Daily Bonus</font></b></u><br>You have been awarded ' + reward + ' Gyarabucks.<br>' + showDailyRewardAni(reward) + '<br>Because you have connected to the server for the past ' + (reward === 1 ? 'Day' : reward + ' Days') + '.</center>');
 };
 
 // last two functions needed to make sure SG.regdate() fully works

@@ -171,6 +171,7 @@ exports.commands = {
 	},
 	showhelp: ["/show - Displays user's global rank. Requires: & ~"],
 
+	servercredits: 'credits',
 	credits: function (target, room, user) {
 		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>Tsunami Credits</b></u></font><br />" +
 			"<br />" +
@@ -178,24 +179,12 @@ exports.commands = {
 			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
-<<<<<<< HEAD
 			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
-			"- " + SG.nameColor('Clue', true) + " (Policy and Media)<br />" +
-		    	"- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
+		    "- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
-=======
-			"- " + SG.nameColor('Kraken Mare', true) + " (Policy Admin, Development)<br />" +
-			"- " + SG.nameColor('Opple', true) + " (Policy Leader, Media Leader)<br />" +
-			"- " + SG.nameColor('C733937 123', true) + " (Policy Leader)<br />" +
-			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting, Digimon Project)<br />" +
-			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
-			"- " + SG.nameColor('Gligars', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Retired Staff:</b></u><br />" +
-			"- " + SG.nameColor('The Run', true) + " (Former Server Owner, Development)<br />" +
-			"- " + SG.nameColor('Vulcaron', true) + " (Former Policy Leader)<br />" +
-			"- " + SG.nameColor('HiroZ', true) + " (Former Policy Leader)<br />" +
->>>>>>> 48dbb2caabe8b39a40334036f3d95cdedd51e122
+			"- " + SG.nameColor('Clue', true) + " (Former Policy & Media Admin)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
@@ -313,15 +302,15 @@ exports.commands = {
 		return this.sendReplyBox('There ' + (names.length === 1 ? 'is' : 'are') + ' <font color="#24678d"><b>' + names.length + '</b></font> ' + (names.length === 1 ? 'user' : 'users') + ' with the rank <font color="#24678d"><b>' + Config.groups[target].name + '</b></font> currently online.<br />' + names.join(', '));
 	},
 
-	'!spacialgazerepo': true,
-	sg: 'spacialgazerepo',
-	sgr: 'spacialgazerepo',
-	repo: 'spacialgazerepo',
-	spacialgazerepo: function (target, room, user) {
+	'!tsunamirepo': true,
+	tsu: 'tsunamirepo',
+	tsur: 'tsunamirepo',
+	repo: 'tsunamirepo',
+	tsunamirepo: function (target, room, user) {
 		if (!this.runBroadcast()) return;
-		this.sendReply(`|raw|<a href="https://github.com/HoeenCoder/SpacialGaze">SpacialGaze's repo</a>`);
+		this.sendReply(`|raw|<a href="https://github.com/DesoGit/Tsunami_PS">Tsunami's repo</a>`);
 	},
-	spacialgazerepohelp: ["/spacialgazerepo - Links to the SpacialGaze repository on Github."],
+	tsunamirepohelp: ["/tsunamirepo - Links to the Tsunami repository on GitHub."],
 
 	'!seen': true,
 	seen: function (target, room, user) {
@@ -555,6 +544,12 @@ exports.commands = {
 	discord: function () {
 		if (!this.runBroadcast()) return;
 		this.sendReplyBox("<a href=\"https://discord.gg/qRvnKBJ\">The Official Tsunami Discord</a>");
+	},
+	
+	'!tsumeta': true,
+	tsumeta: function () {
+		if (!this.runBroadcast()) return;
+		this.sendReplyBox("<a href=\"http://tsunamips.weebly.com/tsumeta.html\">The Official TsuMeta Website</a>");
 	},
 
 	'!youtube': true,
