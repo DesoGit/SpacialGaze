@@ -3,6 +3,7 @@
 
 exports.BattleScripts = {
 	randomSeasonalRegStaffTeam: function (side) {
+		let userid = toId(side.name);
 		let team = [];
 		let variant = this.random(2);
 		let sets = {
@@ -134,38 +135,7 @@ exports.BattleScripts = {
 				},
 				nature: 'Modest',
 			},
-			// Global Drivers:
-			'%Clue': {
-				species: 'Magnezone',
-				ability: 'Levitate',
-				item: 'Choice Specs',
-				moves: [
-					['Volt Switch', 'Thunderbolt'][this.random(2)], 'Hidden Power Ice', 'Aura Sphere',
-				],
-				signatureMove: 'Mechanical Dysfunction',
-				evs: {
-					spa: 252,
-					spe: 252,
-					hp: 4,
-				},
-				nature: 'Modest',
-			},
-			'%ducktown': {
-				species: 'Golduck',
-				ability: 'Cloud Nine',
-				item: 'Leftovers',
-				gender: 'M',
-				moves: ['Scald', 'Ice Beam', 'Psychic',
-				],
-				signatureMove: 'Duck Power',
-				evs: {
-					spa: 252,
-					spe: 252,
-					hp: 4,
-				},
-				nature: 'Modest',
-			},
-			'%Insist': {
+			'@Insist': {
 				species: "Ludicolo",
 				ability: "Crippling Depression",
 				item: "Playnium Z",
@@ -181,6 +151,22 @@ exports.BattleScripts = {
 				},
 				nature: "Timid",
 			},
+			// Global Drivers:
+			'%ducktown': {
+				species: 'Golduck',
+				ability: 'Cloud Nine',
+				item: 'Leftovers',
+				gender: 'M',
+				moves: ['Scald', 'Ice Beam', 'Psychic',
+				],
+				signatureMove: 'Duck Power',
+				evs: {
+					spa: 252,
+					spe: 252,
+					hp: 4,
+				},
+				nature: 'Modest',
+			},
 			'%Serperiorater': {
 				species: 'Serperior',
 				ability: 'Sturdy',
@@ -195,6 +181,20 @@ exports.BattleScripts = {
 					spd: 4,
 				},
 				nature: 'Timid',
+			},
+			'%Gligars': {
+				species: "Gligar",
+				ability: "Regenerator",
+				item: "Eviolite",
+				gender: "M",
+				moves: ['Thousand Arrows', 'U-Turn', ['Sacred Fire', 'Bolt Strike'][variant]],
+				signatureMove: "Daredevil",
+				evs: {
+					atk: 172,
+					def: 84,
+					spd: 252,
+				},
+				nature: "Adamant",
 			},
 			// Former Bots
 			'*SpaceGazer': {
@@ -299,6 +299,21 @@ exports.BattleScripts = {
 				},
 				nature: 'Adamant',
 			},
+			'+Clue': {
+				species: 'Magnezone',
+				ability: 'Levitate',
+				item: 'Choice Specs',
+				moves: [
+					['Volt Switch', 'Thunderbolt'][this.random(2)], 'Hidden Power Ice', 'Aura Sphere',
+				],
+				signatureMove: 'Mechanical Dysfunction',
+				evs: {
+					spa: 252,
+					spe: 252,
+					hp: 4,
+				},
+				nature: 'Modest',
+			},
 			'+Ranfen': {
 				species: 'Flygon',
 				ability: 'DesertDragon',
@@ -357,20 +372,6 @@ exports.BattleScripts = {
 				},
 				nature: 'Impish',
 			},
-			'+Gligars': {
-				species: "Gligar",
-				ability: "Regenerator",
-				item: "Eviolite",
-				gender: "M",
-				moves: ['Thousand Arrows', 'U-Turn', ['Sacred Fire', 'Bolt Strike'][variant]],
-				signatureMove: "Daredevil",
-				evs: {
-					atk: 172,
-					def: 84,
-					spd: 252,
-				},
-				nature: "Adamant",
-			},
 			'+Mimiroppu': {
 				species: 'Lopunny',
 				ability: 'Limber',
@@ -387,7 +388,7 @@ exports.BattleScripts = {
 				nature: 'Jolly',
 			},
 			//Former Staff + Regs
-			'+Hurricane\'d': {
+			' Hurricane\'d': {
 				species: 'Tomohawk',
 				ability: 'Gale Wings',
 				item: 'Rocky Helmet',
@@ -410,49 +411,37 @@ exports.BattleScripts = {
 		}
 
 		// Generate the team randomly.
-		let pool = Object.keys(sets);
+		let pool = Dex.shuffle(Object.keys(sets));
 		for (let i = 0; i < 6; i++) {
-			let name = this.sampleNoReplace(pool);
-			let set = sets[name];
+			if (i === 1) {
+				let monIds = pool.slice(0, 6).map(function (p) {
+					return toId(p);
+				});
+				for (let mon in sets) {
+					if (toId(mon) === userid && monIds.indexOf(userid) === -1) {
+						pool[1] = mon;
+						break;
+					}
+				}
+			}
+			let set = sets[pool[i]];
 			set.level = 100;
-			set.name = name;
+			set.name = pool[i];
 			if (!set.ivs) {
-				set.ivs = {
-					hp: 31,
-					atk: 31,
-					def: 31,
-					spa: 31,
-					spd: 31,
-					spe: 31,
-				};
+				set.ivs = {hp:31, atk:31, def:31, spa:31, spd:31, spe:31};
 			} else {
-				for (let iv in {
-					hp: 31,
-					atk: 31,
-					def: 31,
-					spa: 31,
-					spd: 31,
-					spe: 31,
-				}) {
-					set.ivs[iv] = iv in set.ivs ? set.ivs[iv] : 31;
+				for (let iv in {hp:31, atk:31, def:31, spa:31, spd:31, spe:31}) {
+					set.ivs[iv] = set.ivs[iv] || set.ivs[iv] === 0 ? set.ivs[iv] : 31;
 				}
 			}
 			// Assuming the hardcoded set evs are all legal.
-			if (!set.evs) {
-				set.evs = {
-					hp: 84,
-					atk: 84,
-					def: 84,
-					spa: 84,
-					spd: 84,
-					spe: 84,
-				};
-			}
+			if (!set.evs) set.evs = {hp:84, atk:84, def:84, spa:84, spd:84, spe:84};
 			set.moves = [this.sampleNoReplace(set.moves), this.sampleNoReplace(set.moves), this.sampleNoReplace(set.moves)].concat(set.signatureMove);
 			team.push(set);
 		}
 		return team;
 	},
+
 	//Deny Terrain setting if Ashley is active.
 	setTerrain: function (status, source, sourceEffect) {
 		status = this.getEffect(status);

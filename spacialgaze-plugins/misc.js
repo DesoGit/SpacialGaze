@@ -178,10 +178,24 @@ exports.commands = {
 			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
+<<<<<<< HEAD
 			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
 			"- " + SG.nameColor('Clue', true) + " (Policy and Media)<br />" +
 		    	"- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
+=======
+			"- " + SG.nameColor('Kraken Mare', true) + " (Policy Admin, Development)<br />" +
+			"- " + SG.nameColor('Opple', true) + " (Policy Leader, Media Leader)<br />" +
+			"- " + SG.nameColor('C733937 123', true) + " (Policy Leader)<br />" +
+			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting, Digimon Project)<br />" +
+			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
+			"- " + SG.nameColor('Gligars', true) + " (Development)<br />" +
+			"<br />" +
+			"<u><b>Retired Staff:</b></u><br />" +
+			"- " + SG.nameColor('The Run', true) + " (Former Server Owner, Development)<br />" +
+			"- " + SG.nameColor('Vulcaron', true) + " (Former Policy Leader)<br />" +
+			"- " + SG.nameColor('HiroZ', true) + " (Former Policy Leader)<br />" +
+>>>>>>> 48dbb2caabe8b39a40334036f3d95cdedd51e122
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
@@ -305,7 +319,7 @@ exports.commands = {
 	repo: 'spacialgazerepo',
 	spacialgazerepo: function (target, room, user) {
 		if (!this.runBroadcast()) return;
-		this.sendReply("|raw|<a href='https://github.com/HoeenCoder/SpacialGaze'>SpacialGaze\'s repo</a>");
+		this.sendReply(`|raw|<a href="https://github.com/HoeenCoder/SpacialGaze">SpacialGaze's repo</a>`);
 	},
 	spacialgazerepohelp: ["/spacialgazerepo - Links to the SpacialGaze repository on Github."],
 
@@ -423,15 +437,16 @@ exports.commands = {
 		'/usetoken [token], [argument(s)] - Redeem a token from the shop. Accepts the following arguments: ',
 		'/usetoken avatar, [image] | /usetoken declare, [message] | /usetoken color, [hex code]',
 		'/usetoken icon [image] | /usetoken title, [name], [hex code] | /usetoken emote, [name], [image]',
-		'/usetoken disableintroscroll [room name]'
+		'/usetoken disableintroscroll [room name]',
 	],
 
 	bonus: 'dailybonus',
 	checkbonus: 'dailybonus',
 	dailybonus: function (target, room, user) {
-		let nextBonus = Date.now() - Db.DailyBonus.get(user.userid, [1, Date.now()])[1];
-		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user.userid, user);
-		return this.sendReply('Your next bonus is ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 8 ? 7 : Db.DailyBonus.get(user.userid, [1, Date.now()])[0]) + ' ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
+		let obj = Db.DailyBonus.get(user.latestIp, [1, Date.now()]);
+		let nextBonus = Date.now() - obj[1];
+		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user);
+		return this.sendReply('Your next bonus is ' + obj[0] + ' ' + (obj[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
 	},
 
 	etour: function (target, room, user) {
