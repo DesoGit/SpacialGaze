@@ -119,11 +119,11 @@ exports.BattleStatuses = {
 		},
 	},
 	desokoro: {
-	  	exists: true,
-  		onStart: function () {
+		exists: true,
+		onStart: function () {
 			this.add('c', '~Desokoro', 'The divine one has arrived to give you a smackdown of epic proportions.');
 		},
-   		onSwitchOut: function (pokemon) {
+		onSwitchOut: function (pokemon) {
 			this.add('c', '~Desokoro', 'I\'ll be back!');
 		},
 		onFaint: function (pokemon) {

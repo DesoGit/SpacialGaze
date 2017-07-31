@@ -1,5 +1,5 @@
 tournaments/lib/
 logs/
 dev-tools/globals.js
-spacialgaze-plugins/shop.js
+tsunami-plugins/shop.js
 chat-plugins/private.js

@@ -340,9 +340,9 @@ exports.Formats = [
 	},
 
 	///////////////////////////////////////////////////////
-	// SpacialGaze Metagames
+	// TsunamiGaze Metagames
 	{
-		section: 'Spacialgaze Metagames',
+		section: 'Tsunamigaze Metagames',
 		column: 2,
 	},
 	{
