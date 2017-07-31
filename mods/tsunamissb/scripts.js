@@ -60,7 +60,7 @@ exports.BattleScripts = {
 				ability: 'Death Boost',
 				item: 'Darkiniumz',
 				gender: 'M',
-				moves: ['Nightmare', 'Dark Pulse', 'Shadow Ball'
+				moves: ['Nightmare', 'Dark Pulse', 'Shadow Ball',
 				],
 				signatureMove: 'Overpower',
 				evs: {
@@ -72,7 +72,7 @@ exports.BattleScripts = {
 			},
 			// Global Leaders:
 			'&MechSteelix': {
-				species: 'Mega-Steelix',
+				species: 'Steelix-Mega',
 				ability: 'Sandbox',
 				item: 'Lum Berry',
 				gender: 'M',
@@ -86,7 +86,7 @@ exports.BattleScripts = {
 				},
 				nature: 'Impish',
 			},
-			
+
 			// Global Moderators:
 			'@Admewn': {
 				species: 'Mew',
@@ -118,7 +118,7 @@ exports.BattleScripts = {
 				nature: 'Jolly',
 			},
 			'@TheRittz': {
-				species: 'Mega-Venusaur',
+				species: 'Venusaur-Mega',
 				ability: 'Paradoxical Prowess',
 				item: 'Black Sludge',
 				gender: 'M',

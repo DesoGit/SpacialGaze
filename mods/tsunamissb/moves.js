@@ -47,7 +47,7 @@ exports.BattleMovedex = {
 			this.add('-anim', source, "Surf", target);
 		},
 		onHit: function (target, source, move) {
-			this.add('c|%Kraken Mare â˜­|If I go down I\'m taking you with me!');
+			this.add('c|%Kraken Mare â˜|If I go down I\'m taking you with me!');
 		},
 		target: "Normal",
 		type: "Water",
@@ -141,7 +141,7 @@ exports.BattleMovedex = {
 		id: "penguinsshower",
 		isViable: true,
 		isNonstandard: true,
-		name: "Penguin\'s Shower",
+		name: "Penguin's Shower",
 		pp: 6.25,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
@@ -208,11 +208,11 @@ exports.BattleMovedex = {
 		secondary: {
 			chance: 100,
 			self: {
-					volatileStatus: 'aquaring',
-					effect: {
-						onStart: function (pokemon) {
-							this.add('-start', pokemon, 'Everlasting Annoyingness');
-						},
+				volatileStatus: 'aquaring',
+				effect: {
+					onStart: function (pokemon) {
+						this.add('-start', pokemon, 'Everlasting Annoyingness');
+					},
 					onResidualOrder: 6,
 					onResidual: function (pokemon) {
 						this.heal(pokemon.maxhp / 16);
@@ -383,11 +383,11 @@ exports.BattleMovedex = {
 			chance: 100,
 			self: {
 				boosts: {
-				atk: 1,
-				def: 1,
-				spa: 1,
-				spd: 1,
-				spe: 1,
+					atk: 1,
+					def: 1,
+					spa: 1,
+					spd: 1,
+					spe: 1,
 				},
 			},
 		},
@@ -419,8 +419,8 @@ exports.BattleMovedex = {
 			chance: 100,
 			self: {
 				boosts: {
-				def: 1,
-				spd: 1,
+					def: 1,
+					spd: 1,
 				},
 			},
 		},
