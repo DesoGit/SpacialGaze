@@ -1,29 +1,29 @@
-Spacialgaze Server @ Pokémon Showdown
+Tsunami Server @ Pokémon Showdown
 ========================================================================
 
-Navigation: [Spacialgaze][1] | [PS Server repository][10] | [PS Client repository][2] | [PS Dex repository][3]
+Navigation: [Tsunami][1] | [PS Server repository][10] | [PS Client repository][2] | [PS Dex repository][3]
 
-  [1]: http://spacialgaze.psim.us/
+  [1]: http://tsunami.psim.us/
   [2]: https://github.com/Zarel/Pokemon-Showdown-Client
   [3]: https://github.com/Zarel/Pokemon-Showdown-Dex
   [10]: https://github.com/Zarel/Pokemon-Showdown
 
-[![Build Status](https://travis-ci.org/HoeenCoder/SpacialGaze.svg?branch=master)](https://travis-ci.org/HoeenCoder/SpacialGaze)
-[![dependencies Status](https://david-dm.org/HoeenCoder/SpacialGaze/status.svg)](https://david-dm.org/HoeenCoder/SpacialGaze)
-[![devDependencies Status](https://david-dm.org/HoeenCoder/SpacialGaze/dev-status.svg)](https://david-dm.org/HoeenCoder/SpacialGaze?type=dev)
-[![optionalDependencies Status](https://david-dm.org/HoeenCoder/SpacialGaze/optional-status.svg)](https://david-dm.org/HoeenCoder/SpacialGaze?type=optional)
+[![Build Status](https://travis-ci.org/DesoGit/Tsunami_PS.svg?branch=master)](https://travis-ci.org/DesoGit/Tsunami_PS)
+[![dependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/status.svg)](https://david-dm.org/DesoGit/Tsunami_PS)
+[![devDependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/dev-status.svg)](https://david-dm.org/DesoGit/Tsunami_PS?type=dev)
+[![optionalDependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/optional-status.svg)](https://david-dm.org/DesoGit/Tsunami_PS?type=optional)
 
 
 Introduction
 ------------------------------------------------------------------------
 
-This is the source code for the Pokémon Showdown server [Spacialgaze][4], a website for Pokémon battling. Pokémon Showdown simulates singles, doubles and triples battles in all the games out so far (Generations 1 through 7).
+This is the source code for the Pokémon Showdown server [Tsunami][4], a website for Pokémon battling. Pokémon Showdown simulates singles, doubles and triples battles in all the games out so far (Generations 1 through 7).
 
-This repository contains the files needed to set up your own Pokémon Showdown server. The Spacialgaze server also comes with some custom additions not found on the main repo. This repo will still have all the features from the main server. Note that to set up a server, you'll also need a server computer.
+This repository contains the files needed to set up your own Pokémon Showdown server. The Tsunami server also comes with some custom additions not found on the main repo. This repo will still have all the features from the main server. Note that to set up a server, you'll also need a server computer.
 
 You can use your own computer as a server, but for other people to connect to your computer, you'll need to expose a port (default is 8000 but you can choose a different one) to connect to, which sometimes requires [port forwarding][5] (note that this isn't possible on certain internet connections).
 
-  [4]: http://spacialgaze.psim.us/
+  [4]: http://tsunami.psim.us/
   [5]: http://en.wikipedia.org/wiki/Port_forwarding
 
 
@@ -96,7 +96,7 @@ License
 
 Spacialgaze's and Pokémon Showdown's server is distributed under the terms of the [MIT License][9].
 
-  [9]: https://github.com/HoeenCoder/Spacialgaze/blob/master/LICENSE
+  [9]: https://github.com/DesoGit/Tsunami_PS/blob/master/LICENSE
 
 
 Maintainers
@@ -106,13 +106,11 @@ This server is brought to you and maintained by the following people:
 
 Owners
 
-- [HoeenCoder](https://github.com/HoeenCoder)
-- [Mystifi](https://github.com/Mystifi)
+- [DesoGit](https://github.com/DesoGit)
 
 Contributors
 
 - [Insist](https://github.com/DeathlyPlays)
-- [Gligars](https://github.com/Gligar)
 
 Special thanks
 
