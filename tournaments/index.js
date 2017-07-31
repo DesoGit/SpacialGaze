@@ -117,15 +117,10 @@ class Tournament {
 		return true;
 	}
 
-	setBanlist(params, output) {
+	setBanlist(banlist, output) {
 		let format = Dex.getFormat(this.originalFormat);
 		if (format.team) {
-			output.errorReply(format.name + " does not support supplementary banlists.");
-			return false;
-		}
-		let banlist = Dex.getSupplementaryBanlist(format, params);
-		if (banlist.length < 1) {
-			output.errorReply("The specified banlist is invalid or already included in " + format.name + ".");
+			output.errorReply(format.name + " does not support custom banlists.");
 			return false;
 		}
 		if (this.teambuilderFormat === this.originalFormat) this.teambuilderFormat = 'customgame-' + this.room.id + '-' + this.room.tourNumber;
@@ -1106,7 +1101,7 @@ let commands = {
 			if (Monitor.countPrepBattle(connection.ip, connection)) {
 				return;
 			}
-			TeamValidator(tournament.teambuilderFormat).prepTeam(user.team).then(result => {
+			TeamValidator(tournament.teambuilderFormat, tournament.banlist).prepTeam(user.team).then(result => {
 				if (result.charAt(0) === '1') {
 					connection.popup("Your team is valid for this tournament.");
 				} else {
@@ -1364,9 +1359,9 @@ let commands = {
 				return this.sendReply("Usage: " + cmd + " <on|off>");
 			}
 		},
-		ban: function (tournament, user, params, cmd) {
+		banuser: function (tournament, user, params, cmd) {
 			if (params.length < 1) {
-				return this.sendReply("Usage: " + cmd + " <user>, <reason>");
+				return this.sendReply(`Usage: ${cmd} <user>, <reason>`);
 			}
 			let targetUser = Users.get(params[0]);
 			let online = !!targetUser;
@@ -1375,7 +1370,7 @@ let commands = {
 			let reason = '';
 			if (params[1]) {
 				reason = params[1].trim();
-				if (reason.length > MAX_REASON_LENGTH) return this.errorReply("The reason is too long. It cannot exceed " + MAX_REASON_LENGTH + " characters.");
+				if (reason.length > MAX_REASON_LENGTH) return this.errorReply(`The reason is too long. It cannot exceed ${MAX_REASON_LENGTH} characters.`);
 			}
 
 			if (tournament.checkBanned(targetUser)) return this.errorReply("This user is already banned from tournaments.");
@@ -1387,11 +1382,12 @@ let commands = {
 				Punishments.roomPunishName(this.room, targetUser, punishment);
 			}
 			tournament.removeBannedUser(targetUser);
-			this.privateModCommand((targetUser.name || targetUserid) + " was banned from tournaments by " + user.name + "." + (reason ? " (" + reason + ")" : ""));
+			if (reason) reason = ` (${reason})`;
+			this.privateModCommand(`${targetUser.name || targetUserid} was banned from joining tournaments by ${user.name}.${reason}`);
 		},
-		unban: function (tournament, user, params, cmd) {
+		unbanuser: function (tournament, user, params, cmd) {
 			if (params.length < 1) {
-				return this.sendReply("Usage: " + cmd + " <user>");
+				return this.sendReply(`Usage: ${cmd} <user>`);
 			}
 			let targetUser = Users.get(params[0]) || params[0];
 			let targetUserid = toId(targetUser);
@@ -1400,7 +1396,7 @@ let commands = {
 
 			Punishments.roomUnpunish(this.room, targetUser, 'TOURBAN');
 			tournament.removeBannedUser(targetUser);
-			this.privateModCommand((targetUser.name || targetUserid) + " was unbanned from tournaments by " + user.name + ".");
+			this.privateModCommand(`${targetUser.name || targetUserid} was unbanned from joining tournaments by ${user.name}.`);
 		},
 	},
 };
@@ -1560,9 +1556,9 @@ Chat.commands.tournamenthelp = function (target, room, user) {
 	return this.sendReplyBox(
 		"- create/new &lt;format>, &lt;type> [, &lt;comma-separated arguments>]: Creates a new tournament in the current room.<br />" +
 		"- settype &lt;type> [, &lt;comma-separated arguments>]: Modifies the type of tournament after it's been created, but before it has started.<br />" +
-		"- banlist &lt;comma-separated arguments>: Sets the supplementary banlist for the tournament before it has started.<br />" +
-		"- viewbanlist: Shows the supplementary banlist for the tournament.<br />" +
-		"- clearbanlist: Clears the supplementary banlist for the tournament before it has started.<br />" +
+		"- banlist &lt;comma-separated arguments>: Sets the custom banlist for the tournament before it has started.<br />" +
+		"- viewbanlist: Shows the custom banlist for the tournament.<br />" +
+		"- clearbanlist: Clears the custom banlist for the tournament before it has started.<br />" +
 		"- name &lt;name>: Sets a custom name for the tournament.<br />" +
 		"- clearname: Clears the custom name of the tournament.<br />" +
 		"- end/stop/delete: Forcibly ends the tournament in the current room.<br />" +
@@ -1578,7 +1574,7 @@ Chat.commands.tournamenthelp = function (target, room, user) {
 		"- on/enable &lt;%|@>: Enables allowing drivers or mods to start tournaments in the current room.<br />" +
 		"- off/disable: Disables allowing drivers and mods to start tournaments in the current room.<br />" +
 		"- announce/announcements &lt;on|off>: Enables/disables tournament announcements for the current room.<br />" +
-		"- ban/unban &lt;user>: Bans/unbans a user from joining tournaments in this room. Lasts 2 weeks.<br />" +
+		"- banuser/unbanuser &lt;user>: Bans/unbans a user from joining tournaments in this room. Lasts 2 weeks.<br />" +
 		"More detailed help can be found <a href=\"https://www.smogon.com/forums/threads/3570628/#post-6777489\">here</a>"
 	);
 };

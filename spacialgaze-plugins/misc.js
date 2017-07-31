@@ -171,6 +171,7 @@ exports.commands = {
 	},
 	showhelp: ["/show - Displays user's global rank. Requires: & ~"],
 
+	servercredits: 'credits',
 	credits: function (target, room, user) {
 		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>Tsunami Credits</b></u></font><br />" +
 			"<br />" +
@@ -179,9 +180,11 @@ exports.commands = {
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
 			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
-			"- " + SG.nameColor('Clue', true) + " (Policy and Media)<br />" +
-		    	"- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
+		    "- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
 			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
+			"<br />" +
+			"<u><b>Retired Staff:</b></u><br />" +
+			"- " + SG.nameColor('Clue', true) + " (Former Policy & Media Admin)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
@@ -299,15 +302,15 @@ exports.commands = {
 		return this.sendReplyBox('There ' + (names.length === 1 ? 'is' : 'are') + ' <font color="#24678d"><b>' + names.length + '</b></font> ' + (names.length === 1 ? 'user' : 'users') + ' with the rank <font color="#24678d"><b>' + Config.groups[target].name + '</b></font> currently online.<br />' + names.join(', '));
 	},
 
-	'!spacialgazerepo': true,
-	sg: 'spacialgazerepo',
-	sgr: 'spacialgazerepo',
-	repo: 'spacialgazerepo',
-	spacialgazerepo: function (target, room, user) {
+	'!tsunamirepo': true,
+	tsu: 'tsunamirepo',
+	tsur: 'tsunamirepo',
+	repo: 'tsunamirepo',
+	tsunamirepo: function (target, room, user) {
 		if (!this.runBroadcast()) return;
-		this.sendReply("|raw|<a href='https://github.com/HoeenCoder/SpacialGaze'>SpacialGaze\'s repo</a>");
+		this.sendReply(`|raw|<a href="https://github.com/DesoGit/Tsunami_PS">Tsunami's repo</a>`);
 	},
-	spacialgazerepohelp: ["/spacialgazerepo - Links to the SpacialGaze repository on Github."],
+	tsunamirepohelp: ["/tsunamirepo - Links to the Tsunami repository on GitHub."],
 
 	'!seen': true,
 	seen: function (target, room, user) {
@@ -423,15 +426,16 @@ exports.commands = {
 		'/usetoken [token], [argument(s)] - Redeem a token from the shop. Accepts the following arguments: ',
 		'/usetoken avatar, [image] | /usetoken declare, [message] | /usetoken color, [hex code]',
 		'/usetoken icon [image] | /usetoken title, [name], [hex code] | /usetoken emote, [name], [image]',
-		'/usetoken disableintroscroll [room name]'
+		'/usetoken disableintroscroll [room name]',
 	],
 
 	bonus: 'dailybonus',
 	checkbonus: 'dailybonus',
 	dailybonus: function (target, room, user) {
-		let nextBonus = Date.now() - Db.DailyBonus.get(user.userid, [1, Date.now()])[1];
-		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user.userid, user);
-		return this.sendReply('Your next bonus is ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 8 ? 7 : Db.DailyBonus.get(user.userid, [1, Date.now()])[0]) + ' ' + (Db.DailyBonus.get(user.userid, [1, Date.now()])[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
+		let obj = Db.DailyBonus.get(user.latestIp, [1, Date.now()]);
+		let nextBonus = Date.now() - obj[1];
+		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user);
+		return this.sendReply('Your next bonus is ' + obj[0] + ' ' + (obj[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
 	},
 
 	etour: function (target, room, user) {
@@ -540,6 +544,12 @@ exports.commands = {
 	discord: function () {
 		if (!this.runBroadcast()) return;
 		this.sendReplyBox("<a href=\"https://discord.gg/qRvnKBJ\">The Official Tsunami Discord</a>");
+	},
+	
+	'!tsumeta': true,
+	tsumeta: function () {
+		if (!this.runBroadcast()) return;
+		this.sendReplyBox("<a href=\"http://tsunamips.weebly.com/tsumeta.html\">The Official TsuMeta Website</a>");
 	},
 
 	'!youtube': true,
