@@ -197,24 +197,22 @@ exports.BattleScripts = {
 				},
 				nature: 'Jolly',
 			},
-			/******************
-			Waiting for move to be ready.
-			'+C733937123':{
-				species: 'Chesnaught',
-				ability: 'Paladin Armour',
-				item: 'Shining Blade and Glowing Armour',
-				gender: 'M',
-				moves: ['Leaf Blade', 'Smart Strike', 'Sacred Sword',
-				],
-				signatureMove: 'Paladin Strike',
+			"+C733937 123": {
+				species: "Gengar-Mega",
+				ability: "Chaotic Armor",
+				item: "Aguav Berry",
+				gender: "M",
+				moves: ['shadowball', 'darkpulse', 'painsplit'],
+				signatureMove: "Voodoo Magic",
 				evs: {
-					atk: 252,
-					spd: 128,
-					spe: 128,
+					spa: 252,
+					spe: 252,
+					spd: 4,
 				},
-				nature: 'Adamant',
+				nature: "Timid",
 			},
-			*************************/
+
+			/*************************/
 			//Former Staff + Regs
 			
 		};

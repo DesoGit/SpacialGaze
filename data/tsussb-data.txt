@@ -141,19 +141,18 @@ Signature Move: Stab Stab
 Notes: Stabby Stabby! ||| "My signature move should be 100% chance to OKHO instead of what it is now." -Stabby the Krabby
 Rank: TBD
 
-+C733937123
-(Chesnaught, Grass/Steel Typing)
-@ Shining Blade and Glowing Armour
-    -1.5x all stats other than Speed. Speed .5x. No STAB bonus while holding this item.
-EVs 252 Atk / 128 SpD / 128 Spe
-Adament Nature
-Ability: Paladin Armour
-    -Multiscale + Magic Bounce + Magic Guard + Guts + Quick Feet
-Moves: Leaf Blade, Smart Strike, Sacred Sword
-Signature Move: Paladin Strike
-    -Two Turn Attack. First Turn: Spiky Shield + Kings Shield, Second Turn: Steel Type, Physical, 130 BP, 15 PP. Higher Crit Rate, and ignores stat changes on opponent.
-Notes: Under Construction
-Rank: Under Construction
++C733937 123
+(Gengar-Mega)
+@ Aguav Berry
+EVs: 252 SpA / 4 SpD / 252 Spe
+Timid Nature
+Ability: Chaotic Armor
+    - Prankster and Magic Bounce.
+Moves: Shadow Ball, Dark Pulse, Pain Split
+Special Move: Voodoo Magic
+    - Normal Type, Status, 90% Accuracy, 10 PP, Goes through Substitute, Ignores Abilities, Doesn't Bounce. Puts a curse on the opponent that does a hideous amount of bad effects. (User takes 1/4 HP damage then Taunts, Torments, Mean Looks, Embargos, Clears Stats, Heal Blocks, Removes ability, Spites, Flinches, and removes all shields. Taunt, Embargo, and Heal Block last for 10 turns, Stat Clear, Flinch, and Spite happen on turn move used, rest last till switch (haha lol no switching for you) Does not fail if user is less than 1/4 hp).
+Notes: Fast Status Inflicting Sweeper.
+Rank: TBD.
 
 +xcmr
 (Meowth)
