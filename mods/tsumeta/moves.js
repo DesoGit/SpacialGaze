@@ -36,11 +36,13 @@ exports.BattleMovedex = {
 	},
 	"aurasphere": {
 		inherit: true,
+		def: "High crit ratio",
 		critRate: 2,
 	},
 	"forcepalm": {
 		inherit: true,
 		basePower: 90,
+		def: "15% chance to paralyze target",
 		secondary: {
 			chance: 15,
 			status: "par",
@@ -56,6 +58,8 @@ exports.BattleMovedex = {
 				spe: -1,
 			},
 		},
+		desc: "Lowers Defense, Special Defense, and Speed by one stage",
+		shortDesc: "Lowers Def + SpD + Spe by 1 stage",
 	},
 	"extremespeed": { //FAILED TO WORK
 		inherit: true,
@@ -73,8 +77,7 @@ exports.BattleMovedex = {
 		onBeforeHit: function(pokemon, target, move) {
 			if (move.id === 'detect') {
 				this.breaksProtect = false;
-			}
-			else {
+			} else {
 				if (Math.floor(Math.random() * 99) < 30) {
 					this.breaksProtect = true;
 				}
@@ -88,11 +91,13 @@ exports.BattleMovedex = {
 	"wildcharge": {
 		inherit: true,
 		basePower: 120,
+		desc: "1/3 of damage dealt is inflicted on user.",
 		recoil: [1, 3],
 	},
 	"xscissor": {
 		inherit: true,
 		basePower: 100,
+		desc: "High Crit Ratio.",
 		critRatio: 2,
 	},
 	"dragonrush": {
@@ -100,6 +105,7 @@ exports.BattleMovedex = {
 		basePower: 135,
 		accuracy: 85,
 		recoil: [1, 4],
+		desc: "10% chance to flinch target, 1/4 damage dealt to target inflicts user",
 		secondary: {
 			chance: 10,
 			volatileStatus: 'flinch',
@@ -110,6 +116,7 @@ exports.BattleMovedex = {
 		category: "Physical",
 		basePower: 30,
 		accuracy: 75,
+		desc: "30% chance to lower target's accuracy by one stage",
 		secondary: {
 			chance: 30,
 			boost: {
@@ -127,6 +134,7 @@ exports.BattleMovedex = {
 				spa: -1,
 			},
 		},
+		desc: "20% chance to lower foe's Attack and Special Attack by one stage",
 	},
 	"dazzlinggleam": {
 		inherit: true,
@@ -138,6 +146,7 @@ exports.BattleMovedex = {
 				return false;
 			}
 		},
+		desc: "If opponent is holding Black Glasses, Wise Glasses, or Safety Googles this has no effect.",
 	},
 	"shadowball": {
 		inherit: true,
@@ -146,5 +155,6 @@ exports.BattleMovedex = {
 			chance: 10,
 			volatileStatus: 'curse',
 		},
+		desc: "10% chance to inflict a curse on the target.",
 	},
 };

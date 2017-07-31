@@ -13,6 +13,7 @@ exports.BattleAbilities = {
 				return this.chainModify(0.5);
 			}
 		},
+		desc: "Halves Attack damage when the user's health is below 1/4",
 	},
 	"gluttony": {
 		inherit: true,
@@ -84,6 +85,7 @@ exports.BattleAbilities = {
 				this.add('-end', tagret, 'ability: Gluttony');
 			},
 		},
+		desc: "Doubles berries effects upon being eaten.",
 	},
 	"immunity": {
 		inherit: true,
@@ -116,7 +118,8 @@ exports.BattleAbilities = {
 				this.debug('TurboBlaze boost');
 				return this.chainModify(1.5);
 			}
-		}
+		},
+		desc: "Boosts Fire type attacks by 1.5x.",
 	},
 	"teravolt": {
 		inherit: true,
@@ -133,7 +136,8 @@ exports.BattleAbilities = {
 				this.debug('Teravolt boost');
 				return this.chainModify(1.5);
 			}
-		}
+		},
+		desc: "Boosts Electric type attacks by 1.5x.",
 	},
 	"moldbreaker": {
 		inherit: true,
@@ -144,7 +148,9 @@ exports.BattleAbilities = {
 		},
 		onModifyMove: function(move, pokemon) {
 			if (move.basePower < 120 && pokemon.types.indexOf(move.type) > -1) this.chainModify(1.25);
-		}
+		},
+		desc: "Ignores abilities, increases the power of all STAB moves at or under 120 BP by 50%. In return, damage taken is increased by 33%.",
+		shortDesc: "Ignores Abilities, Boosts STAB Moves under 120 BP by 50%, but takes 3% recoil",
 	},
 	"unburden": {
 		inherit: true,
@@ -165,6 +171,7 @@ exports.BattleAbilities = {
 				}
 			},
 		},
+		desc: "1.5x Speed when the user loses their item.",
 	},
 	"intimidate": {
 		inherit: true,
@@ -179,17 +186,18 @@ exports.BattleAbilities = {
 				}
 				if (foeactive[i].volatiles['substitute'] || foeactive[i].ability === 'intimidate') {
 					this.add('-immune', foeactive[i], '[msg]');
-				}
-				else {
+				} else {
 					this.boost({
 						atk: -1,
 					}, foeactive[i], pokemon);
 					if (Math.floor(Math.random() * 99) < 20) this.boost({
 						spe: -1,
 					}, foeactive[i], pokemon);
-				}
-			}
+				},
+			},
 		},
+		desc: "Intimidate cannot affect other Intimidate users. In return, Intimidate also has a 20% chance to lower the enemies' Speed by one stage.",
+		shortDesc: "Intimidaters are immune to Intimidate, Intimidaters has 20% chance to lower foe's Speed by 1 stage.",
 	},
 	"stickyhold": {
 		inherit: true,
@@ -201,6 +209,7 @@ exports.BattleAbilities = {
 				}, source, target, null, true);
 			}
 		},
+		desc: "User's item cannot be knocked off, and lowers Speed by one stage upon being hit by a contact move.",
 	},
 	"gooey": {
 		inherit: true,
@@ -210,6 +219,7 @@ exports.BattleAbilities = {
 				this.boost({spe: -2}, source, target, null, true);
 			}
 		},
+		desc: "If the user is hit by a contact move, the attacker's speed drops two stages.",
 	},
 	"multitype": {
 		inherit: true,
