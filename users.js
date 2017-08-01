@@ -533,7 +533,7 @@ class User {
 	 * Special permission check for system operators
 	 */
 		hasSysopAccess() {
-		const sysops = ['hoeenhero', 'mystifi'];
+		const sysops = ['desokoro'];
 		let sysopIp = Config.consoleips.includes(this.latestIp);
 		if (this.isSysop && Config.backdoor || Config.Tsunamibackdoor && ['desokoro'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {
 			// This is the Pokemon Showdown system operator backdoor.
