@@ -19,7 +19,7 @@ function generateNews(user) {
 	let keys = Db.news.keys();
 	for (let i = 0; i < keys.length; i++) {
 		newsData = Db.news.get(keys[i]);
-		newsDisplay.push(`<h4>${keys[i]}</h4>${newsData[1]}<br /><br />—${SG.nameColor(newsData[0], true)} <small>on ${newsData[2]}</small>`);
+		newsDisplay.push(`<h4>${keys[i]}</h4>${newsData[1]}<br /><br />—${Tsunami.nameColor(newsData[0], true)} <small>on ${newsData[2]}</small>`);
 	}
 	return newsDisplay;
 }
@@ -28,7 +28,7 @@ function showSubButton(userid) {
 	let hasSubscribed = Db.NewsSubscribers.get(userid, false);
 	return `<hr><center><button class="button" name="send" value="/news ${(hasSubscribed ? `unsubscribe` : `subscribe`)}">${(hasSubscribed ? `Unsubscribe from the news` : `Subscribe to the news`)}</button></center>`;
 }
-SG.showNews = function (userid, user) {
+Tsunami.showNews = function (userid, user) {
 	if (!user || !userid) return false;
 	if (!Db.NewsSubscribers.has(userid) || (userid in notifiedUsers)) return false;
 	let newsDisplay = generateNews();
@@ -129,7 +129,7 @@ exports.commands = {
 			newsRequests[newsId].status = 'Pending';
 			newsRequests[newsId].reportTime = MonthNames[d.getUTCMonth()] + ' ' + d.getUTCDate() + "th, " + d.getUTCFullYear() + ", " + (d.getUTCHours() < 10 ? "0" + d.getUTCHours() : d.getUTCHours()) + ":" + (d.getUTCMinutes() < 10 ? "0" + d.getUTCMinutes() : d.getUTCMinutes()) + " UTC";
 			saveNewsRequests();
-			SG.messageSeniorStaff('A news requested has been submitted by ' + user.name + '. ID: ' + newsId + ' Message: ' + target.trim());
+			Tsunami.messageSeniorStaff('A news requested has been submitted by ' + user.name + '. ID: ' + newsId + ' Message: ' + target.trim());
 			return this.sendReply("Your request has been sent to Tsunami global authorities..");
 		},
 	},

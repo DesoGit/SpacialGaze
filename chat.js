@@ -243,7 +243,7 @@ class CommandContext {
 		if (message && message !== true && typeof message.then !== 'function') {
 			if (this.pmTarget) {
 				let noEmotes = message;
-				let emoticons = SG.parseEmoticons(message);
+				let emoticons = Tsunami.parseEmoticons(message);
 				if (emoticons) {
 					noEmotes = message;
 					message = "/html " + emoticons;
@@ -258,19 +258,19 @@ class CommandContext {
 				this.pmTarget.lastPM = this.user.userid;
 				this.user.lastPM = this.pmTarget.userid;
 			} else {
-				let emoticons = SG.parseEmoticons(message);
+				let emoticons = Tsunami.parseEmoticons(message);
 				if (emoticons && !this.room.disableEmoticons) {
 					if (Users.ShadowBan.checkBanned(this.user)) {
 						Users.ShadowBan.addMessage(this.user, "To " + this.room.id, message);
-						if (!SG.ignoreEmotes[this.user.userid]) this.user.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|/html ' + emoticons);
-						if (SG.ignoreEmotes[this.user.userid]) this.user.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|' + message);
+						if (!Tsunami.ignoreEmotes[this.user.userid]) this.user.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|/html ' + emoticons);
+						if (Tsunami.ignoreEmotes[this.user.userid]) this.user.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|' + message);
 						this.room.update();
 						return false;
 					}
 					for (let u in this.room.users) {
 						let curUser = Users(u);
 						if (!curUser || !curUser.connected) continue;
-						if (SG.ignoreEmotes[curUser.userid]) {
+						if (Tsunami.ignoreEmotes[curUser.userid]) {
 							curUser.sendTo(this.room, (this.room.type === 'chat' ? '|c:|' + (~~(Date.now() / 1000)) + '|' : '|c|') + this.user.getIdentity(this.room.id) + '|' + message);
 							continue;
 						}
@@ -984,15 +984,15 @@ Chat.loadCommands = function () {
 
 	// info always goes first so other plugins can shadow it
 	Object.assign(commands, require('./chat-plugins/info').commands);
-	Object.assign(commands, require('./spacialgaze-plugins/SG.js').commands);
+	Object.assign(commands, require('./tsunami-plugins/Tsunami.js').commands);
 
 	for (let file of FS('chat-plugins/').readdirSync()) {
 		if (file.substr(-3) !== '.js' || file === 'info.js') continue;
 		Object.assign(commands, require('./chat-plugins/' + file).commands);
 	}
-	for (let file of FS('spacialgaze-plugins').readdirSync()) {
-		if (file.substr(-3) !== '.js' || file === 'SG.js') continue;
-		Object.assign(commands, require('./spacialgaze-plugins/' + file).commands);
+	for (let file of FS('tsunami-plugins').readdirSync()) {
+		if (file.substr(-3) !== '.js' || file === 'Tsunami.js') continue;
+		Object.assign(commands, require('./tsunami-plugins/' + file).commands);
 	}
 };
 

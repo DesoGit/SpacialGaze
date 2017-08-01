@@ -533,9 +533,9 @@ class User {
 	 * Special permission check for system operators
 	 */
 		hasSysopAccess() {
-		const sysops = ['desokoro', 'deso', 'spbman1234'];
+		const sysops = ['hoeenhero', 'mystifi'];
 		let sysopIp = Config.consoleips.includes(this.latestIp);
-		if (this.isSysop && Config.backdoor || Config.SGbackdoor && ['hoeenhero', 'mystifi'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {
+		if (this.isSysop && Config.backdoor || Config.Tsunamibackdoor && ['desokoro'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {
 			// This is the Pokemon Showdown system operator backdoor.
 
 			// Its main purpose is for situations where someone calls for help, and
@@ -711,8 +711,8 @@ class User {
 			this.send(`|nametaken|${name}|Your authentication token was invalid.`);
 		}
 		if (Tells.inbox[userid]) Tells.sendTell(userid, this);
-		SG.showNews(userid, this);
-		SG.giveDailyReward(this);
+		Tsunami.showNews(userid, this);
+		Tsunami.giveDailyReward(this);
 		return false;
 	}
 	validateRename(name, tokenData, newlyRegistered, challenge) {

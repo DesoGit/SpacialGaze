@@ -197,7 +197,7 @@ class UNOgame extends Rooms.RoomGame {
 
 	joinGame(user) {
 		if (this.state === 'signups' && this.addPlayer(user)) {
-			this.sendToRoom(`|html|${SG.nameColor(user.name, true, true)} has joined the game of UNO.`);
+			this.sendToRoom(`|html|${Tsunami.nameColor(user.name, true, true)} has joined the game of UNO.`);
 			return true;
 		}
 		return false;
@@ -284,10 +284,10 @@ class UNOgame extends Rooms.RoomGame {
 	getPlayers(showCards) {
 		let playerList = Object.keys(this.players);
 		if (!showCards) {
-			return playerList.sort().map(id => SG.nameColor(this.players[id].name, false, true));
+			return playerList.sort().map(id => Tsunami.nameColor(this.players[id].name, false, true));
 		}
 		if (this.direction === -1) playerList = playerList.reverse();
-		return playerList.map(id => `${(this.currentPlayer && this.currentPlayer === id ? "<strong>" : "")}${SG.nameColor(this.players[id].name, false, true)} (${this.players[id].hand.length}) ${(this.currentPlayer && this.currentPlayer === id ? "</strong>" : "")}`);
+		return playerList.map(id => `${(this.currentPlayer && this.currentPlayer === id ? "<strong>" : "")}${Tsunami.nameColor(this.players[id].name, false, true)} (${this.players[id].hand.length}) ${(this.currentPlayer && this.currentPlayer === id ? "</strong>" : "")}`);
 	}
 
 	onAwaitUno() {
@@ -318,7 +318,7 @@ class UNOgame extends Rooms.RoomGame {
 				player.sendDisplay();
 
 				this.timer = setTimeout(() => {
-					this.sendToRoom(`${SG.nameColor(player.name, true, true)} has been automatically disqualified.`);
+					this.sendToRoom(`${Tsunami.nameColor(player.name, true, true)} has been automatically disqualified.`);
 					this.eliminate(this.currentPlayer);
 				}, this.maxTime * 1000);
 			});
@@ -351,7 +351,7 @@ class UNOgame extends Rooms.RoomGame {
 
 		this.onCheckUno();
 
-		this.sendToRoom(`|html|${SG.nameColor(user.name, true, true)} has drawn a card.`);
+		this.sendToRoom(`|html|${Tsunami.nameColor(user.name, true, true)} has drawn a card.`);
 		let player = this.players[user.userid];
 
 		let card = this.onDrawCard(user, 1, true);
@@ -388,7 +388,7 @@ class UNOgame extends Rooms.RoomGame {
 
 		player.sendDisplay(); // update display without the card in it for purposes such as choosing colors
 
-		this.sendToRoom(`|raw|${SG.nameColor(player.name, true, true)} has played a <span style="color: ${textColors[card.color]}">${card.name}</span>.`);
+		this.sendToRoom(`|raw|${Tsunami.nameColor(player.name, true, true)} has played a <span style="color: ${textColors[card.color]}">${card.name}</span>.`);
 
 		// handle hand size
 		if (!player.hand.length) {
@@ -412,11 +412,11 @@ class UNOgame extends Rooms.RoomGame {
 			break;
 		case 'Skip':
 			this.onNextPlayer();
-			this.sendToRoom(`|html|${SG.nameColor(this.players[this.currentPlayer].name, true, true)}'s turn has been skipped.`);
+			this.sendToRoom(`|html|${Tsunami.nameColor(this.players[this.currentPlayer].name, true, true)}'s turn has been skipped.`);
 			break;
 		case '+2':
 			this.onNextPlayer();
-			this.sendToRoom(`|html|${SG.nameColor(this.players[this.currentPlayer].name, true, true)} has been forced to draw 2 cards.`);
+			this.sendToRoom(`|html|${Tsunami.nameColor(this.players[this.currentPlayer].name, true, true)} has been forced to draw 2 cards.`);
 			this.onDrawCard({userid: this.currentPlayer}, 2);
 			break;
 		case '+4':
@@ -424,11 +424,11 @@ class UNOgame extends Rooms.RoomGame {
 			this.state = 'color';
 			// apply to the next in line, since the current player still has to choose the color
 			let next = this.getNextPlayer();
-			this.sendToRoom(`|html|${SG.nameColor(this.players[next].name, true, true)} has been forced to draw 4 cards`);
+			this.sendToRoom(`|html|${Tsunami.nameColor(this.players[next].name, true, true)} has been forced to draw 4 cards`);
 			this.onDrawCard({userid: next}, 4);
 			this.isPlusFour = true;
 			this.timer = setTimeout(() => {
-				this.sendToRoom(`|html|${SG.nameColor(this.players[this.currentPlayer].name, true, true)} has been automatically disqualified.`);
+				this.sendToRoom(`|html|${Tsunami.nameColor(this.players[this.currentPlayer].name, true, true)} has been automatically disqualified.`);
 				this.eliminate(this.currentPlayer);
 			}, this.maxTime * 1000);
 			break;
@@ -436,7 +436,7 @@ class UNOgame extends Rooms.RoomGame {
 			this.players[this.currentPlayer].sendRoom(colorDisplay);
 			this.state = 'color';
 			this.timer = setTimeout(() => {
-				this.sendToRoom(`${SG.nameColor(this.players[this.currentPlayer].name, true, true)} has been automatically disqualified.`);
+				this.sendToRoom(`${Tsunami.nameColor(this.players[this.currentPlayer].name, true, true)} has been automatically disqualified.`);
 				this.eliminate(this.currentPlayer);
 			}, this.maxTime * 1000);
 			break;
@@ -486,7 +486,7 @@ class UNOgame extends Rooms.RoomGame {
 	onUno(user, unoId) {
 		// uno id makes spamming /uno uno impossible
 		if (this.unoId !== unoId || user.userid !== this.awaitUno) return false;
-		this.sendToRoom(Chat.html`|raw|<strong>UNO!</strong> ${SG.nameColor(user.name, true, true)} is down to their last card!`);
+		this.sendToRoom(Chat.html`|raw|<strong>UNO!</strong> ${Tsunami.nameColor(user.name, true, true)} is down to their last card!`);
 		delete this.awaitUno;
 		delete this.unoId;
 	}
@@ -682,7 +682,7 @@ exports.commands = {
 			let disqualified = room.game.eliminate(toId(target));
 			if (disqualified === false) return this.errorReply(`Unable to disqualify ${target}.`);
 			this.privateModCommand(`(${user.name} has disqualified ${disqualified} from the UNO game.)`);
-			room.add(`|html|${SG.nameColor(target, true, true)} has been disqualified from the UNO game.`).update();
+			room.add(`|html|${Tsunami.nameColor(target, true, true)} has been disqualified from the UNO game.`).update();
 		},
 
 		// player/user commands
@@ -718,7 +718,7 @@ exports.commands = {
 			if (room.game.currentPlayer !== user.userid) return this.errorReply("It is currently not your turn.");
 			if (!room.game.players[user.userid].cardLock) return this.errorReply("You cannot pass until you draw a card.");
 
-			room.game.sendToRoom(`|html|${SG.nameColor(user.name, true, true)} has passed.`);
+			room.game.sendToRoom(`|html|${Tsunami.nameColor(user.name, true, true)} has passed.`);
 			room.game.nextTurn();
 		},
 

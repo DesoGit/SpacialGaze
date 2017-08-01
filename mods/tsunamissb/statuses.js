@@ -6,7 +6,7 @@ exports.BattleStatuses = {
 			this.add('c', '~HoeenHero', 'Do I have to? I\'m in the middle of programming.');
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '~Hoeenhero', 'I can\'t battle now, I\'m too busy.');
+			this.add('c', '~HoeenHero', 'I can\'t battle now, I\'m too busy.');
 		},
 		onFaint: function (pokemon) {
 			this.add('c', '~HoeenHero', 'Hey! Thats more hax than I get to use >:(');
@@ -119,11 +119,11 @@ exports.BattleStatuses = {
 		},
 	},
 	desokoro: {
-	  	exists: true,
-  		onStart: function () {
+		exists: true,
+		onStart: function () {
 			this.add('c', '~Desokoro', 'The divine one has arrived to give you a smackdown of epic proportions.');
 		},
-   		onSwitchOut: function (pokemon) {
+		onSwitchOut: function (pokemon) {
 			this.add('c', '~Desokoro', 'I\'ll be back!');
 		},
 		onFaint: function (pokemon) {

@@ -168,19 +168,19 @@ exports.BattleAbilities = {
 		onTakeItem: function (item, pokemon, source) {
 			if (this.suppressingAttackEvents() && pokemon !== this.activePokemon || !pokemon.hp || pokemon.item === 'stickybarb') return;
 			if ((source && source !== pokemon) || this.activeMove.id === 'knockoff') {
-				this.add('-activate', pokemon, 'ability: Sticky Hold');
+				this.add('-activate', pokemon, 'ability: Paradoxical Prowess');
 				return false;
 			}
 		},
 		//Oblivious
 		onUpdate: function (pokemon) {
 			if (pokemon.volatiles['attract']) {
-				this.add('-activate', pokemon, 'ability: Oblivious');
+				this.add('-activate', pokemon, 'ability: Paradoxical Prowess');
 				pokemon.removeVolatile('attract');
-				this.add('-end', pokemon, 'move: Attract', '[from] ability: Oblivious');
+				this.add('-end', pokemon, 'move: Attract', '[from] ability: Paradoxical Prowess');
 			}
 			if (pokemon.volatiles['taunt']) {
-				this.add('-activate', pokemon, 'ability: Oblivious');
+				this.add('-activate', pokemon, 'ability: Paradoxical Prowess');
 				pokemon.removeVolatile('taunt');
 				// Taunt's volatile already sends the -end message when removed
 			}
@@ -190,14 +190,14 @@ exports.BattleAbilities = {
 		},
 		onTryHit: function (pokemon, target, move) {
 			if (move.id === 'attract' || move.id === 'captivate' || move.id === 'taunt') {
-				this.add('-immune', pokemon, '[msg]', '[from] ability: Oblivious');
+				this.add('-immune', pokemon, '[msg]', '[from] ability: Paradoxical Prowess');
 				return null;
 			}
 		},
 		//Solid Rock
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.typeMod > 0) {
-				this.debug('Solid Rock neutralize');
+				this.debug('Paradoxical Prowess neutralize');
 				return this.chainModify(0.75);
 			}
 		},
@@ -236,7 +236,7 @@ exports.BattleAbilities = {
 		},
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (target.hp >= target.maxhp) {
-				this.debug('Multiscale weaken');
+				this.debug('Paladin Armour weaken');
 				return this.chainModify(0.5);
 			}
 		},
@@ -303,6 +303,47 @@ exports.BattleAbilities = {
 				move.ignoreImmunity['Fighting'] = true;
 				move.ignoreImmunity['Normal'] = true;
 			}
+		},
+	},
+	//C733937 123
+	"chatoicarmor": {
+		id: "chaoticarmor",
+		name: "Chaotic Armor",
+		//Prankster
+		onModifyPriority: function (priority, pokemon, target, move) {
+			if (move && move.category === 'Status') {
+				return priority + 1;
+			}
+		},
+		onModifyMove: function (move) {
+			if (move && move.category === 'Status') {
+				move.pranksterBoosted = true;
+			}
+		},
+		//Magic Bounce
+		onTryHitPriority: 1,
+		onTryHit: function (target, source, move) {
+			if (target === source || move.hasBounced || !move.flags['reflectable']) {
+				return;
+			}
+			let newMove = this.getMoveCopy(move.id);
+			newMove.hasBounced = true;
+			newMove.pranksterBoosted = false;
+			this.useMove(newMove, target, source);
+			return null;
+		},
+		onAllyTryHitSide: function (target, source, move) {
+			if (target.side === source.side || move.hasBounced || !move.flags['reflectable']) {
+				return;
+			}
+			let newMove = this.getMoveCopy(move.id);
+			newMove.hasBounced = true;
+			newMove.pranksterBoosted = false;
+			this.useMove(newMove, this.effectData.target, source);
+			return null;
+		},
+		effect: {
+			duration: 1,
 		},
 	},
 };

@@ -60,7 +60,7 @@ exports.BattleScripts = {
 				ability: 'Death Boost',
 				item: 'Darkiniumz',
 				gender: 'M',
-				moves: ['Nightmare', 'Dark Pulse', 'Shadow Ball'
+				moves: ['Nightmare', 'Dark Pulse', 'Shadow Ball',
 				],
 				signatureMove: 'Overpower',
 				evs: {
@@ -72,7 +72,7 @@ exports.BattleScripts = {
 			},
 			// Global Leaders:
 			'&MechSteelix': {
-				species: 'Mega-Steelix',
+				species: 'Steelix-Mega',
 				ability: 'Sandbox',
 				item: 'Lum Berry',
 				gender: 'M',
@@ -86,7 +86,7 @@ exports.BattleScripts = {
 				},
 				nature: 'Impish',
 			},
-			
+
 			// Global Moderators:
 			'@Admewn': {
 				species: 'Mew',
@@ -118,7 +118,7 @@ exports.BattleScripts = {
 				nature: 'Jolly',
 			},
 			'@TheRittz': {
-				species: 'Mega-Venusaur',
+				species: 'Venusaur-Mega',
 				ability: 'Paradoxical Prowess',
 				item: 'Black Sludge',
 				gender: 'M',
@@ -197,24 +197,22 @@ exports.BattleScripts = {
 				},
 				nature: 'Jolly',
 			},
-			/******************
-			Waiting for move to be ready.
-			'+C733937123':{
-				species: 'Chesnaught',
-				ability: 'Paladin Armour',
-				item: 'Shining Blade and Glowing Armour',
-				gender: 'M',
-				moves: ['Leaf Blade', 'Smart Strike', 'Sacred Sword',
-				],
-				signatureMove: 'Paladin Strike',
+			"+C733937 123": {
+				species: "Gengar-Mega",
+				ability: "Chaotic Armor",
+				item: "Aguav Berry",
+				gender: "M",
+				moves: ['shadowball', 'darkpulse', 'painsplit'],
+				signatureMove: "Voodoo Magic",
 				evs: {
-					atk: 252,
-					spd: 128,
-					spe: 128,
+					spa: 252,
+					spe: 252,
+					spd: 4,
 				},
-				nature: 'Adamant',
+				nature: "Timid",
 			},
-			*************************/
+
+			/*************************/
 			//Former Staff + Regs
 			
 		};

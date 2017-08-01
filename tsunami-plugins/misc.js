@@ -176,15 +176,15 @@ exports.commands = {
 		let popup = "|html|" + "<font size=5 color=#0066ff><u><b>Tsunami Credits</b></u></font><br />" +
 			"<br />" +
 			"<u><b>Server Maintainers:</u></b><br />" +
-			"- " + SG.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
+			"- " + Tsunami.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
-			"- " + SG.nameColor('HoeenHero', true) + " (Development)<br />" +
-		    "- " + SG.nameColor('Perison', true) + " (Policy)<br />" +
-			"- " + SG.nameColor('Insist', true) + " (Development)<br />" +
+			"- " + Tsunami.nameColor('HoeenHero', true) + " (Development)<br />" +
+		    "- " + Tsunami.nameColor('Perison', true) + " (Policy)<br />" +
+			"- " + Tsunami.nameColor('Insist', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Retired Staff:</b></u><br />" +
-			"- " + SG.nameColor('Clue', true) + " (Former Policy & Media Admin)<br />" +
+			"- " + Tsunami.nameColor('Clue', true) + " (Former Policy & Media Admin)<br />" +
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +
@@ -265,7 +265,7 @@ exports.commands = {
 			return this.sendReply("Usernames can not be less than one character or longer than 19 characters. (Current length: " + target.length + ".)");
 		}
 		if (!this.runBroadcast()) return;
-		SG.regdate(target, date => {
+		Tsunami.regdate(target, date => {
 			if (date) {
 				this.sendReplyBox(regdateReply(date));
 			}
@@ -273,14 +273,14 @@ exports.commands = {
 
 		function regdateReply(date) {
 			if (date === 0) {
-				return SG.nameColor(target, true) + " <b><font color='red'>is not registered.</font></b>";
+				return Tsunami.nameColor(target, true) + " <b><font color='red'>is not registered.</font></b>";
 			} else {
 				let d = new Date(date);
 				let MonthNames = ["January", "February", "March", "April", "May", "June",
 					"July", "August", "September", "October", "November", "December",
 				];
 				let DayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-				return SG.nameColor(target, true) + " was registered on <b>" + DayNames[d.getUTCDay()] + ", " + MonthNames[d.getUTCMonth()] + ' ' + d.getUTCDate() + ", " + d.getUTCFullYear() + "</b> at <b>" + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds() + " UTC.</b>";
+				return Tsunami.nameColor(target, true) + " was registered on <b>" + DayNames[d.getUTCDay()] + ", " + MonthNames[d.getUTCMonth()] + ' ' + d.getUTCDate() + ", " + d.getUTCFullYear() + "</b> at <b>" + d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds() + " UTC.</b>";
 			}
 			//room.update();
 		}
@@ -317,11 +317,11 @@ exports.commands = {
 		if (!this.runBroadcast()) return;
 		if (!target) return this.parse('/help seen');
 		let targetUser = Users.get(target);
-		if (targetUser && targetUser.connected) return this.sendReplyBox(SG.nameColor(targetUser.name, true) + " is <b><font color='limegreen'>Currently Online</b></font>.");
+		if (targetUser && targetUser.connected) return this.sendReplyBox(Tsunami.nameColor(targetUser.name, true) + " is <b><font color='limegreen'>Currently Online</b></font>.");
 		target = Chat.escapeHTML(target);
 		let seen = Db.seen.get(toId(target));
-		if (!seen) return this.sendReplyBox(SG.nameColor(target, true) + " has <b><font color='red'>never been online</font></b> on this server.");
-		this.sendReplyBox(SG.nameColor(target, true) + " was last seen <b>" + Chat.toDurationString(Date.now() - seen, {precision: true}) + "</b> ago.");
+		if (!seen) return this.sendReplyBox(Tsunami.nameColor(target, true) + " has <b><font color='red'>never been online</font></b> on this server.");
+		this.sendReplyBox(Tsunami.nameColor(target, true) + " was last seen <b>" + Chat.toDurationString(Date.now() - seen, {precision: true}) + "</b> ago.");
 	},
 	seenhelp: ["/seen - Shows when the user last connected on the server."],
 
@@ -377,47 +377,47 @@ exports.commands = {
 
 		switch (target[0]) {
 		case 'avatar':
-			msg = '/html <center>' + SG.nameColor(user.name, true) + ' has redeemed a avatar token.<br/><img src="' + target[1] + '" alt="avatar"/><br/>';
+			msg = '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeemed a avatar token.<br/><img src="' + target[1] + '" alt="avatar"/><br/>';
 			msg += '<button class="button" name="send" value="/customavatar set ' + user.userid + ', ' + target[1] + '">Apply Avatar</button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		case 'declare':
-			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeemed a global declare token.<br/> Message: ' + target[1] + "<br/>";
+			msg += '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeemed a global declare token.<br/> Message: ' + target[1] + "<br/>";
 			msg += '<button class="button" name="send" value="/globaldeclare ' + target[1] + '">Globally Declare the Message</button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		case 'color':
-			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeemed a custom color token.<br/> hex color: <span' + target[1] + '<br/>';
+			msg += '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeemed a custom color token.<br/> hex color: <span' + target[1] + '<br/>';
 			msg += '<button class="button" name="send" value="/customcolor set ' + user.name + ',' + target[1] + '">Set color (<b><font color="' + target[1] + '">' + target[1] + '</font></b>)</button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		case 'icon':
-			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeemed a icon token.<br/><img src="' + target[1] + '" alt="icon"/><br/>';
+			msg += '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeemed a icon token.<br/><img src="' + target[1] + '" alt="icon"/><br/>';
 			msg += '<button class="button" name="send" value="/customicon set ' + user.userid + ', ' + target[1] + '">Apply icon</button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		case 'title':
 			if (!target[2]) return this.errorReply('/usetoken title, [name], [hex code]');
-			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeem a title token.<br/> title name: ' + target[1] + '<br/>';
+			msg += '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeem a title token.<br/> title name: ' + target[1] + '<br/>';
 			msg += '<button class="button" name="send" value="/customtitle set ' + user.userid + ', ' + target[1] + ', ' + target[2] + '">Set title (<b><font color="' + target[2] + '">' + target[2] + '</font></b>)</button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		case 'emote':
 			if (!target[2]) return this.errorReply('/usetoken emote, [name], [img]');
 			target[2] = target[2].trim();
-			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeem a emote token.<br/><img src="' + target[2] + '" alt="' + target[1] + '"/><br/>';
+			msg += '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeem a emote token.<br/><img src="' + target[2] + '" alt="' + target[1] + '"/><br/>';
 			msg += '<button class="button" name="send" value="/emote add, ' + target[1] + ', ' + target[2] + '">Add emote</button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		case 'disableintroscroll':
 			if (!target[1]) return this.errorReply('/usetoken disableintroscroll, [room]');
 			let roomid = toId(target[1]);
 			if (!Rooms(roomid)) return this.errorReply(`${roomid} is not a room.`);
 			if (Db.disabledScrolls.has(roomid)) return this.errorReply(`${Rooms(roomid).title} has already roomintro scroll disabled.`);
-			msg += '/html <center>' + SG.nameColor(user.name, true) + ' has redeemed roomintro scroll disabler token.<br/>';
+			msg += '/html <center>' + Tsunami.nameColor(user.name, true) + ' has redeemed roomintro scroll disabler token.<br/>';
 			msg += '<button class="button" name="send" value="/disableintroscroll ' + target[1] + '">Disable Intro Scrool for <b>' + Rooms(roomid).title + '</b></button></center>';
 			delete user.tokens[target[0]];
-			return SG.messageSeniorStaff(msg);
+			return Tsunami.messageSeniorStaff(msg);
 		default:
 			return this.errorReply('An error occured in the command.'); // This should never happen.
 		}
@@ -434,7 +434,7 @@ exports.commands = {
 	dailybonus: function (target, room, user) {
 		let obj = Db.DailyBonus.get(user.latestIp, [1, Date.now()]);
 		let nextBonus = Date.now() - obj[1];
-		if ((86400000 - nextBonus) <= 0) return SG.giveDailyReward(user);
+		if ((86400000 - nextBonus) <= 0) return Tsunami.giveDailyReward(user);
 		return this.sendReply('Your next bonus is ' + obj[0] + ' ' + (obj[0] === 1 ? currencyName : currencyPlural) + ' in ' + Chat.toDurationString(Math.abs(86400000 - nextBonus)));
 	},
 

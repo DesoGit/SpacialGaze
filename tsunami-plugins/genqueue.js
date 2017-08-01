@@ -156,7 +156,7 @@ exports.commands = {
 	},
 
 	gensyscredits: function (target, room, user, connection) {
-	this.sendReplyBox('Thank ' + '<font color=' + SG.nameColor('Mystifi', false) + '>' + Chat.escapeHTML('Mystifi') + '</font>' + ' for essentially building the framework for the genning request system!. The system is maintained by ' + '<font color=' + SG.nameColor('Desokoro', false) + '>' + Chat.escapeHTML('Desokoro') + '</font>' + '.');
+	this.sendReplyBox('Thank ' + '<font color=' + Tsunami.nameColor('Mystifi', false) + '>' + Chat.escapeHTML('Mystifi') + '</font>' + ' for essentially building the framework for the genning request system!. The system is maintained by ' + '<font color=' + Tsunami.nameColor('Desokoro', false) + '>' + Chat.escapeHTML('Desokoro') + '</font>' + '.');
 	},
 };
 

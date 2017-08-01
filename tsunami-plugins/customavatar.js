@@ -69,7 +69,7 @@ exports.commands = {
 
 			downloadImage(avatarUrl, name, ext);
 			this.sendReply("|raw|" + name + "'s avatar was successfully set. Avatar:<br /><img src='" + avatarUrl + "' width='80' height='80'>");
-			if (Users(name)) Users(name).popup("|html|" + SG.nameColor(user.name, true) + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
+			if (Users(name)) Users(name).popup("|html|" + Tsunami.nameColor(user.name, true) + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
 		},
 
 		remove: 'delete',
@@ -89,7 +89,7 @@ exports.commands = {
 					console.error(err);
 				}
 
-				if (Users(userid)) Users(userid).popup("|html|" + SG.nameColor(user.name, true) + " has deleted your custom avatar.");
+				if (Users(userid)) Users(userid).popup("|html|" + Tsunami.nameColor(user.name, true) + " has deleted your custom avatar.");
 				this.sendReply(target + "'s avatar has been successfully removed.");
 			});
 		},
