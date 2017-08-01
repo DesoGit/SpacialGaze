@@ -340,10 +340,71 @@ exports.Formats = [
 	},
 
 	///////////////////////////////////////////////////////
-	// TsunamiGaze Metagames
+	// Tsunami Metagames
 	{
-		section: 'Tsunamigaze Metagames',
+		section: 'Tsunami Metagames',
 		column: 2,
+	},
+	{
+		name: "[Gen 7] TsuMeta (BETA)",
+		desc: [
+			"&bullet; <a href=\"http://tsunamips.weebly.com/tsumeta.html\">TsuMeta Information</a>",
+		],
+		section: "Tsunami Metagames",
+		column: 5,
+
+		mod: 'tsumeta',
+		ruleset: ['[Gen 7] OU'],
+	},
+	{
+		//Base of SSB code from SpacialGaze and its contributors. 
+		name: "[Gen 7] Tsu Super Staff Bros",
+		desc: ["Tsunami staff fight it out in pokemon form to see who is the best!"],
+		mod: 'tsunamissb',
+		team: 'randomTsuStaff',
+		ruleset: ['HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod'],
+		onBegin: function () {
+			this.add('message', 'Prepare for the Tsunami!');
+
+			let allPokemon = this.p1.pokemon.concat(this.p2.pokemon);
+			for (let i = 0, len = allPokemon.length; i < len; i++) {
+				let pokemon = allPokemon[i];
+				let last = pokemon.moves.length - 1;
+				if (pokemon.moves[last]) {
+					pokemon.moves[last] = toId(pokemon.set.signatureMove);
+					pokemon.moveset[last].move = pokemon.set.signatureMove;
+					pokemon.baseMoveset[last].move = pokemon.set.signatureMove;
+				}
+			}
+		},
+		onSwitchIn: function (pokemon) {
+			let name = toId(pokemon.illusion ? pokemon.illusion.name : pokemon.name);
+			//Add the mon's status effect to it as a volatile.
+			if (this.data.Statuses[name] && this.data.Statuses[name].exists) {
+				pokemon.addVolatile(name, pokemon);
+			}
+			if (name === 'c733937123' && !pokemon.illusion) {
+				this.add('-start', pokemon, 'typechange', 'Grass/Steel');
+				pokemon.types = ["Grass", "Steel"];
+			}
+			if (name === 'tidalwavebot' && !pokemon.illusion) {
+				this.add('-start', pokemon, 'typechange', 'Steel/Electric');
+				pokemon.types = ["Steel", "Electric"];
+			}
+		},
+		onModifyPokemon: function (pokemon) {
+			//let name = toId(pokemon.name);
+			// Enforce choice item locking on custom moves.
+			let moves = pokemon.moveset;
+			if (pokemon.getItem().isChoice && pokemon.lastMove === moves[3].id) {
+				for (let i = 0; i < 3; i++) {
+					if (!moves[i].disabled) {
+						pokemon.disableMove(moves[i].id, false);
+						moves[i].disabled = true;
+					}
+				}
+			}
+		},
 	},
 	{
 		name: "[Gen 7] Metronome Battle",
@@ -2929,69 +2990,5 @@ exports.Formats = [
 		searchShow: false,
 		debug: true,
 		ruleset: ['Pokemon', 'HP Percentage Mod', 'Cancel Mod'],
-	},
-	// Tsunami Metagames
-	///////////////////////////////////////////////////////////////////
-
-	{
-		name: "[Gen 7] TsuMeta (BETA)",
-		desc: [
-			"&bullet; <a href=\"http://tsunamips.weebly.com/tsumeta.html\">TsuMeta Information</a>",
-		],
-		section: "Tsunami Metagames",
-		column: 5,
-
-		mod: 'tsumeta',
-		ruleset: ['[Gen 7] OU'],
-	},
-	{
-		//Base of SSB code from SpacialGaze and its contributors. 
-		name: "[Gen 7] Tsu Super Staff Bros",
-		desc: ["Tsunami staff fight it out in pokemon form to see who is the best!"],
-		mod: 'tsunamissb',
-		team: 'randomTsuStaff',
-		ruleset: ['HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod'],
-		onBegin: function () {
-			this.add('message', 'Prepare for the Tsunami!');
-
-			let allPokemon = this.p1.pokemon.concat(this.p2.pokemon);
-			for (let i = 0, len = allPokemon.length; i < len; i++) {
-				let pokemon = allPokemon[i];
-				let last = pokemon.moves.length - 1;
-				if (pokemon.moves[last]) {
-					pokemon.moves[last] = toId(pokemon.set.signatureMove);
-					pokemon.moveset[last].move = pokemon.set.signatureMove;
-					pokemon.baseMoveset[last].move = pokemon.set.signatureMove;
-				}
-			}
-		},
-		onSwitchIn: function (pokemon) {
-			let name = toId(pokemon.illusion ? pokemon.illusion.name : pokemon.name);
-			//Add the mon's status effect to it as a volatile.
-			if (this.data.Statuses[name] && this.data.Statuses[name].exists) {
-				pokemon.addVolatile(name, pokemon);
-			}
-			if (name === 'c733937123' && !pokemon.illusion) {
-				this.add('-start', pokemon, 'typechange', 'Grass/Steel');
-				pokemon.types = ["Grass", "Steel"];
-			}
-			if (name === 'tidalwavebot' && !pokemon.illusion) {
-				this.add('-start', pokemon, 'typechange', 'Steel/Electric');
-				pokemon.types = ["Steel", "Electric"];
-			}
-		},
-		onModifyPokemon: function (pokemon) {
-			//let name = toId(pokemon.name);
-			// Enforce choice item locking on custom moves.
-			let moves = pokemon.moveset;
-			if (pokemon.getItem().isChoice && pokemon.lastMove === moves[3].id) {
-				for (let i = 0; i < 3; i++) {
-					if (!moves[i].disabled) {
-						pokemon.disableMove(moves[i].id, false);
-						moves[i].disabled = true;
-					}
-				}
-			}
-		},
 	},
 ];
