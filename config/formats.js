@@ -345,7 +345,7 @@ exports.Formats = [
 		name: "[Gen 7] Tsu Super Staff Bros",
 		desc: ["Tsunami staff fight it out in pokemon form to see who is the best!"],
 		mod: 'tsunamissb',
-		team: 'randomTsuStaff',
+		team: 'randomSeasonalRegStaff',
 		ruleset: ['HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod'],
 		onBegin: function () {
 			this.add('message', 'Prepare for the Tsunami!');
@@ -1950,7 +1950,7 @@ exports.Formats = [
 			battle: 2,
 		},
 		ruleset: ['Gen 7] Doubles OU'],
-		banlist: ['Tapu Lele', 'Perish Song'],
+		banlist: ['Tapu Lele', 'Focus Sash', 'Perish Song'],
 	},
 	{
 		name: "[Gen 7] Typemons",
