@@ -3,3 +3,4 @@ logs/
 dev-tools/globals.js
 tsunami-plugins/shop.js
 chat-plugins/private.js
+tsunami-plugins/factions.js
