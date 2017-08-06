@@ -20,40 +20,40 @@ exports.BattleAbilities = {
 		onEatItem: function (item, pokemon) {
 			if (!pokemon.volatiles['gluttony']) pokemon.addVolatile('gluttony');
 			switch (item.id) {
-				case 'sitrusberry':
-					return this.heal(pokemon.maxhp / 2);
-				case 'oranberry':
-					return this.heal(pokemon.hp + 20);
-				case 'figyberry':
-					return this.heal(pokemon.maxhp / 4);
-				case 'wikiberry':
-					return this.heal(pokemon.maxhp / 4);
-				case 'magoberry':
-					return this.heal(pokemon.maxhp / 4);
-				case 'iapapaberry':
-					return this.heal(pokemon.maxhp / 4);
-				case 'aguavberry':
-					return this.heal(pokemon.maxhp / 4);
-				case 'occaberry':
-				case 'passhoberry':
-				case 'wacanberry':
-				case 'rindoberry':
-				case 'yacheberry':
-				case 'chopleberry':
-				case 'kebiaberry':
-				case 'shucaberry':
-				case 'cobaberry':
-				case 'payapaberry':
-				case 'tangaberry':
-				case 'chartiberry':
-				case 'chilanberry':
-				case 'kasibberry':
-				case 'habanberry':
-				case 'colburberry':
-				case 'babiriberry':
-					return this.chainModify(0.25);
-				default:
-					return this.chainModify(1); //Do nothing different
+			case 'sitrusberry':
+				return this.heal(pokemon.maxhp / 2);
+			case 'oranberry':
+				return this.heal(pokemon.hp + 20);
+			case 'figyberry':
+				return this.heal(pokemon.maxhp / 4);
+			case 'wikiberry':
+				return this.heal(pokemon.maxhp / 4);
+			case 'magoberry':
+				return this.heal(pokemon.maxhp / 4);
+			case 'iapapaberry':
+				return this.heal(pokemon.maxhp / 4);
+			case 'aguavberry':
+				return this.heal(pokemon.maxhp / 4);
+			case 'occaberry':
+			case 'passhoberry':
+			case 'wacanberry':
+			case 'rindoberry':
+			case 'yacheberry':
+			case 'chopleberry':
+			case 'kebiaberry':
+			case 'shucaberry':
+			case 'cobaberry':
+			case 'payapaberry':
+			case 'tangaberry':
+			case 'chartiberry':
+			case 'chilanberry':
+			case 'kasibberry':
+			case 'habanberry':
+			case 'colburberry':
+			case 'babiriberry':
+				return this.chainModify(0.25);
+			default:
+				return this.chainModify(1); //Do nothing different
 			}
 		},
 		effect: {
