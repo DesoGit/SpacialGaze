@@ -341,7 +341,7 @@ exports.Formats = [
 		ruleset: ['[Gen 7] OU'],
 	},
 	{
-		//Base of SSB code from SpacialGaze and its contributors. 
+		//Base of SSB code from SpacialGaze and its contributors.
 		name: "[Gen 7] Tsu Super Staff Bros",
 		desc: ["Tsunami staff fight it out in pokemon form to see who is the best!"],
 		mod: 'tsunamissb',

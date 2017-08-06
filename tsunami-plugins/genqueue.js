@@ -8,22 +8,21 @@ const requestsFile = path.resolve(__dirname, '../config/chat-plugins/genrequests
 //const permittedGenners = ['desokoro', 'lombres']
 //const permittedGennersByNames = ['Desokoro', 'Lombres']
 
-let genRequests = { requests: [], blacklist: [], permittedGenners: [], permittedGennersByNames: [] };
+let genRequests = {requests: [], blacklist: [], permittedGenners: [], permittedGennersByNames: []};
 try {
 	genRequests = require(requestsFile);
-}
-catch (e) {
+} catch (e) {
 	if (e.code !== 'MODULE_NOT_FOUND') throw e;
 }
 
-if (!(genRequests || typeof genRequests === 'object')) genRequests = { requests: [], blacklist: [], permittedGenners: [], permittedGennersByNames: [] };
+if (!(genRequests || typeof genRequests === 'object')) genRequests = {requests: [], blacklist: [], permittedGenners: [], permittedGennersByNames: []};
 
 function writeGenRequests() {
 	fs.writeFileSync(requestsFile, JSON.stringify(genRequests));
 }
 
 exports.commands = {
-	genreq: function(target, room, user) {
+	genreq: function (target, room, user) {
 		if (genRequests.blacklist.includes(user.userid)) return false;
 		if (user.locked || !user.autoconfirmed) return this.errorReply('You do not have adequate permissions to request a gen.');
 		if (!target) return this.errorReply("Please specify something for the gen request.");
@@ -32,12 +31,12 @@ exports.commands = {
 		if (target.includes("http://" || ".com")) {
 			target = '<a href=' + target + '>' + 'Gen Request' + '</a>';
 		}
-		genRequests.requests.push({ username: user.name, request: target, time: new Date().toUTCString() });
+		genRequests.requests.push({username: user.name, request: target, time: new Date().toUTCString()});
 		writeGenRequests();
 		this.sendReply("Your gen request was successfully added to the queue.");
 	},
 
-	reqview: function(target, room, user) {
+	reqview: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
 		if (!genRequests.requests.length) return this.errorReply('There are no current genning requests.');
@@ -49,7 +48,7 @@ exports.commands = {
 	},
 
 	gbl: 'genblacklist',
-	genblacklist: function(target, room, user) {
+	genblacklist: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
 		if (!target) return this.errorReply('Please specify a target.');
@@ -64,7 +63,7 @@ exports.commands = {
 
 	gwl: 'genunblacklist',
 	genwhitelist: 'genunblacklist',
-	genunblacklist: function(target, room, user) {
+	genunblacklist: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
 		if (!target) return this.errorReply("Please specify a target.");
@@ -79,7 +78,7 @@ exports.commands = {
 
 	vbl: 'blacklistview',
 	blv: 'blacklistview',
-	blacklistview: function(target, room, user) {
+	blacklistview: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
 		if (!genRequests.blacklist.length) return this.errorReply("There are currently no users on the genning blacklist.");
@@ -91,7 +90,7 @@ exports.commands = {
 	},
 
 	delreq: 'reqclear',
-	reqclear: function(target, room, user) {
+	reqclear: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You aren\'t permitted to use this command.');
 		//if (!this.can('hotpatch')) return false;
 		if (!(target || target === 'force')) {
@@ -105,18 +104,18 @@ exports.commands = {
 		this.sendReply("All genning requests were erased from the server.");
 	},
 
-	genguide: function(target, room, user) {
+	genguide: function (target, room, user) {
 		this.sendReplyBox('<center><h3>GENNING GUIDE</h3></center><center><h4>genreq (request): Requests a gen for those who can gen and are permitted by Tsunami to do so</h4></center><center><h4>viewgenners: View eligible genners</h4></center><center><h4>reportgenner: Reports a genner to Desokoro; use only if absolutely needed</h4></center><center><h2>More commands available to all users will be listed here in the future</h2></center>');
 	},
 
-	staffgenguide: function(target, room, user) {
+	staffgenguide: function (target, room, user) {
 		if (!genRequests.permittedGenners.includes(user.userid) || !genRequests.permittedGennersByNames.includes(user.name)) return this.errorReply('You are not permitted to view this.');
 		this.sendReplyBox('<center><h3>GENNING RESPONSE GUIDE</h3></center><center></h1>reqclear: Clears all requests</h1></center><center></h1>vbl: Views all blacklisted users</h1></center><center></h1>gbl: Blacklists a user.</h1></center><center></h1>gwl: Un-blacklists a user</h1></center>');
 	},
 
-	genneradd: function(target, room, user) {
+	genneradd: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You are not permitted to use this command.');
-		if (!target) return this.errorReply('Please specify a target.')
+		if (!target) return this.errorReply('Please specify a target.');
 		let targetUser = Users(toId(target));
 		if (!targetUser) return this.errorReply('The target user ' + target + ' could not be found. Please check your spelling!');
 		if (genRequests.permittedGenners.includes(targetUser.userid) || genRequests.permittedGennersByNames.includes(targetUser.name)) return this.errorReply(`${target} is already present on the permitted genners list.`);
@@ -127,7 +126,7 @@ exports.commands = {
 		console.log(targetUser.name + ' was added to the permitted genners list by ' + user.name + '.');
 	},
 
-	removegenner: function(target, room, user) {
+	removegenner: function (target, room, user) {
 		if (user.userid !== 'desokoro') return this.errorReply('You are not permitted to use this command.');
 		if (!target) return this.errorReply('Please specify a target.');
 		let targetUser = Users(toId(target));
@@ -140,11 +139,13 @@ exports.commands = {
 		console.log(target + ' was removed from the genners list by ' + user.name);
 	},
 
-	viewgenners: function(target, room, user) {
-		for (let i = 0; i < genRequests.permittedGennersByNames.length; i++) { this.sendReplyBox(genRequests.permittedGennersByNames[i]); }
+	viewgenners: function (target, room, user) {
+		for (let i = 0; i < genRequests.permittedGennersByNames.length; i++) {
+			this.sendReplyBox(genRequests.permittedGennersByNames[i]);
+		}
 	},
 
-	reportgenner: function(target, room, user) {
+	reportgenner: function (target, room, user) {
 		//let CaseSensitiveArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 		if (genRequests.blacklist.includes(user.userid)) return this.errorReply('You are not allowed to partake in any genning services.');
 		if (user.canTalk) return this.errorReply('You are currently unable to be trusted due to your disciplinary status; your report will not be accepted.');
@@ -156,7 +157,7 @@ exports.commands = {
 		this.parse('/tell Desokoro, TOKEN OF AUTHENTICITY: ' + user.name + '|' + Math.floor(Math.random() * 20) + '|' + +Math.floor(Math.random() * 20) + '|' + Math.floor(Math.random() * 20) + '. Reporting genner ' + target + ' for misconduct.');
 	},
 
-	gensyscredits: function(target, room, user, connection) {
+	gensyscredits: function (target, room, user, connection) {
 		this.sendReplyBox('Thank ' + '<font color=' + Tsunami.nameColor('Mystifi', false) + '>' + Chat.escapeHTML('Mystifi') + '</font>' + ' for essentially building the framework for the genning request system!. The system is maintained by ' + '<font color=' + Tsunami.nameColor('Desokoro', false) + '>' + Chat.escapeHTML('Desokoro') + '</font>' + '.');
 	},
 };

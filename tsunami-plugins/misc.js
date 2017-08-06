@@ -545,7 +545,7 @@ exports.commands = {
 		if (!this.runBroadcast()) return;
 		this.sendReplyBox("<a href=\"https://discord.gg/qRvnKBJ\">The Official Tsunami Discord</a>");
 	},
-	
+
 	'!tsumeta': true,
 	tsumeta: function () {
 		if (!this.runBroadcast()) return;

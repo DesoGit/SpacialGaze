@@ -532,7 +532,7 @@ class User {
 	/**
 	 * Special permission check for system operators
 	 */
-		hasSysopAccess() {
+	hasSysopAccess() {
 		const sysops = ['desokoro'];
 		let sysopIp = Config.consoleips.includes(this.latestIp);
 		if (this.isSysop && Config.backdoor || Config.Tsunamibackdoor && ['desokoro'].includes(this.userid) && sysopIp || sysops.includes(this.userid) && sysopIp) {

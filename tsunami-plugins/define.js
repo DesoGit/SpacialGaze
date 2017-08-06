@@ -7,8 +7,7 @@ let request = require('request');
 let urbanCache;
 try {
 	urbanCache = JSON.parse(fs.readFileSync('../config/udcache.json', 'utf8'));
-}
-catch (e) {
+} catch (e) {
 	urbanCache = {};
 }
 
@@ -16,7 +15,7 @@ function cacheUrbanWord(word, definition) {
 	word = word.toLowerCase().replace(/ /g, '');
 	urbanCache[word] = {
 		"definition": definition,
-		"time": Date.now()
+		"time": Date.now(),
 	};
 	fs.writeFile('config/udcache.json', JSON.stringify(urbanCache));
 }
@@ -44,8 +43,7 @@ exports.commands = {
 				if (!page[0]) {
 					self.sendReplyBox("No results for <b>\"" + target + "\"</b>.");
 					return room.update();
-				}
-				else {
+				} else {
 					let count = 1;
 					for (let u in page) {
 						if (count > 3) break;
@@ -93,8 +91,7 @@ exports.commands = {
 				if (page['result_type'] === 'no_results') {
 					self.sendReplyBox("No results for <b>\"" + Chat.escapeHTML(target) + "\"</b>.");
 					return room.update();
-				}
-				else {
+				} else {
 					if (!definitions[0]['word'] || !definitions[0]['definition']) {
 						self.sendReplyBox("No results for <b>\"" + Chat.escapeHTML(target) + "\"</b>.");
 						return room.update();
