@@ -155,7 +155,7 @@ exports.BattleScripts = {
 				ability: 'Loading...',
 				item: 'Guardian\'s Amulet',
 				shiny: true,
-				moves: ['Wild Charge', 'Shift Gear', 'Gear Grind'
+				moves: ['Wild Charge', 'Shift Gear', 'Gear Grind',
 				],
 				signatureMove: 'Server Guardian',
 				evs: {
@@ -170,7 +170,7 @@ exports.BattleScripts = {
 				ability: 'Ready to Stab',
 				item: 'Eviolite',
 				gender: 'M',
-				moves: ['Crabhammer', 'Swords Dance', 'Knock Off'
+				moves: ['Crabhammer', 'Swords Dance', 'Knock Off',
 				],
 				baseSignatureMove: "stabstab",
 				signatureMove: 'Stab Stab',
@@ -214,7 +214,6 @@ exports.BattleScripts = {
 
 			/*************************/
 			//Former Staff + Regs
-			
 		};
 		// convert moves to ids.
 		for (let k in sets) {
@@ -226,17 +225,17 @@ exports.BattleScripts = {
 		let pool = Dex.shuffle(Object.keys(sets));
 		for (let i = 0; i < 6; i++) {
 			if (i === 1) {
- 				let monIds = pool.slice(0, 6).map(function (p) {
- 					return toId(p);
- 				});
- 				for (let mon in sets) {
- 					if (toId(mon) === userid && monIds.indexOf(userid) === -1) {
- 						pool[1] = mon;
- 						break;
- 					}
- 				}
- 			}
- 			let set = sets[pool[i]];
+				let monIds = pool.slice(0, 6).map(function (p) {
+					return toId(p);
+				});
+				for (let mon in sets) {
+					if (toId(mon) === userid && monIds.indexOf(userid) === -1) {
+						pool[1] = mon;
+						break;
+					}
+				}
+			}
+			let set = sets[pool[i]];
 			set.level = 100;
 			set.name = pool[i];
 			if (!set.ivs) {

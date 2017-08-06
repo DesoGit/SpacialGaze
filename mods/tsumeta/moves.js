@@ -74,7 +74,7 @@ exports.BattleMovedex = {
 				}
 			}
 		}, */
-		onBeforeHit: function(pokemon, target, move) {
+		onBeforeHit: function (pokemon, target, move) {
 			if (move.id === 'detect') {
 				this.breaksProtect = false;
 			} else {
@@ -140,7 +140,7 @@ exports.BattleMovedex = {
 		inherit: true,
 		basePower: 105,
 		accuracy: true,
-		onTryHit: function(target) {
+		onTryHit: function (target) {
 			if (target.item === 'blackglasses' || target.item === 'wiseglasses' || target.item === 'safetygoggles') {
 				this.add('-immune', this);
 				return false;

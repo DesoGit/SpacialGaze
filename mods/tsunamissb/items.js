@@ -23,7 +23,7 @@ exports.BattleItems = {
 		},
 		onModifySpePriority: 2,
 		onModifySpe: function (spe, pokemon) {
-			return this.chainModify(.5);
+			return this.chainModify(0.5);
 		},
 		onModifyMove: function (move) {
 			move.stab = 0;
