@@ -64,7 +64,7 @@ exports.BattleMovedex = {
 			chance: 35,
 			volatileStatus: 'flinch',
 		},
-		onHit: function (target) { 
+		onHit: function (target) {
 			this.add('c|~Desokoro|You best hope the waves I ride have mercy on your soul!');
 		},
 		pp: 5,
@@ -120,7 +120,7 @@ exports.BattleMovedex = {
 					target.trySetStatus('frz', source);
 				}
 			},
-			volatileStatus: ['flinch', 'confusion',],
+			volatileStatus: ['flinch', 'confusion'],
 		},
 		onHit: function (target, source, move) {
 			this.add('c|~Mosmero|I protec, but I also attac.');
@@ -142,7 +142,8 @@ exports.BattleMovedex = {
 		isViable: true,
 		isNonstandard: true,
 		name: "Penguin's Shower",
-		pp: 6.25,
+		pp: 1,
+		noPPBoosts: true,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
 		secondary: {
@@ -169,7 +170,7 @@ exports.BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
-		onHit: function (target) { 
+		onHit: function (target) {
 			if (target.hp >= target.maxhp) return false;
 			if (!target.setStatus('slp')) return false;
 			target.statusData.time = 3;
@@ -201,7 +202,8 @@ exports.BattleMovedex = {
 		isViable: true,
 		isNonstandard: true,
 		name: "Everlasting Annoyingness",
-		pp: 6.25,
+		pp: 1,
+		noPPBoosts: true,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
 		volatileStatus: 'partiallytrapped',
@@ -218,26 +220,28 @@ exports.BattleMovedex = {
 						this.heal(pokemon.maxhp / 16);
 					},
 				},
-				volatileStatus: 'ingrain',
-				effect: {
-					onStart: function (pokemon) {
-						this.add('-start', pokemon, 'move: Everlasting Annoyingness');
-					},
-					onResidualOrder: 7,
-					onResidual: function (pokemon) {
-						this.heal(pokemon.maxhp / 16);
-					},
-					onTrapPokemon: function (pokemon) {
-						pokemon.tryTrap();
-					},
-					onDragOut: function (pokemon) {
-						this.add('-activate', pokemon, 'move: Everlasting Annoyingness');
-						return null;
-					},
+			},
+		},
+		self: {
+			volatileStatus: 'ingrain',
+			effect: {
+				onStart: function (pokemon) {
+					this.add('-start', pokemon, 'move: Everlasting Annoyingness');
+				},
+				onResidualOrder: 7,
+				onResidual: function (pokemon) {
+					this.heal(pokemon.maxhp / 16);
+				},
+				onTrapPokemon: function (pokemon) {
+					pokemon.tryTrap();
+				},
+				onDragOut: function (pokemon) {
+					this.add('-activate', pokemon, 'move: Everlasting Annoyingness');
+					return null;
 				},
 			},
 		},
-		onHit: function (target) { 
+		onHit: function (target) {
 			this.add('c|@TheRittz|Feel the annoyingness!');
 		},
 		drain: [1, 1],
@@ -257,8 +261,7 @@ exports.BattleMovedex = {
 		priority: 4,
 		flags: {},
 		stallingMove: true,
-		volatileStatus: ['kingsshield', 'spikyshield' 
-		],
+		volatileStatus: ['kingsshield', 'spikyshield'],
 		effect: {
 			duration: 1,
 			onStart: function (target) {
@@ -326,7 +329,7 @@ exports.BattleMovedex = {
 			chance: 25,
 			volatileStatus: 'flinch',
 		},
-		onHit: function (target) { 
+		onHit: function (target) {
 			this.add('c|*Stabby the Krabby|Stabby Stabby!');
 		},
 		pp: 5,
@@ -358,7 +361,7 @@ exports.BattleMovedex = {
 			this.add('-anim', source, "Bulk Up", source);
 			this.add('-anim', source, "Safeguard", source);
 		},
-		onHit: function (target) { 
+		onHit: function (target) {
 			this.add('c|*Tidal Wave Bot|Initiating Sustainability Protocol...standby.');
 		},
 		heal: [1, 2],
@@ -391,14 +394,14 @@ exports.BattleMovedex = {
 				},
 			},
 		},
-		onHit: function (target) { 
+		onHit: function (target) {
 			this.add('c|~Tsunami Prince|Witness my true power, my true strength, the feeling of fear, and your team\'s demise.');
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Dark Void", target);
 			this.add('-anim', source, "Future Sight", target);
-			this.add('-anim', source, "Psycho Boost",  source)
+			this.add('-anim', source, "Psycho Boost", source);
 		},
 		target: "normal",
 		type: "Dark",
@@ -424,7 +427,7 @@ exports.BattleMovedex = {
 				},
 			},
 		},
-		onHit: function (target) { 
+		onHit: function (target) {
 			this.add('c|+xcmr|The calc says this should kill.');
 		},
 		onEffectiveness: function (typeMod, type) {
