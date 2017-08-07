@@ -150,7 +150,7 @@ exports.BattleAbilities = {
 			if (move.basePower < 120 && pokemon.types.indexOf(move.type) > -1) this.chainModify(1.25);
 		},
 		desc: "Ignores abilities, increases the power of all STAB moves at or under 120 BP by 50%. In return, damage taken is increased by 33%.",
-		shortDesc: "Ignores Abilities, Boosts STAB Moves under 120 BP by 50%, but takes 3% recoil",
+		shortDesc: "Ignores Abilities, Boosts STAB Moves under 120 BP by 50%, but takes 33% more damage.",
 	},
 	"unburden": {
 		inherit: true,
