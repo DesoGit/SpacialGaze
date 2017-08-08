@@ -133,7 +133,7 @@ exports.BattleMovedex = {
 		target: "Normal",
 		type: "Ghost",
 	},
-	//CubsPenguinn
+	//CubsFan38
 	penguinsshower: {
 		category: "Special",
 		accuracy: 95,
@@ -151,7 +151,7 @@ exports.BattleMovedex = {
 			status: 'frz',
 		},
 		onHit: function (target, source, move) {
-			this.add('c|@ClubPenguinn|You\'re really gonna let a penguin beat you?');
+			this.add('c|&CubsFan38|You\'re really gonna let a penguin beat you?');
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
