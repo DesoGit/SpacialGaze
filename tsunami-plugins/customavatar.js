@@ -69,12 +69,8 @@ exports.commands = {
 
 			downloadImage(avatarUrl, name, ext);
 			this.sendReply("|raw|" + name + "'s avatar was successfully set. Avatar:<br /><img src='" + avatarUrl + "' width='80' height='80'>");
-<<<<<<< HEAD:tsunami-plugins/customavatar.js
-			if (Users(name)) Users(name).popup("|html|" + Tsunami.nameColor(user.name, true) + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
-=======
 			Monitor.adminlog(name + "'s avatar was successfully set by " + user.name + "."); //no reason to show the avatar in upper staff
-			if (Users(name)) Users(name).popup("|html|" + SG.nameColor(user.name, true) + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
->>>>>>> cebf028be00159bef82262fb9c1b200b5f6cab60:spacialgaze-plugins/customavatar.js
+			if (Users(name)) Users(name).popup("|html|" + Tsunami.nameColor(user.name, true) + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
 		},
 
 		remove: 'delete',
