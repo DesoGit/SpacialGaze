@@ -63,19 +63,7 @@ Signature Move: Deep Sleep
 Notes: Quite a nice wall, especially effective while Sandbox is active. Gets quite weakened by the loss of Sandbox ability, but still can fight well.
 Rank: TBD
 
-@Admewn
-(Mew)
-@ Expert Belt
-EVs: 252 SpA / 4 HP / 252 Spe
-Timid Nature
-Ability: Protean
-Moves: Energy Ball, Oblivion Wing and Shadow Ball.
-Signature Move: Mewtation
-	-Dark Type, Special, 90 BP, 10 PP and transforms user into a Dark Type.
-Notes: Use Type changing to your advantage as much as possible.
-Rank: TBD
-
-@CubsFan38
+&CubsFan38
 (Mamoswine)
 @ Life Orb
 EVs: 4 HP / 252 Atk / 252 Spe
@@ -86,6 +74,18 @@ Moves: Ice Shard, Knock Off, Earthquake
 Signature Move: Penguin's Shower
     -120 power, 10 pp, 95% accuracy, 50% chance to freeze opponent
 Notes: Can do a good amount of damage to some of the strongest in this meta.
+Rank: TBD
+
+@Admewn
+(Mew)
+@ Expert Belt
+EVs: 252 SpA / 4 HP / 252 Spe
+Timid Nature
+Ability: Protean
+Moves: Energy Ball, Oblivion Wing and Shadow Ball.
+Signature Move: Mewtation
+	-Dark Type, Special, 90 BP, 10 PP and transforms user into a Dark Type.
+Notes: Use Type changing to your advantage as much as possible.
 Rank: TBD
 
 @TheRittz
