@@ -39,7 +39,8 @@ exports.BattleMovedex = {
 		isViable: true,
 		isNonstandard: true,
 		name: "Revenge of Kraken Mare",
-		pp: 0.625,
+		pp: 1,
+		noPPBoosts: true,
 		priority: 5,
 		selfdestruct: "always",
 		onPrepareHit: function (target, source, move) {
@@ -105,7 +106,8 @@ exports.BattleMovedex = {
 		isViable: true,
 		isNonstandard: true,
 		name: "Mosmero Beam",
-		pp: 6.25,
+		pp: 10,
+		noPPBoosts: true,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
 		secondary: {
@@ -375,8 +377,8 @@ exports.BattleMovedex = {
 		accuracy: 100,
 		basePower: 0,
 		id: "overpower",
-		isViable:true,
-		isNonstandard:true,
+		isViable: true,
+		isNonstandard: true,
 		name: "Overpower",
 		pp: 10,
 		priority: 0,
@@ -405,6 +407,7 @@ exports.BattleMovedex = {
 		},
 		target: "normal",
 		type: "Dark",
+		zMoveEffect: "heal",
 	},
 	//xcmr
 	kittycrush: {
@@ -412,10 +415,11 @@ exports.BattleMovedex = {
 		accuracy: 95,
 		basePower: 95,
 		id: "kittycrush",
-		isViable:true,
-		isNonstandard:true,
+		isViable: true,
+		isNonstandard: true,
 		name: "Kitty Crush",
-		pp: 3.125,
+		pp: 5,
+		noPPBoosts: true,
 		priority: 1,
 		flags: {protect: 1, mirror: 1},
 		secondary: {
