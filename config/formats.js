@@ -367,10 +367,6 @@ exports.Formats = [
 			if (this.data.Statuses[name] && this.data.Statuses[name].exists) {
 				pokemon.addVolatile(name, pokemon);
 			}
-			if (name === 'c733937123' && !pokemon.illusion) {
-				this.add('-start', pokemon, 'typechange', 'Grass/Steel');
-				pokemon.types = ["Grass", "Steel"];
-			}
 			if (name === 'tidalwavebot' && !pokemon.illusion) {
 				this.add('-start', pokemon, 'typechange', 'Steel/Electric');
 				pokemon.types = ["Steel", "Electric"];
