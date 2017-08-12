@@ -1508,8 +1508,8 @@ exports.BattleAbilities = {
 		num: 150,
 	},
 	"infiltrator": {
-		desc: "This Pokemon's moves ignore substitutes and the opposing side's Reflect, Light Screen, Safeguard, and Mist.",
-		shortDesc: "Moves ignore substitutes and opposing Reflect, Light Screen, Safeguard, and Mist.",
+		desc: "This Pokemon's moves ignore substitutes and the opposing side's Reflect, Light Screen, Safeguard, Mist and Aurora Veil.",
+		shortDesc: "Moves ignore substitutes and foe's Reflect/Light Screen/Safeguard/Mist/Aurora Veil.",
 		onModifyMove: function (move) {
 			move.infiltrates = true;
 		},
@@ -3723,7 +3723,7 @@ exports.BattleAbilities = {
 				if (possibleTargets.length > 1) rand = this.random(possibleTargets.length);
 				let target = possibleTargets[rand];
 				let ability = this.getAbility(target.ability);
-				let bannedAbilities = {comatose:1, disguise:1, flowergift:1, forecast:1, illusion:1, imposter:1, multitype:1, schooling:1, stancechange:1, trace:1, zenmode:1};
+				let bannedAbilities = {battlebond: 1, comatose:1, disguise:1, flowergift:1, forecast:1, illusion:1, imposter:1, multitype:1, powerconstruct:1, powerofalchemy:1, receiver:1, rkssystem:1, schooling:1, shieldsdown:1, stancechange:1, trace:1, zenmode:1};
 				if (bannedAbilities[target.ability]) {
 					possibleTargets.splice(rand, 1);
 					continue;

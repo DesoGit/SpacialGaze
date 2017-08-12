@@ -727,11 +727,11 @@ class Tournament {
 		this.isAvailableMatchesInvalidated = true;
 		this.update();
 
-		user.prepBattle(this.teambuilderFormat, 'tournament', user, this.banlist).then(result => this.finishChallenge(user, to, output, result));
+		user.prepBattle(this.teambuilderFormat, 'tournament', user, this.banlist).then(validTeam => this.finishChallenge(user, to, output, validTeam));
 	}
-	finishChallenge(user, to, output, result) {
+	finishChallenge(user, to, output, validTeam) {
 		let from = this.players[user.userid];
-		if (!result) {
+		if (validTeam === false) {
 			this.generator.setUserBusy(from, false);
 			this.generator.setUserBusy(to, false);
 
@@ -800,10 +800,10 @@ class Tournament {
 		let challenge = this.pendingChallenges.get(player);
 		if (!challenge || !challenge.from) return;
 
-		user.prepBattle(this.teambuilderFormat, 'tournament', user, this.banlist).then(result => this.finishAcceptChallenge(user, challenge, result));
+		user.prepBattle(this.teambuilderFormat, 'tournament', user, this.banlist).then(validTeam => this.finishAcceptChallenge(user, challenge, validTeam));
 	}
-	finishAcceptChallenge(user, challenge, result) {
-		if (!result) return;
+	finishAcceptChallenge(user, challenge, validTeam) {
+		if (validTeam === false) return;
 
 		// Prevent battles between offline users from starting
 		let from = Users.get(challenge.from.userid);
@@ -814,7 +814,7 @@ class Tournament {
 		let player = this.players[user.userid];
 		if (!this.pendingChallenges.get(player)) return;
 
-		let room = Matchmaker.startBattle(from, user, this.teambuilderFormat, challenge.team, user.team, {rated: this.isRated, tour: this});
+		let room = Matchmaker.startBattle(from, user, this.teambuilderFormat, challenge.team, validTeam, {rated: !Ladders.disabled && this.isRated, tour: this});
 		if (!room) return;
 
 		this.pendingChallenges.set(challenge.from, null);
