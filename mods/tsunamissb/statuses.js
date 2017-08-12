@@ -24,17 +24,30 @@ exports.BattleStatuses = {
 			this.add('c', '@Admewn', 'Turn off the mewsic! I\'m out!');
 		},
 	},
-	krakenmare: {
+	callieagent1: {
 		exists: true,
 		onStart: function () {
-			this.add('c', '%Kraken Mare', 'I\'m looking forward to this.');
-			this.add('c', '%Kraken Mare', 'It\'s foolish to come against me.');
-			this.add('c', '%Kraken Mare', 'NOW, you will feel TRUE pain!');
+			let t = this.random(2);
+			if (t < 1) {
+				this.add('c', '%Callie (Agent 1) ☭', 'I told you to leave...');
+				this.add('c', '%Callie (Agent 1) ☭', 'Now you leave me now choice..');
+				this.add('c', '%Callie (Agent 1) ☭', 'Prepare to be rocked!');
+			} else  {
+				this.add('c', '%Callie (Agent 1) ☭', 'No one throws shade at my shades and gets away with it!');
+			}
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '%Kraken Mare', 'Ha ha ha, you can NEVER defeat ME!');
-			this.add('c', '%Kraken Mare', 'I will be back, prepare yourself!');
-			this.add('c', '%Kraken Mare', 'You will die, just like the others!');
+			this.add('c', '%Kraken Mare', 'I\'ll be back to drop some more SPICY WASABI BEATS!');
+		},
+		onFaint: function () {
+			let i = this.random(3);
+			if (i < 1) {
+				this.add('c', '%Callie (Agent 1) ☭', 'Ow! You got ink RIGHT in my eye!');
+			} else if (i < 2)  {
+				this.add('c', '%Callie (Agent 1) ☭', 'I...I\'ll remember this!');
+			} else {
+				this.add('c', '%Callie (Agent 1) ☭', 'Cross-fade to blaaaaaaaaaaack!')
+			}
 		},
 	},
 	c733937123: {
