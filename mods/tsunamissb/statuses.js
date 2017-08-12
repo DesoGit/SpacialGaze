@@ -37,7 +37,7 @@ exports.BattleStatuses = {
 			}
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '%Kraken Mare', 'I\'ll be back to drop some more SPICY WASABI BEATS!');
+			this.add('c', '%Callie (Agent 1) ☭', 'I\'ll be back to drop some more SPICY WASABI BEATS!');
 		},
 		onFaint: function () {
 			let i = this.random(3);
