@@ -133,21 +133,20 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				nature: 'Calm',
 			},
 			// Global Drivers:
-			'%Kraken Mare': {
-				species: 'Gardevoir-Mega',
-				ability: 'krakensboost',
-				shiny: true,
-				item: 'Focus Sash',
+			'%Callie (Agent 1)': {
+				species: 'Malamar',
+				ability: 'Supreme Squid Sister',
+				item: 'Hypnoshades',
 				gender: 'F',
-				moves: ['Moonblast', 'Calm Mind', 'Psychic',
+				moves: ['Sing', 'Superpower', 'Gunk Shot',
 				],
-				signatureMove: 'Revenge of Kraken Mare',
+				signatureMove: 'Bomb Rush Blush',
 				evs: {
-					hp: 248,
-					spa: 252,
-					def: 8,
+					hp: 252,
+					atk: 252,
+					spd: 4,
 				},
-				nature: 'Modest',
+				nature: 'Adamant',
 			},
 			// Bots:
 			'*Tidal Wave Bot': {
