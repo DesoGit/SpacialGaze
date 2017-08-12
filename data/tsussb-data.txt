@@ -101,17 +101,18 @@ Signature Move: Everlasting Annoyingness
 Notes: Finally nerfed, but still quite good. Feel the annoyingness! (Yes, its meant to spam that phrase. Have fun mate.)
 Rank: TBD
 
-%Kraken Mare
-(Gardevoir-Mega, Shiny)
-@ Focus Sash
-EVs: 248 HP / 8 Def / 252 SpA
-Modest Nature
-Ability: Kraken's Boosts
-    -No Guard and Moody.
-Moves: Moonblast, Calm Mind and Psychic.
-Signature Move: Revenge of Kraken Mare
-	-Water Type, Special, 77,000 BP, Always hits, Self-Destruct and +5 Priority.
-Notes: Take out anyone that is set up in one shot with Revenge of Kraken Mare.
+%Callie (Agent 1)
+(Malamar, Poison/Water Typing)
+@ Hypnoshades
+    -Broken on hit by any move. Boosts physical moves by 1.5x. Also boosts freshness. Stay Fresh~!
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+Ability: Supreme Squid Sister
+    -Contrary, +2 Speed, No Guard
+Moves: Sing, Superpower, Gunk Shot.
+Signature Move: Bomb Rush Blush
+    -Physical, Hits 1-4 Times. Randomly Picks one of the following: "Burst Bombs" (80BP & Water type), "Splat Bombs" (90BP & Poison type), "Suction Bombs" (100BP & Steel type).
+Notes: Lots of Splatoon References. ^-^ || If she can hit, she will hit hard.
 Rank: TBD
 
 *Tidal Wave Bot
