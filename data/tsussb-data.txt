@@ -21,7 +21,7 @@ Ability: Mosmic Power
 Moves: Shadow Ball, Sludge Bomb, Giga Drain
 Signature Move: Mosmero Beam
 	-Ghost type, 130 BP, 80% Accuracy, 30% chance to Burn, Paralyze, Freeze. 30% to also Flinch or Confuse.
-Notes: Signature Move is not worth the time to use, just go for the quick kills.
+Notes: Hit Quickly & you should be able to take down some enemies.
 Rank: TBD
 
 ~Tsunami Prince
@@ -63,19 +63,7 @@ Signature Move: Deep Sleep
 Notes: Quite a nice wall, especially effective while Sandbox is active. Gets quite weakened by the loss of Sandbox ability, but still can fight well.
 Rank: TBD
 
-@Admewn
-(Mew)
-@ Expert Belt
-EVs: 252 SpA / 4 HP / 252 Spe
-Timid Nature
-Ability: Protean
-Moves: Energy Ball, Oblivion Wing and Shadow Ball.
-Signature Move: Mewtation
-	-Dark Type, Special, 90 BP, 10 PP and transforms user into a Dark Type.
-Notes: Use Type changing to your advantage as much as possible.
-Rank: TBD
-
-@CubsFan38
+&CubsFan38
 (Mamoswine)
 @ Life Orb
 EVs: 4 HP / 252 Atk / 252 Spe
@@ -88,13 +76,25 @@ Signature Move: Penguin's Shower
 Notes: Can do a good amount of damage to some of the strongest in this meta.
 Rank: TBD
 
+@Admewn
+(Mew)
+@ Expert Belt
+EVs: 252 SpA / 4 HP / 252 Spe
+Timid Nature
+Ability: Protean
+Moves: Energy Ball, Oblivion Wing and Shadow Ball.
+Signature Move: Mewtation
+	-Dark Type, Special, 90 BP, 10 PP and transforms user into a Dark Type.
+Notes: Use Type changing to your advantage as much as possible.
+Rank: TBD
+
 @TheRittz
 (Venusaur-Mega)
 @Black Sludge
 EVs: 252 HP / 128 Def / 128 SpD
 Calm Nature
 Ability: Paradoxical Prowess
-    -Sets up Safeguard, Lucky Chant, has same effects of Magic Guard, has same effects of Sticky Hold, has same effects of Rock Solid, and has same effects of Oblivious
+    -Sets up Safeguard, Lucky Chant, has same effects of Magic Guard, has same effects of Sticky Hold, has same effects of Solid Rock, and has same effects of Oblivious
 Moves: Substitute, Leech Seed, Toxic
 Signature Move: Everlasting Annoyingness
     -Uses the move Ingrain & Special Bullet Seed move that drains 10% HP each hit (2-5 hits).

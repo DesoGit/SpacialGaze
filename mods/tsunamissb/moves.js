@@ -154,7 +154,7 @@ exports.BattleMovedex = {
 		target: "Normal",
 		type: "Ghost",
 	},
-	//CubsPenguinn
+	//CubsFan38
 	penguinsshower: {
 		category: "Special",
 		accuracy: 95,
@@ -163,7 +163,7 @@ exports.BattleMovedex = {
 		isViable: true,
 		isNonstandard: true,
 		name: "Penguin's Shower",
-		pp: 1,
+		pp: 6.25,
 		noPPBoosts: true,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
@@ -172,7 +172,7 @@ exports.BattleMovedex = {
 			status: 'frz',
 		},
 		onHit: function (target, source, move) {
-			this.add('c|@ClubPenguinn|You\'re really gonna let a penguin beat you?');
+			this.add('c|&CubsFan38|You\'re really gonna let a penguin beat you?');
 		},
 		onPrepareHit: function (target, source, move) {
 			this.attrLastMove('[still]');
@@ -223,7 +223,7 @@ exports.BattleMovedex = {
 		isViable: true,
 		isNonstandard: true,
 		name: "Everlasting Annoyingness",
-		pp: 1,
+		pp: 5,
 		noPPBoosts: true,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
