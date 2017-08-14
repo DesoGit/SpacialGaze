@@ -14,7 +14,7 @@ exports.BattleAbilities = {
 			this.add('-end', pokemon, 'Wave Call', '[silent]');
 		},
 		effect: {
-			duration: 4,
+			duration: 3,
 			onStart: function (target) {
 				this.add('-start', target, 'ability: Wave Call');
 			},
