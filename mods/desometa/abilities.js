@@ -36,10 +36,11 @@ effect: {
 		onModifySpA: function (spa, pokemon, move, attacker) {
 				return this.chainModify(4);
 		},
-    		onModifyAccPriority: 5,
-		onModifyAcc: function (acc, pokemon, move, attacker) {
-				return this.chainModify(0.25);
-		},
+		onModifyMove: function (move) {
+			if (move.id !== 'struggle' && typeof move.accuracy === 'number') {
+				move.accuracy *= 0.25;
+			}
+},
     		onModifyMovePriority: 1,
 		onModifyMove: function (move) {
 			if (move.id !== 'struggle' && this.getMove(move.id).type !== 'Grass') {
