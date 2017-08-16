@@ -170,7 +170,7 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				gender: 'M',
 				moves: ['Crabhammer', 'Swords Dance', 'Knock Off',
 				],
-				baseSignatureMove: "stabstab",
+				baseSignatureMove: 'stabstab',
 				signatureMove: 'Stab Stab',
 				evs: {
 					atk: 252,
@@ -195,19 +195,19 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				},
 				nature: 'Jolly',
 			},
-			"+C733937 123": {
-				species: "Gengar-Mega",
-				ability: "Chaotic Armor",
-				item: "Aguav Berry",
-				gender: "M",
+			'+C733937 123': {
+				species: 'Gengar-Mega',
+				ability: 'Chaotic Armor',
+				item: 'Aguav Berry',
+				gender: 'M',
 				moves: ['shadowball', 'darkpulse', 'painsplit'],
-				signatureMove: "Voodoo Magic",
+				signatureMove: 'Voodoo Magic',
 				evs: {
 					spa: 252,
 					spe: 252,
 					spd: 4,
 				},
-				nature: "Timid",
+				nature: 'Timid',
 			},
 			/*************************/
 			//Former Staff + Regs
