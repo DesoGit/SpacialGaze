@@ -111,7 +111,7 @@ Ability: Supreme Squid Sister
     -Contrary, +1 Def & +1 SpD, No Guard
 Moves: Sing, Superpower, Gunk Shot.
 Signature Move: Bomb Rush Blush
-    -Physical, Hits 1-4 Times. Randomly Picks one of the following: "Burst Bombs" (80BP & Water type), "Splat Bombs" (90BP & Poison type), "Suction Bombs" (100BP & Steel type).
+    -Physical, Hits 1-4 Times. Randomly Picks one of the following: "Burst Bombs" (120BP including STAB & Water type), "Splat Bombs" (135BP including STAB & Poison type), "Suction Bombs" (150BP without STAB & Steel type).
 Notes: Lots of Splatoon References. ^-^ || If she can hit, she will hit hard.
 Rank: TBD
 
