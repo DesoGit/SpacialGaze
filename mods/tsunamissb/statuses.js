@@ -29,24 +29,24 @@ exports.BattleStatuses = {
 		onStart: function () {
 			let t = this.random(2);
 			if (t < 1) {
-				this.add('c', '%Callie (Agent 1) ☭', 'I told you to leave...');
-				this.add('c', '%Callie (Agent 1) ☭', 'Now you leave me now choice..');
-				this.add('c', '%Callie (Agent 1) ☭', 'Prepare to be rocked!');
+				this.add('c', '%Callie (Agent 1)', 'I told you to leave...');
+				this.add('c', '%Callie (Agent 1)', 'Now you leave me now choice..');
+				this.add('c', '%Callie (Agent 1)', 'Prepare to be rocked!');
 			} else  {
-				this.add('c', '%Callie (Agent 1) ☭', 'No one throws shade at my shades and gets away with it!');
+				this.add('c', '%Callie (Agent 1)', 'No one throws shade at my shades and gets away with it!');
 			}
 		},
 		onSwitchOut: function (pokemon) {
-			this.add('c', '%Callie (Agent 1) ☭', 'I\'ll be back to drop some more SPICY WASABI BEATS!');
+			this.add('c', '%Callie (Agent 1)', 'I\'ll be back to drop some more SPICY WASABI BEATS!');
 		},
 		onFaint: function () {
 			let i = this.random(3);
 			if (i < 1) {
-				this.add('c', '%Callie (Agent 1) ☭', 'Ow! You got ink RIGHT in my eye!');
+				this.add('c', '%Callie (Agent 1)', 'Ow! You got ink RIGHT in my eye!');
 			} else if (i < 2)  {
-				this.add('c', '%Callie (Agent 1) ☭', 'I...I\'ll remember this!');
+				this.add('c', '%Callie (Agent 1)', 'I...I\'ll remember this!');
 			} else {
-				this.add('c', '%Callie (Agent 1) ☭', 'Cross-fade to blaaaaaaaaaaack!')
+				this.add('c', '%Callie (Agent 1)', 'Cross-fade to blaaaaaaaaaaack!')
 			}
 		},
 	},
