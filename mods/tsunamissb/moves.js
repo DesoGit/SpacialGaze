@@ -107,7 +107,7 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		name: "Mewtation",
 		pp: 10,
-		priority: 0,
+		priority: 1,
 		onPrepareHit: function (target, source) {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Agility", source);
