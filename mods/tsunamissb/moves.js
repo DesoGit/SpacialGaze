@@ -30,28 +30,48 @@ exports.BattleMovedex = {
 		target: "Normal",
 		type: "Psychic",
 	},
-	// Kraken Mare
-	revengeofkrakenmare: {
-		category: "Special",
+	// Callie (Agent 1)
+	bombrushblush: {
+		category: "Physical",
 		accuracy: true,
-		basePower: 77000,
-		id: "revengeofkrakenmare",
+		basePower: 0,
+		id: "bombrushblush",
 		isViable: true,
 		isNonstandard: true,
-		name: "Revenge of Kraken Mare",
-		pp: 1,
-		noPPBoosts: true,
-		priority: 5,
-		selfdestruct: "always",
-		onPrepareHit: function (target, source, move) {
-			this.attrLastMove('[still]');
-			this.add('-anim', source, "Surf", target);
+		name: "Bomb Rush Blush",
+		pp: 5,
+		priority: 0,
+		onModifyMove: function (move, pokemon) {
+			let i = this.random(3);
+			if (i < 1) {
+				move.bomb = "Burst Bomb";
+				move.basePower = 80;
+				move.type = 'Water';
+			} else if (i < 2) {
+				move.bomb = "Splat Bomb";
+				move.basePower = 90;
+			} else {
+				move.bomb = "Suction Bomb";
+				move.basePower = 100;
+				move.type = 'Steel';
+			}
 		},
-		onHit: function (target, source, move) {
-			this.add('c|%Kraken Mare â˜|If I go down I\'m taking you with me!');
+		onPrepareHit: function (pokemon, target, move) {
+			this.add('-message', "4 " + move.bomb + "s were thrown!");
 		},
+		onUseMoveMessage: function (target, source, move) {
+			let t = this.random(2);
+			if (t < 1) {
+				this.add('c|%Callie (Agent 1) ☭|♪Faces blush, a rush of ink!♪');
+				this.add('c|%Callie (Agent 1) ☭|♪Bombs explode, no time to think!♪');
+			} else  {
+				this.add('c|%Callie (Agent 1) ☭|♪Blushing faces covered in pink!♪');
+				this.add('c|%Callie (Agent 1) ☭|♪Rushing bombs, exploding ink!♪');
+			}
+		},
+		multihit: [1,4],
 		target: "Normal",
-		type: "Water",
+		type: "Poison",
 	},
 	// Desokoro
 	tsunamicrash: {
@@ -87,7 +107,7 @@ exports.BattleMovedex = {
 		isNonstandard: true,
 		name: "Mewtation",
 		pp: 10,
-		priority: 0,
+		priority: 1,
 		onPrepareHit: function (target, source) {
 			this.attrLastMove('[still]');
 			this.add('-anim', source, "Agility", source);
