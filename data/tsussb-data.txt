@@ -84,7 +84,7 @@ Timid Nature
 Ability: Protean
 Moves: Energy Ball, Oblivion Wing and Shadow Ball.
 Signature Move: Mewtation
-	-Dark Type, Special, 90 BP, 10 PP and transforms user into a Dark Type.
+	-Dark Type, +1 Priority, Special, 90 BP, 10 PP and transforms user into a Dark Type.
 Notes: Use Type changing to your advantage as much as possible.
 Rank: TBD
 
@@ -94,11 +94,11 @@ Rank: TBD
 EVs: 252 HP / 128 Def / 128 SpD
 Calm Nature
 Ability: Paradoxical Prowess
-    -Sets up Safeguard, Lucky Chant, has same effects of Magic Guard, has same effects of Sticky Hold, has same effects of Solid Rock, and has same effects of Oblivious
+    -Has same effects of Magic Guard, has same effects of Sticky Hold, has same effects of Solid Rock, and has same effects of Oblivious
 Moves: Substitute, Leech Seed, Toxic
 Signature Move: Everlasting Annoyingness
     -Uses the move Ingrain & Special Bullet Seed move that drains 10% HP each hit (2-5 hits).
-Notes: Finally nerfed, but still quite good. Feel the annoyingness! (Yes, its meant to spam that phrase. Have fun mate.)
+Notes: Soild Staller. Feel the annoyingness! (Yes, its meant to spam that phrase. Have fun mate.)
 Rank: TBD
 
 %Callie (Agent 1)
@@ -108,7 +108,7 @@ Rank: TBD
 EVs: 252 HP / 252 Atk / 4 SpD
 Adamant Nature
 Ability: Supreme Squid Sister
-    -Contrary, +2 Speed, No Guard
+    -Contrary, +1 Def & +1 SpD, No Guard
 Moves: Sing, Superpower, Gunk Shot.
 Signature Move: Bomb Rush Blush
     -Physical, Hits 1-4 Times. Randomly Picks one of the following: "Burst Bombs" (80BP & Water type), "Splat Bombs" (90BP & Poison type), "Suction Bombs" (100BP & Steel type).
