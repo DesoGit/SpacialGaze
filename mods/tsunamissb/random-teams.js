@@ -86,7 +86,21 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				},
 				nature: 'Impish',
 			},
-
+			'&CubsFan38': {
+				species: 'Mamoswine',
+				ability: 'Chilly Penguinn',
+				item: 'Life Orb',
+				gender: 'M',
+				moves: ['Ice Shard', 'Knock Off', 'Earthquake',
+				],
+				signatureMove: 'Penguin\'s Shower',
+				evs: {
+					hp: 4,
+					atk: 252,
+					spe: 252,
+				},
+				nature: 'Jolly',
+			},
 			// Global Moderators:
 			'@Admewn': {
 				species: 'Mew',
@@ -101,21 +115,6 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 					hp: 4,
 				},
 				nature: 'Timid',
-			},
-			'@CubsFan38': {
-				species: 'Mamoswine',
-				ability: 'Chilly Penguinn',
-				item: 'Life Orb',
-				gender: 'M',
-				moves: ['Ice Shard', 'Knock Off', 'Earthquake',
-				],
-				signatureMove: 'Penguin\'s Shower',
-				evs: {
-					hp: 4,
-					atk: 252,
-					spe: 252,
-				},
-				nature: 'Jolly',
 			},
 			'@TheRittz': {
 				species: 'Venusaur-Mega',
