@@ -88,7 +88,7 @@ exports.BattleAbilities = {
 		id: "supremesquidsister",
 		name: "Supreme Squid Sister",
 		onStart: function (pokemon) {
-			this.boost({spe: -2});
+			this.boost({def: -1, spd: -1});
 		},
 		onBoost: function (boost, target, source, effect) {
 			if (effect && effect.id === 'zpower') return;
