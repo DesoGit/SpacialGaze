@@ -23,7 +23,6 @@ effect: {
 			onEnd: function (target) {
 				this.add('-end', target, 'Hallucinogen');
 			},
-		},
 		onModifyAtkPriority: 5,
 		onModifyAtk: function (atk, pokemon, move, attacker) {
 				return this.chainModify(4);
@@ -44,6 +43,7 @@ effect: {
 				move.accuracy *= 0.25;
 			}
 			}
+			},
 },
 },
 },
