@@ -36,15 +36,13 @@ effect: {
 		onModifySpA: function (spa, pokemon, move, attacker) {
 				return this.chainModify(4);
 		},
-		onModifyMove: function (move) {
-			if (move.id !== 'struggle' && typeof move.accuracy === 'number') {
-				move.accuracy *= 0.25;
-			}
-},
     		onModifyMovePriority: 1,
 		onModifyMove: function (move) {
 			if (move.id !== 'struggle' && this.getMove(move.id).type !== 'Grass') {
 				move.type = 'Grass';
+			if (move.id !== 'struggle' && typeof move.accuracy === 'number') {
+				move.accuracy *= 0.25;
+			}
 			}
 },
 },
