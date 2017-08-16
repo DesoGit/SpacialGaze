@@ -86,7 +86,21 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				},
 				nature: 'Impish',
 			},
-
+			'&CubsFan38': {
+				species: 'Mamoswine',
+				ability: 'Chilly Penguinn',
+				item: 'Life Orb',
+				gender: 'M',
+				moves: ['Ice Shard', 'Knock Off', 'Earthquake',
+				],
+				signatureMove: 'Penguin\'s Shower',
+				evs: {
+					hp: 4,
+					atk: 252,
+					spe: 252,
+				},
+				nature: 'Jolly',
+			},
 			// Global Moderators:
 			'@Admewn': {
 				species: 'Mew',
@@ -101,21 +115,6 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 					hp: 4,
 				},
 				nature: 'Timid',
-			},
-			'@CubsFan38': {
-				species: 'Mamoswine',
-				ability: 'Chilly Penguinn',
-				item: 'Life Orb',
-				gender: 'M',
-				moves: ['Ice Shard', 'Knock Off', 'Earthquake',
-				],
-				signatureMove: 'Penguin\'s Shower',
-				evs: {
-					hp: 4,
-					atk: 252,
-					spe: 252,
-				},
-				nature: 'Jolly',
 			},
 			'@TheRittz': {
 				species: 'Venusaur-Mega',
@@ -133,21 +132,20 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				nature: 'Calm',
 			},
 			// Global Drivers:
-			'%Kraken Mare': {
-				species: 'Gardevoir-Mega',
-				ability: 'krakensboost',
-				shiny: true,
-				item: 'Focus Sash',
+			'%Callie (Agent 1)': {
+				species: 'Malamar',
+				ability: 'Supreme Squid Sister',
+				item: 'Hypnoshades',
 				gender: 'F',
-				moves: ['Moonblast', 'Calm Mind', 'Psychic',
+				moves: ['Sing', 'Superpower', 'Gunk Shot',
 				],
-				signatureMove: 'Revenge of Kraken Mare',
+				signatureMove: 'Bomb Rush Blush',
 				evs: {
-					hp: 248,
-					spa: 252,
-					def: 8,
+					hp: 252,
+					atk: 252,
+					spd: 4,
 				},
-				nature: 'Modest',
+				nature: 'Adamant',
 			},
 			// Bots:
 			'*Tidal Wave Bot': {
@@ -172,7 +170,7 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				gender: 'M',
 				moves: ['Crabhammer', 'Swords Dance', 'Knock Off',
 				],
-				baseSignatureMove: "stabstab",
+				baseSignatureMove: 'stabstab',
 				signatureMove: 'Stab Stab',
 				evs: {
 					atk: 252,
@@ -197,19 +195,19 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				},
 				nature: 'Jolly',
 			},
-			"+C733937 123": {
-				species: "Gengar-Mega",
-				ability: "Chaotic Armor",
-				item: "Aguav Berry",
-				gender: "M",
+			'+C733937 123': {
+				species: 'Gengar-Mega',
+				ability: 'Chaotic Armor',
+				item: 'Aguav Berry',
+				gender: 'M',
 				moves: ['shadowball', 'darkpulse', 'painsplit'],
-				signatureMove: "Voodoo Magic",
+				signatureMove: 'Voodoo Magic',
 				evs: {
 					spa: 252,
 					spe: 252,
 					spd: 4,
 				},
-				nature: "Timid",
+				nature: 'Timid',
 			},
 			/*************************/
 			//Former Staff + Regs
