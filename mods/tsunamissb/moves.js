@@ -52,7 +52,7 @@ exports.BattleMovedex = {
 				move.basePower = 90;
 			} else {
 				move.bomb = "Suction Bomb";
-				move.basePower = 100;
+				move.basePower = 150; //The other two get a 1.5 STAB boost. This makes it 15 BP more than Splat bomb (135 w/ stab) and 30 more than burst bomb (120 w/ stab)
 				move.type = 'Steel';
 			}
 		},
