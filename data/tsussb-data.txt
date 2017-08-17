@@ -167,3 +167,30 @@ Signature Move: Kitty Crush
     -Hits all types neutral, Normal Type, 95 BP, 95% accuracy, +1 to both Def & SpD on use.
 Notes: Soild counter to most with its Scrappy and Kitty Crush combo.
 Rank: TBD
+
+Clue
+(Magnezone)
+@ Choice Specs
+EVs: 252 SpA / 4 HP / 252 Spe
+Modest Nature
+Ability: Levitate
+Moves: Volt Switch/Thunderbolt, Aura Sphere and Hidden Power Ice.
+Signature Move: Mechanical Dysfunction
+	- Electric Type, Special, 110 BP, 90% accuracy, 5 PP and 50% chance to paralyze.
+Notes: Special Sweeper.
+Rank: TBD.
+
+Insist
+(Ludicolo)
+@ Playnium Z
+	- Allows user to use Exiled From All Others.
+		- Exiled From All Others: Water Type, Special, 150 BP, Z-Move.
+EVs: 252 SpA / 252 Spe / 4 HP
+Timid Nature
+Ability: Crippling Depression
+	- Primordial Sea, Rain Dish and Swift Swim.
+Moves: Giga Drain, Focus Blast and Freeze-Dry.
+Signature Move: Aqua Subscribe
+	- Water Type, Special, 90 BP, 100% Accuracy, 15 PP and boosts own SpA and Spe by 1 stage and +1 Priority.
+Notes: Fast Rain Abuser with priority.
+Rank: TBD.
