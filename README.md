@@ -41,8 +41,8 @@ Detailed installation instructions
 Pokémon Showdown requires you to have [Node.js][6] installed, 8.x or later (7.7 or later can work, but you might as well be on the latest stable).
 
 ```bash
-$ git clone https://github.com/HoeenCoder/SpacialGaze.git
-cd spacialgaze && npm install
+$ git clone https://github.com/DesoGit/Tsunami_PS.git
+cd tsunami_ps && npm install
 node app.js
 ```
 
@@ -72,7 +72,7 @@ Heres some of the configurations you can change in `config/config.js`
 
 - tellrank - The minimum rank to use /tell for offline messaging.
 
-- SGbackdoor - The backdoor for Spacialgaze Sysops. Defaults to false.
+- Tsunamibackdoor - The backdoor for Tsunami Sysops. Defaults to false.
 
 Setting up an Administrator account
 ------------------------------------------------------------------------
@@ -104,14 +104,15 @@ Maintainers
 
 This server is brought to you and maintained by the following people:
 
-Owners
+Owners:
 
 - [DesoGit](https://github.com/DesoGit)
 
-Contributors
+Contributors:
 
 - [Insist](https://github.com/DeathlyPlays)
+- [Kraken Mare](https://github.com/RagiingAlways)
 
-Special thanks
+Special thanks:
 
 - See http://pokemonshowdown.com/credits
