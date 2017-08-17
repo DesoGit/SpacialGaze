@@ -64,12 +64,12 @@ exports.BattleMovedex = {
 			if (t < 1) {
 				this.add('c|%Callie (Agent 1)|♪Faces blush, a rush of ink!♪');
 				this.add('c|%Callie (Agent 1)|♪Bombs explode, no time to think!♪');
-			} else  {
+			} else {
 				this.add('c|%Callie (Agent 1)|♪Blushing faces covered in pink!♪');
 				this.add('c|%Callie (Agent 1)|♪Rushing bombs, exploding ink!♪');
 			}
 		},
-		multihit: [1,4],
+		multihit: [1, 4],
 		target: "Normal",
 		type: "Poison",
 	},
@@ -594,5 +594,87 @@ exports.BattleMovedex = {
 		},
 		type: "Normal",
 		target: "normal",
+	},
+	// Insist
+	npmtest: {
+		id: "npmtest",
+		name: "npmtest",
+		priority: 1,
+		self: {
+			boosts: {
+				spa: 1,
+				spe: 1,
+			},
+		},
+		flags: {
+			protect: 1,
+			mirror: 1,
+		},
+		desc: "Boosts user's SpA and Spe by 1 stage.",
+		secondary: false,
+		category: "Special",
+		onHit: function (target, source, move) {
+			this.add('c| Insist|``> pokemon-showdown@0.11.1 test /home/ubuntu/workspace``');
+			this.add('c| Insist|``> eslint --rulesdir=dev-tools/eslint --cache *.js chat-plugins/ tsunami-plugins/ config/ data/ dev-tools/ mods/ sim/ tournaments/ test/ && mocha``');
+		},
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Hydro Pump", target);
+		},
+		basePower: 90,
+		pp: 15,
+		accuracy: 100,
+		target: "normal",
+		type: "Water",
+		zMovePower: 140,
+		contestType: "Cool",
+	},
+	//Insist
+	"debugging": {
+		id: "debugging",
+		name: "Debugging",
+		basePower: 150,
+		accuracy: 100,
+		pp: 1,
+		noPPBoosts: true,
+		secondary: false,
+		category: "Special",
+		isNonStandard: true,
+		isZ: "playniumz",
+		priority: 1,
+		flags: {
+			protect: 1,
+		},
+		onHit: function (target, source, move) {
+			this.add('c| Insist|What did ya break this time?');
+		},
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Hydro Pump", target);
+		},
+		target: "normal",
+		type: "Water",
+	},
+	// Clue
+	mechanicaldysfunction: {
+		category: "Special",
+		basePower: 110,
+		accuracy: 90,
+		id: "mechanicaldysfunction",
+		isNonstandard: true,
+		name: "Mechanical Dysfunction",
+		secondary: {
+			chance: 50,
+			status: 'par',
+		},
+		desc: "50% chance to paralyze.",
+		pp: 5,
+		priority: 0,
+		onPrepareHit: function (target, source, move) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Zap Cannon", target);
+		},
+		target: "normal",
+		type: "Electric",
 	},
 };

@@ -75,4 +75,15 @@ exports.BattleItems = {
 			}
 		},
 	},
+	playniumz: {
+		spritenum: 656,
+		onTakeItem: false,
+		id: "playniumz",
+		name: "Playnium Z",
+		isNonStandard: true,
+		zMove: "Debugging",
+		zMoveFrom: "npm test",
+		zMoveUser: ["Ludicolo"],
+		desc: "If holder is a Ludicolo with npm test, it can use Debugging.",
+	},
 };

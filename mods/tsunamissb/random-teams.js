@@ -210,7 +210,35 @@ class RandomSeasonalRegStaffTeams extends RandomTeams {
 				nature: 'Timid',
 			},
 			/*************************/
-			//Former Staff + Regs
+			/*  Former Staff + Regs   /
+			/*************************/
+			" Insist": {
+				species: "Ludicolo",
+				ability: "Am A Dev",
+				item: "Playnium Z",
+				gender: "M",
+				moves: ['Giga Drain', 'Freeze Dry', 'Focus Blast'],
+				signatureMove: "npm test",
+				evs: {
+					spa: 252,
+					spd: 4,
+					spe: 252,
+				},
+				nature: "Timid",
+			},
+			' Clue': {
+				species: 'Magnezone',
+				ability: 'Levitate',
+				item: 'Choice Specs',
+				moves: ['Volt Switch', 'Thunderbolt', 'Hidden Power Ice'],
+				signatureMove: 'Mechanical Dysfunction',
+				evs: {
+					spa: 252,
+					spe: 252,
+					hp: 4,
+				},
+				nature: 'Modest',
+			},
 		};
 		// convert moves to ids.
 		for (let k in sets) {
