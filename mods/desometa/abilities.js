@@ -49,48 +49,13 @@ exports.BattleAbilities = {
 	industrialized: {
 		id: "industrialized",
 		name: "Industrialized",
-		desc: "This Pokemon's Steel & Poison type moves do 2x damage. This Pokemon's Grass & Bug type moves do 0.5x damage. Autotomize is doubled in effectiveness.",
-		onStart: function(pokemon) {
-			pokemon.addVolatile('industrialized');
+		desc: "On switch-in, the user summons Industrialized terrain.",
+		onStart: function (pokemon) {
+			this.setTerrain('industrialized');
 			this.add('', 'The battlefield has been industrialized!');
 		},
-		onEnd: function(pokemon) {
-			delete pokemon.volatiles['industrialized'];
-			this.add('-end', pokemon, 'Industrialized', '[silent]');
+		onEnd: function (pokemon) {
 			this.add('', 'The battlefield has become Detroit!');
-		},
-		effect: {
-			duration: 4,
-			onStart: function(target) {
-				this.add('-start', target, 'ability: Industrialized');
-			},
-			onModifyAtkPriority: 5,
-			onModifyAtk: function(atk, pokemon) {
-				if (move.type === 'Steel' || move.type === 'Poison') {
-					return this.chainModify(2);
-				}
-				if (move.type === 'Grass' || move.type === 'Bug') {
-					return this.chainModify(0.5);
-				},
-			},
-			onModifySpAPriority: 5,
-			onModifySpA: function(spa, pokemon) {
-				if (move.type === 'Steel' || move.type === 'Poison') {
-					return this.chainModify(2);
-				}
-				if (move.type === 'Grass' || move.type === 'Bug') {
-					return this.chainModify(0.5);
-				},
-			},
-			onModifyMovePriority: 1,
-			onModifyMove: function(move) {
-				if (move.id === 'autotomize') {
-					return this.chainModify(3);
-				}
-			},
-			onEnd: function(target) {
-				this.add('-end', target, 'Industrialized');
-			},
 		},
 	},
 };
