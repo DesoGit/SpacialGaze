@@ -1,7 +1,7 @@
 'use strict';
 
 exports.BattleMovedex = {
-	"Industrialize": {
+	"industrialize": {
 		num: 678,
 		accuracy: true,
 		basePower: 0,
@@ -13,7 +13,7 @@ exports.BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {nonsky: 1},
-		terrain: 'Industrialized',
+		terrain: 'industrialized',
 		effect: {
 			duration: 3,
 			durationCallback: function (source, effect) {
@@ -23,28 +23,27 @@ exports.BattleMovedex = {
 				return 5;
 			},
 			onModifyAtkPriority: 5,
-			onModifyAtk: function (atk, pokemon) {
-      if (move.type === 'Steel' || move.type === 'Poison') {
-				return this.chainModify(2);
-        }
-      if (move.type === 'Grass' || move.type === 'Bug') {
-        return this.chainModify(0.5);
-        }
+			onModifyAtk: function (atk, pokemon, move) {
+				if (move.type === 'Steel' || move.type === 'Poison') {
+					return this.chainModify(2);
+				} else if (move.type === 'Grass' || move.type === 'Bug') {
+					return this.chainModify(0.5);
+				}
 			},
 			onModifySpAPriority: 5,
-			onModifySpA: function (spa, pokemon) {
-      if move.type === 'Steel || move.type === 'Poison') {
-				return this.chainModify(2);
-        }
-      if (move.type === 'Grass' || move.type === 'Bug') {
-        return this.chainModify(0.5);
+			onModifySpA: function (spa, pokemon, move) {
+				if (move.type === 'Steel' || move.type === 'Poison') {
+					return this.chainModify(2);
+				} else if (move.type === 'Grass' || move.type === 'Bug') {
+					return this.chainModify(0.5);
+				}
 			},
-      onModifySpePriority: 5,
-      onModifySpe: function (spe, pokemon) {
-      if (move.id === 'autotomize') {
-      return this.chainModify(3);
-      }
-      },
+			onModifySpePriority: 5,
+			onModifySpe: function (spe, pokemon, move) {
+				if (move.id === 'autotomize') {
+					return this.chainModify(3);
+				}
+			},
 			onStart: function (battle, source, effect) {
 				if (effect && effect.effectType === 'Ability') {
 					this.add('-fieldstart', 'move: Industrialized', '[from] ability: ' + effect, '[of] ' + source);
