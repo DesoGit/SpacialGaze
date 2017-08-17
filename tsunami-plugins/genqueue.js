@@ -28,7 +28,7 @@ exports.commands = {
 		if (!target) return this.errorReply("Please specify something for the gen request.");
 		if (target.length > 180) return this.sendReply('|html|<font color="EF4333">Please use a link shortener like <a href="https://pastebin.com">Pastebin</a></font>');
 		if (target.includes("pornhub" || "xvideos" || "xnxx")) return this.errorReply('You are not permitted to link those things.');
-		if (target.includes("http://" || ".com")) {
+		if (target.includes("http://" || "https://" || ".com")) {
 			target = '<a href=' + target + '>' + 'Gen Request' + '</a>';
 		}
 		genRequests.requests.push({username: user.name, request: target, time: new Date().toUTCString()});
