@@ -64,12 +64,12 @@ exports.BattleMovedex = {
 			if (t < 1) {
 				this.add('c|%Callie (Agent 1)|♪Faces blush, a rush of ink!♪');
 				this.add('c|%Callie (Agent 1)|♪Bombs explode, no time to think!♪');
-			} else  {
+			} else {
 				this.add('c|%Callie (Agent 1)|♪Blushing faces covered in pink!♪');
 				this.add('c|%Callie (Agent 1)|♪Rushing bombs, exploding ink!♪');
 			}
 		},
-		multihit: [1,4],
+		multihit: [1, 4],
 		target: "Normal",
 		type: "Poison",
 	},

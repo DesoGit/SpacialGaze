@@ -32,7 +32,7 @@ exports.BattleStatuses = {
 				this.add('c', '%Callie (Agent 1)', 'I told you to leave...');
 				this.add('c', '%Callie (Agent 1)', 'Now you leave me now choice..');
 				this.add('c', '%Callie (Agent 1)', 'Prepare to be rocked!');
-			} else if (t < 2)  {
+			} else if (t < 2) {
 				this.add('c', '%Callie (Agent 1)', 'No one throws shade at my shades and gets away with it!');
 			} else if (t < 3) {
 				this.add('c', '%Callie (Agent 1)', 'It\'s time to swab the deck and plunder the booty!');
@@ -49,7 +49,7 @@ exports.BattleStatuses = {
 				this.add('c', '%Callie (Agent 1)', 'EAT THAT!');
 			} else if (c < 2) {
 				this.add('c', '%Callie (Agent 1)', 'Nailed it!');
-			} else if (c < 3){
+			} else if (c < 3) {
 				this.add('c', '%Callie (Agent 1)', 'Got it!');
 			} else {
 				this.add('c', '%Callie (Agent 1)', 'Yeah! Let\'s ROCK!');
@@ -60,16 +60,16 @@ exports.BattleStatuses = {
 				this.add('c', '%Callie (Agent 1)', 'Thou ART defeated! HA!');
 			}
 		},
-			
+
 		onFaint: function () {
 			let i = this.random(5);
 			if (i < 1) {
 				this.add('c', '%Callie (Agent 1)', 'Ow! You got ink RIGHT in my eye!');
-			} else if (i < 2)  {
+			} else if (i < 2) {
 				this.add('c', '%Callie (Agent 1)', 'I...I\'ll remember this!');
 			} else if (i < 3) {
-				this.add('c', '%Callie (Agent 1)', 'Cross-fade to blaaaaaaaaaaack!')
-			} else if (i < 4){
+				this.add('c', '%Callie (Agent 1)', 'Cross-fade to blaaaaaaaaaaack!');
+			} else if (i < 4) {
 				this.add('c', '%Callie (Agent 1)', 'I should have bought more bombs...');
 			} else {
 				this.add('c', '%Callie (Agent 1)', 'Don\'t worry, Team Callie. I still love you all...');
