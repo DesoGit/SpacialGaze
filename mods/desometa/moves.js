@@ -2,7 +2,7 @@
 
 exports.BattleMovedex = {
 	"industrialize": {
-		num: 678,
+		num: -700,
 		accuracy: true,
 		basePower: 0,
 		category: "Status",

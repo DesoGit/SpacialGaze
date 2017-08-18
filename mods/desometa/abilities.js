@@ -5,6 +5,7 @@ exports.BattleAbilities = {
 		id: "hallucinogen",
 		name: "Hallucinogen",
 		desc: "Max Attack, Special Attack and Speed for three turns in exchange for 0.25x accuracy and all moves become Grass type. All attacks that connect confuse both players.",
+		shortDesc: "4x Atk, SpA & Spe for 3 turns, but 0.25x Accuracy.  All moves become Grass type.",
 		onStart: function (pokemon) {
 			pokemon.addVolatile('hallucinogen');
 			this.add('', 'The battlefield has suddenly become trippy as hell!');
@@ -15,7 +16,7 @@ exports.BattleAbilities = {
 			this.add('', 'The battlefield has lost its trippiness.');
 		},
 		effect: {
-			duration: 4,
+			duration: 3,
 			onStart: function (target) {
 				this.add('-start', target, 'ability: Hallucinogen');
 			},
@@ -35,10 +36,15 @@ exports.BattleAbilities = {
 				if (typeof accuracy !== 'number') return;
 				return accuracy * 0.25;
 			},
+			onHit: function (pokemon, target) {
+				pokemon.addVolatile('confusion');
+				target.addVolatile('confusion');
+			},
 			onModifyMovePriority: 1,
-			onModifyMove: function (move) {
-				if (move.id !== 'struggle' && this.getMove(move.id).type !== 'Grass') {
+			onModifyMove: function (move, pokemon) {
+				if (!(move.isZ && move.category !== 'Status') && !(move.id in {hiddenpower:1, judgment:1, multiattack:1, naturalgift:1, revelationdance:1, struggle:1, technoblast:1, weatherball:1})) {
 					move.type = 'Grass';
+					if (move.category !== 'Status') pokemon.addVolatile('hallucinogen');
 				}
 			},
 			onEnd: function (target) {
