@@ -2,12 +2,12 @@
 
 exports.BattleMovedex = {
 	"industrialize": {
-		num: 678,
+		num: -700,
 		accuracy: true,
 		basePower: 0,
 		category: "Status",
 		desc: "Steel and Poison type moves do double damage. Grass and Bug moves do half. Lasts 5 turns (8 with Oil Canister). Autotomize has double effectiveness",
-		shortDesc: "Steel/Poison x2 damage, Grass/Bug 0.5x damage, 5 turns (8 w Oil Canister), Autotomize is 2x more effective",
+		shortDesc: "Steel/Poison x2 damage, Grass/Bug 0.5x damage, 5 turns (8 w/ Oil Canister), Autotomize is 2x more effective",
 		id: "industrialize",
 		name: "Industrialize",
 		pp: 10,
@@ -17,7 +17,7 @@ exports.BattleMovedex = {
 		effect: {
 			duration: 3,
 			durationCallback: function (source, effect) {
-				if (source && source.hasItem('Oil Canister')) {
+				if (source && source.hasItem('oilcanister')) {
 					return 8;
 				}
 				return 5;
