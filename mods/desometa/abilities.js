@@ -13,6 +13,7 @@ exports.BattleAbilities = {
 	industrialized: {
 		id: "industrialized",
 		name: "Industrialized",
+<<<<<<< HEAD
 		desc: "This Pokemon's Steel & Poison type moves do 2x damage. This Pokemon's Grass & Bug type moves do 0.5x damage. Autotomize is doubled in effectiveness.",
 		onStart: function (pokemon) {
 			pokemon.addVolatile('industrialized');
@@ -55,5 +56,15 @@ exports.BattleAbilities = {
 			},
 		},
 		rating: 5,
+=======
+		desc: "On switch-in, the user summons Industrialized terrain.",
+		onStart: function (pokemon) {
+			this.setTerrain('industrialized');
+			this.add('', 'The battlefield has been industrialized!');
+		},
+		onEnd: function (pokemon) {
+			this.add('', 'The battlefield has become Detroit!');
+		},
+>>>>>>> 990bdf49d16268834003241b5bd625dce05f5498
 	},
 };

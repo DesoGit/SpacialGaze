@@ -61,19 +61,8 @@ exports.BattleMovedex = {
 		desc: "Lowers Defense, Special Defense, and Speed by one stage",
 		shortDesc: "Lowers Def + SpD + Spe by 1 stage",
 	},
-	"extremespeed": { //FAILED TO WORK
-		inherit: true,
-		/* onTryHit: function (target) {
-			if (Math.floor(Math.random()*99) < 30) {
-			  let broke = false;
-			  for (let i in {kingsshield:1, protect:1, spikyshield:1}) {
-				  if (target.removeVolatile(i)) broke = true;
-				}
-				if (broke) {
-				  this.add('-activate', target, 'move: Extreme Speed', '[broken]');
-				}
-			}
-		}, */
+	"extremespeed": {
+		flags: {contact: 1},
 		onBeforeHit: function (pokemon, target, move) {
 			if (move.id === 'detect') {
 				this.breaksProtect = false;
