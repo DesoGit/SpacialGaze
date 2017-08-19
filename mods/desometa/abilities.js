@@ -58,10 +58,10 @@ exports.BattleAbilities = {
 		desc: "On switch-in, the user summons Industrialized terrain.",
 		onStart: function (pokemon) {
 			this.setTerrain('industrialized');
-			this.add('', 'The battlefield has been industrialized!');
+			this.add('-message', 'The battlefield has been industrialized!');
 		},
 		onEnd: function (pokemon) {
-			this.add('', 'The battlefield has become Detroit!');
+			this.add('-message', 'The battlefield has become Detroit!');
 		},
 	},
 };
