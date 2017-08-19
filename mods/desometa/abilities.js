@@ -8,12 +8,12 @@ exports.BattleAbilities = {
 		shortDesc: "4x Atk, SpA & Spe for 3 turns, but 0.25x Accuracy.  All moves become Grass type.",
 		onStart: function (pokemon) {
 			pokemon.addVolatile('hallucinogen');
-			this.add('', pokemon, ' has suddenly started tripping.');
+			this.add('-message', pokemon + ' has suddenly started tripping.');
 		},
 		onEnd: function (pokemon) {
 			delete pokemon.volatiles['hallucinogen'];
 			this.add('-end', pokemon, 'Hallucinogen', '[silent]');
-			this.add('', pokemon, ' has stopped tripping.');
+			this.add('-message', pokemon + ' has stopped tripping.');
 		},
 		effect: {
 			duration: 3,
