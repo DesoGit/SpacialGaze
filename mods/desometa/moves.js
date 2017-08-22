@@ -59,7 +59,7 @@ exports.BattleMovedex = {
 		},
 		secondary: false,
 		target: "all",
-		type: "Poison",
+		type: "Steel",
 		zMoveBoost: {spa: 1},
 		contestType: "Clever",
 	},

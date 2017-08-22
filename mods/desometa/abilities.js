@@ -8,12 +8,12 @@ exports.BattleAbilities = {
 		shortDesc: "4x Atk, SpA & Spe for 3 turns, but 0.25x Accuracy.  All moves become Grass type.",
 		onStart: function (pokemon) {
 			pokemon.addVolatile('hallucinogen');
-			this.add('', 'The battlefield has suddenly become trippy as hell!');
+			this.add('-message', pokemon + ' has suddenly started tripping.');
 		},
 		onEnd: function (pokemon) {
 			delete pokemon.volatiles['hallucinogen'];
 			this.add('-end', pokemon, 'Hallucinogen', '[silent]');
-			this.add('', 'The battlefield has lost its trippiness.');
+			this.add('-message', pokemon + ' has stopped tripping.');
 		},
 		effect: {
 			duration: 3,
@@ -58,10 +58,10 @@ exports.BattleAbilities = {
 		desc: "On switch-in, the user summons Industrialized terrain.",
 		onStart: function (pokemon) {
 			this.setTerrain('industrialized');
-			this.add('', 'The battlefield has been industrialized!');
+			this.add('-message', 'The battlefield has been industrialized!');
 		},
 		onEnd: function (pokemon) {
-			this.add('', 'The battlefield has become Detroit!');
+			this.add('-message', 'The battlefield has become Detroit!');
 		},
 	},
 };
