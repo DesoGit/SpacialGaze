@@ -56,7 +56,7 @@ exports.commands = {
 		if (!user.can('roomowner') && user.userid !== target) return this.errorReply(`/checkroomrequest -  Access Denied for viewing requests for other users.`);
 		let curRequest = Db.rooms.get(target);
 		if (!curRequest || curRequest.blacklisted) return this.errorReply(`${(target === user.userid ? "You don't " : target + " does not ")} have a pending room request.`);
-		let output = `<center><h1>Spacialgaze Room Request</h1></center><b>Requester</b>: ${target} <br/><b>Room Name</b>: ${curRequest.name}<br/><b>Room Type</b>: ${curRequest.type}<br/><b>Description</b>: ${curRequest.desc}<br/>`;
+		let output = `<center><h1>Tsunami Room Request</h1></center><b>Requester</b>: ${target} <br/><b>Room Name</b>: ${curRequest.name}<br/><b>Room Type</b>: ${curRequest.type}<br/><b>Description</b>: ${curRequest.desc}<br/>`;
 		if (user.can('roomowner')) output += `${(curRequest.staff ? `The requester is a Spacial Gaze global staff member` : (curRequest.trusted ? `The requester is a trusted user.` : ``))}`;
 		this.sendReplyBox(output);
 	},

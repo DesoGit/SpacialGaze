@@ -180,9 +180,9 @@ exports.commands = {
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
 			"- " + Tsunami.nameColor('HoeenHero', true) + " (Development)<br />" +
-				"- " + Tsunami.nameColor('Tsunami Prince', true) + " (Policy Admin)<br />" +
+			"- " + Tsunami.nameColor('Tsunami Prince', true) + " (Policy Admin)<br />" +
 			"- " + Tsunami.nameColor('Insist', true) + " (Development)<br />" +
-				"- " + Tsunami.nameColor('Kraken Mare', true) + " (Development)<br />" +
+			"- " + Tsunami.nameColor('Kraken Mare', true) + " (Development)<br />" +
 			"<br />" +
 			"<u><b>Retired Staff:</b></u><br />" +
 			"- " + Tsunami.nameColor('Clue', true) + " (Former Policy & Media Admin)<br />" +
