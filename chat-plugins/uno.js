@@ -518,7 +518,7 @@ class UNOgame extends Rooms.RoomGame {
 		if (Users(targetUserid).unoBoost) prize *= 2;
 		if (Users(targetUserid).gameBoost) prize *= 2;
 		for (let i = 0; i < this.players.length; i++) {
-			SG.addExp(Users(this.players[i]).userid, this.room, 20);
+			Tsunami.addExp(Users(this.players[i]).userid, this.room, 20);
 		}
 		if (this.room.isOfficial) {
 			Economy.writeMoney(targetUserid, prize, newAmount => {
