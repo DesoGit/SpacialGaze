@@ -1,12 +1,12 @@
 'use strict';
 
-/********************************************
- *     EXP SYSTEM FOR POKEMON SHOWDOWN	    *
- *     	  By Volco and HoeenHero	    *
- *        Modified by Insist                *
- ********************************************/
+/**
+ * EXP SYSTEM FOR POKEMON SHOWDOWN
+ * By Volco, modified by Insist
+ */
 
 const DEFAULT_AMOUNT = 0;
+let DOUBLE_XP = false;
 
 function isExp(exp) {
 	let numExp = Number(exp);
@@ -49,6 +49,7 @@ let EXP = Tsunami.EXP = {
 };
 
 function addExp(user, room, amount) {
+<<<<<<< HEAD:tsunami-plugins/exp.js
 	if (Db.expoff.get(user)) {
 		return false;
 	} else {
@@ -58,13 +59,69 @@ function addExp(user, room, amount) {
 			EXP.writeExp(user.userid, amount);
 			if (!user || !room) return;
 			let level = Tsunami.level(user);
+=======
+	if (!user || !room) return;
+	user = Users(toId(user));
+	if (Db.expoff.get(user.userid)) return false;
+	if (DOUBLE_XP) amount = amount * 2;
+	EXP.readExp(user.userid, totalExp => {
+		let oldLevel = SG.level(user.userid);
+		EXP.writeExp(user.userid, amount, newTotal => {
+			let level = SG.level(user.userid);
+>>>>>>> 0a2639684785c16c47c22a57485c084970227bea:spacialgaze-plugins/exp.js
 			if (oldLevel < level) {
-				//let reward;
-				if (oldLevel < 3 && 3 <= level) {
-					//reward = '';
-					Db.currency.set(user.userid, Db.currency.get(user.userid, 0) + 2);
-					//user.sendTo(room, 'You have earned ' + reward + ' for level up!');
+				let reward = '';
+				switch (level) {
+				case 5:
+					Economy.logTransaction(user.userid + ' received a custom symbol for reaching level ' + level + '.');
+					user.canCustomSymbol = true;
+					reward = 'a Custom Symbol. To claim your custom symbol, use the command /customsymbol [symbol]';
+					break;
+				case 10:
+					Economy.logTransaction(user.userid + ' received a custom avatar for reaching level ' + level + '.');
+					if (!user.tokens) user.tokens = {};
+					user.tokens.avatar = true;
+					reward = 'a Custom Avatar. To claim your avatar, use the command /usetoken avatar, [link to the image you want]';
+					break;
+				case 15:
+					Economy.logTransaction(user.userid + ' received a custom title for reaching level ' + level + '.');
+					if (!user.tokens) user.tokens = {};
+					user.tokens.title = true;
+					reward = 'a Profile Title. To claim your profile title, use the command /usetoken title, [title], [hex color]';
+					break;
+				case 20:
+					Economy.logTransaction(user.userid + ' received a custom icon for reaching level ' + level + '.');
+					if (!user.tokens) user.tokens = {};
+					user.tokens.icon = true;
+					reward = 'a Custom Userlist Icon. To claim your icon, use the command /usetoken icon, [link to the image you want]';
+					break;
+				case 25:
+					Economy.logTransaction(user.userid + ' received a emote for reaching level ' + level + '.');
+					if (!user.tokens) user.tokens = {};
+					user.tokens.emote = true;
+					reward = 'an Emote. To claim your emote, use the command /usetoken emote, [name], [image]';
+					break;
+				case 30:
+					Economy.logTransaction(user.userid + ' received a custom color for reaching level ' + level + '.');
+					if (!user.tokens) user.tokens = {};
+					user.tokens.color = true;
+					reward = 'a Custom Color. To claim your custom color, use the command /usetoken color, [hex color]';
+					break;
+				case 35:
+					Economy.writeMoney(user.userid, 50);
+					reward = '50 ' + currencyPlural + '.';
+					break;
+				case 40:
+					Economy.logTransaction(user.userid + ' received a chatroom for reaching level ' + level + '.');
+					SG.messageSeniorStaff(user.userid + ' has earned a chatroom for reaching level ' + level + '!');
+					Monitor.adminlog(user.userid + ' has earned a chatroom for reaching level ' + level + '!');
+					reward = 'a Chatroom. To claim your chatroom, Contact a Leader (&) or Administrator (~).';
+					break;
+				default:
+					Economy.writeMoney(user.userid, Math.ceil(level * 0.5));
+					reward = Math.ceil(level * 0.5) + ' ' + (Math.ceil(level * 0.5) === 1 ? currencyName : currencyPlural) + '.';
 				}
+<<<<<<< HEAD:tsunami-plugins/exp.js
 				if (oldLevel < 5 && 5 <= level) {
 					//reward = '';
 					Db.currency.set(user.userid, Db.currency.get(user.userid, 0) + 5);
@@ -116,27 +173,44 @@ function addExp(user, room, amount) {
 					//user.sendTo(room, 'You have earned ' + reward + ' for level up!');
 				}
 				let newLevel = Tsunami.level(user);
+=======
+>>>>>>> 0a2639684785c16c47c22a57485c084970227bea:spacialgaze-plugins/exp.js
 				user.sendTo(room, '|html|<center><font size=4><b><i>Level Up!</i></b></font><br />' +
-				'You have reached level ' + newLevel + '.' + /*' This will award you:<br /><b> ' + reward + */ '</b></center>');
+				'You have reached level ' + level + ', and have earned ' + reward + '</b></center>');
 			}
 		});
-	}
+	});
 }
 Tsunami.addExp = addExp;
 
-function level(user) {
-	let curExp = Db.exp.get(user, 0);
+function level(userid) {
+	userid = toId(userid);
+	let curExp = Db.exp.get(userid, 0);
 	let benchmarks = [0, 40, 90, 165, 250, 400, 600, 810, 1250, 1740, 2450, 3300, 4400, 5550, 6740, 8120, 9630, 11370, 13290, 15520, 18050, 23000, 28000, 33720, 39900, 46440, 52690, 58000, 63600, 69250, 75070, 81170, 87470, 93970, 100810, 107890, 115270, 122960, 131080, 140000];
 	for (let i = 0; i < benchmarks.length; i++) {
-		if (curExp >= benchmarks[benchmarks.length - 1]) return "Maxed!";
-		if (benchmarks[i] <= curExp) {
+		if (curExp >= benchmarks[i]) {
 			continue;
 		} else {
 			return i;
 		}
 	}
+	return benchmarks.length;
 }
 Tsunami.level = level;
+
+function nextLevel(user) {
+	let curExp = Db.exp.get(user, 0);
+	let benchmarks = [0, 40, 90, 165, 250, 400, 600, 810, 1250, 1740, 2450, 3300, 4400, 5550, 6740, 8120, 9630, 11370, 13290, 15520, 18050, 23000, 28000, 33720, 39900, 46440, 52690, 58000, 63600, 69250, 75070, 81170, 87470, 93970, 100810, 107890, 115270, 122960, 131080, 140000];
+	for (let i = 0; i < benchmarks.length; i++) {
+		if (curExp >= benchmarks[i]) {
+			continue;
+		} else {
+			return benchmarks[i] - curExp + " exp";
+		}
+	}
+	return "[Cannot level up]";
+}
+SG.nextLevel = nextLevel;
 
 //Shamelessly ripped from economy
 function rankLadder(title, type, array, prop, group) {
@@ -177,6 +251,7 @@ function rankLadder(title, type, array, prop, group) {
 	return ladderTitle + tableTop + tableRows + tableBottom;
 }
 
+<<<<<<< HEAD:tsunami-plugins/exp.js
 function nextLevel(user) {
 	let curExp = Db.exp.get(user, 0);
 	let benchmarks = [0, 40, 90, 165, 250, 400, 600, 810, 1250, 1740, 2450, 3300, 4400, 5550, 6740, 8120, 9630, 11370, 13290, 15520, 18050, 23000, 28000, 33720, 39900, 46440, 52690, 58000, 63600, 69250, 75070, 81170, 87470, 93970, 100810, 107890, 115270, 122960, 131080, 140000];
@@ -191,6 +266,8 @@ function nextLevel(user) {
 }
 Tsunami.nextLevel = nextLevel;
 
+=======
+>>>>>>> 0a2639684785c16c47c22a57485c084970227bea:spacialgaze-plugins/exp.js
 exports.commands = {
 	'!exp': true,
 	level: 'exp',
@@ -239,9 +316,21 @@ exports.commands = {
 		}
 		Db.exp.set(toId(target), 0);
 		if (Users.get(target)) Users.get(target).popup('Your XP was reset by an Administrator. This cannot be undone and nobody below the rank of Administrator can assist you or answer questions about this.');
+<<<<<<< HEAD:tsunami-plugins/exp.js
 		user.popup("|html|You have reset the XP of " + Tsunami.nameColor(targetUser, true) + ".");
 		Rooms('staff').add('|html|[EXP Monitor] ' + Tsunami.nameColor(user.name, true) + ' has reset the XP of ' + Tsunami.nameColor(target, true));
+=======
+		user.popup("|html|You have reset the XP of " + SG.nameColor(targetUser, true) + ".");
+		Monitor.adminlog('[EXP Monitor] ' + user.name + ' has reset the XP of ' + target);
+>>>>>>> 0a2639684785c16c47c22a57485c084970227bea:spacialgaze-plugins/exp.js
 		room.update();
+	},
+
+	doublexp: 'doubleexp',
+	doubleexp: function (target, room, user) {
+		if (!this.can('roomowner')) return;
+		DOUBLE_XP = !DOUBLE_XP;
+		return this.sendReply('Double XP was turned ' + (DOUBLE_XP ? 'ON' : 'OFF') + '.');
 	},
 
 	expon: function (target, room, user) {

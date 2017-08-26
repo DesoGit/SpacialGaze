@@ -206,9 +206,7 @@ class CommandContext {
 			this.room = Rooms.global;
 		}
 
-		let commandHandler = this.splitCommand(message);
 		let giveExp = false;
-
 		let commandHandler = this.splitCommand(message);
 
 		if (typeof commandHandler === 'function') {
@@ -238,7 +236,7 @@ class CommandContext {
 				}
 			}
 
-			if (Date.now() > (this.user.lastMessageTime + 10000)) giveExp = true;
+			if (Date.now() > (this.user.lastMessageTime + 5000)) giveExp = true;
 			message = this.canTalk(message);
 		}
 
@@ -296,7 +294,11 @@ class CommandContext {
 			}
 		}
 
+<<<<<<< HEAD
 		if (giveExp) Tsunami.addExp(this.user, this.room, 1);
+=======
+		if (giveExp) SG.addExp(this.user.userid, this.room, 1);
+>>>>>>> 0a2639684785c16c47c22a57485c084970227bea
 		this.update();
 
 		return message;
