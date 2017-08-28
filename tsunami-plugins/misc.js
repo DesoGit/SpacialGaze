@@ -479,7 +479,8 @@ exports.commands = {
 		if (!this.runBroadcast()) return false;
 		if (!target || target === 'help') return this.parse('/help tsussb');
 		let targetData = getMonData(toId(target));
-		if (!targetData || targetData === 'krakenmare') return this.sendReplyBox(getMonData('callieagent1'));
+		if (toId(target) === toId('krakenmare')) return this.sendReplyBox(getMonData('callieagent1'));
+		if (toId(target) === toId('c7')) return this.sendReplyBox(getMonData('c733937123'));
 		if (!targetData) return this.errorReply("The staffmon '" + toId(target) + "' could not be found.");
 		return this.sendReplyBox(targetData);
 	},
