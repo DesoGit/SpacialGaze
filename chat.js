@@ -1026,16 +1026,10 @@ Chat.loadPlugins = function () {
 			}
 		}
 	}
-<<<<<<< HEAD
 	for (let file of FS('tsunami-plugins').readdirSync()) {
 		if (file.substr(-3) !== '.js' || file === 'Tsunami.js') continue;
-		Object.assign(commands, require('./tsunami-plugins/' + file).commands);
-=======
-	for (let file of FS('spacialgaze-plugins').readdirSync()) {
-		if (file.substr(-3) !== '.js' || file === 'SG.js') continue;
-		const spacialgazeplugin = require(`./spacialgaze-plugins/${file}`);
-		Object.assign(commands, spacialgazeplugin.commands);
->>>>>>> 3c91ad25edbedbebf70b30bcf3cd052b95f266ad
+		const tsunamiplugin = require(`./tsunami-plugins/${file}`);
+		Object.assign(commands, tsunamiplugin.commands);
 	}
 };
 

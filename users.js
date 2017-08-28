@@ -705,14 +705,9 @@ class User {
 			this.send(`|nametaken|${name}|Your authentication token was invalid.`);
 		}
 		if (Tells.inbox[userid]) Tells.sendTell(userid, this);
-<<<<<<< HEAD
+		Ontime[userid] = Date.now();
 		Tsunami.showNews(userid, this);
 		Tsunami.giveDailyReward(this);
-=======
-		Ontime[userid] = Date.now();
-		SG.showNews(userid, this);
-		SG.giveDailyReward(this);
->>>>>>> 3c91ad25edbedbebf70b30bcf3cd052b95f266ad
 		return false;
 	}
 	validateRename(name, tokenData, newlyRegistered, challenge) {
