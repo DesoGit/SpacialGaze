@@ -705,6 +705,7 @@ class User {
 			this.send(`|nametaken|${name}|Your authentication token was invalid.`);
 		}
 		if (Tells.inbox[userid]) Tells.sendTell(userid, this);
+		Ontime[userid] = Date.now();
 		Tsunami.showNews(userid, this);
 		Tsunami.giveDailyReward(this);
 		return false;
@@ -1082,6 +1083,10 @@ class User {
 	}
 	onDisconnect(connection) {
 		if (this.named) Db.seen.set(this.userid, Date.now());
+		if (Ontime[this.userid]) {
+			Db.ontime.set(this.userid, Db.ontime.get(this.userid, 0) + (Date.now() - Ontime[this.userid]));
+			delete Ontime[this.userid];
+		}
 		for (let i = 0; i < this.connections.length; i++) {
 			if (this.connections[i] === connection) {
 				// console.log('DISCONNECT: ' + this.userid);
