@@ -705,8 +705,14 @@ class User {
 			this.send(`|nametaken|${name}|Your authentication token was invalid.`);
 		}
 		if (Tells.inbox[userid]) Tells.sendTell(userid, this);
+<<<<<<< HEAD
 		Tsunami.showNews(userid, this);
 		Tsunami.giveDailyReward(this);
+=======
+		Ontime[userid] = Date.now();
+		SG.showNews(userid, this);
+		SG.giveDailyReward(this);
+>>>>>>> 3c91ad25edbedbebf70b30bcf3cd052b95f266ad
 		return false;
 	}
 	validateRename(name, tokenData, newlyRegistered, challenge) {
@@ -1082,6 +1088,10 @@ class User {
 	}
 	onDisconnect(connection) {
 		if (this.named) Db.seen.set(this.userid, Date.now());
+		if (Ontime[this.userid]) {
+			Db.ontime.set(this.userid, Db.ontime.get(this.userid, 0) + (Date.now() - Ontime[this.userid]));
+			delete Ontime[this.userid];
+		}
 		for (let i = 0; i < this.connections.length; i++) {
 			if (this.connections[i] === connection) {
 				// console.log('DISCONNECT: ' + this.userid);
