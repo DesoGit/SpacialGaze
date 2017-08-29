@@ -142,4 +142,46 @@ exports.BattleAbilities = {
 			}
 		},
 	},
+	// Gligars
+	finalfight: {
+		name: 'Final Fight',
+		id: 'finalfight',
+		onStart: function (pokemon) {
+			this.add('-ability', pokemon, 'Final Fight');
+		},
+		onModifyMove: function (move) {
+			move.ignoreAbility = true;
+		},
+		onAnyAccuracy: function (accuracy, target, source, move) {
+			if (move && (source === this.effectData.target || target === this.effectData.target)) {
+				return true;
+			}
+			return accuracy;
+		},
+		desc: "Mold Breaker + No Guard",
+	},
+	//megas4ever
+	"spiritascension": {
+		id: "spiritascension",
+		name: "Spirit Ascension",
+		onModifySpAPriority: 5,
+		onModifySpA: function (spa, pokemon) {
+			if (pokemon.status) {
+				return this.chainModify(1.5);
+			}
+		},
+		onModifySpDPriority: 5,
+		onModifySpD: function (spd, pokemon) {
+			if (pokemon.status) {
+				return this.chainModify(1.5);
+			}
+		},
+		onModifySpePriority: 5,
+		onModifySpe: function (spe, pokemon) {
+			if (pokemon.status) {
+				return this.chainModify(1.5);
+			}
+		},
+		desc: "If the user is statused, their SpA, SpD, and Spe is multiplied by 1.5x.",
+	},
 };

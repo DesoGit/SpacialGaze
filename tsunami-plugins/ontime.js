@@ -40,9 +40,15 @@ exports.commands = {
 		if (isConnected && !Ontime[userid]) Ontime[userid] = Date.now();
 
 		if (isConnected) {
+<<<<<<< HEAD:tsunami-plugins/ontime.js
 			this.sendReplyBox(Tsunami.nameColor(user, true) + '\'s total ontime is <b>' + displayTime(convertTime(totalOntime)) + '</b>.' + ' Current ontime: <b>' + displayTime(convertTime((currentOntime))) + '</b>.');
 		} else {
 			this.sendReplyBox(Tsunami.nameColor(user, true) + '\'s total ontime is <b>' + displayTime(convertTime(totalOntime)) + '</b>.' + ' Currently not online.');
+=======
+			this.sendReplyBox(SG.nameColor(userid, true) + '\'s total ontime is <b>' + displayTime(convertTime(totalOntime)) + '</b>.' + ' Current ontime: <b>' + displayTime(convertTime((currentOntime))) + '</b>.');
+		} else {
+			this.sendReplyBox(SG.nameColor(userid, true) + '\'s total ontime is <b>' + displayTime(convertTime(totalOntime)) + '</b>.' + ' Currently not online.');
+>>>>>>> 662c3c95d3061c3a1f0a81eb6ed2209cfd224bbf:spacialgaze-plugins/ontime.js
 		}
 	},
 };

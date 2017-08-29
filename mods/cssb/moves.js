@@ -674,10 +674,100 @@ exports.BattleMovedex = {
 				},
 			},
 		},
-		desc: "95 BP, Dark type & +1 Def, +1 SpD, & +1 Spe",
+		desc: "95 BP & +1 Def, +1 SpD, & +1 Spe",
 		target: "normal",
 		type: "Dark",
 		zMovePower: 200,
+	},
+	// Insist
+	debugging: {
+		id: "debugging",
+		name: "Debugging",
+		priority: 1,
+		self: {
+			boosts: {
+				spa: 1,
+				spe: 1,
+			},
+		},
+		flags: {
+			protect: 1,
+			mirror: 1,
+		},
+		desc: "Boosts user's SpA and Spe by 1 stage.",
+		secondary: false,
+		category: "Special",
+		onHit: function (target, source, move) {
+			this.add('c|@Insist|``npm test``');
+		},
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Hydro Pump", target);
+		},
+		basePower: 90,
+		pp: 15,
+		accuracy: 100,
+		target: "normal",
+		type: "Water",
+		zMovePower: 140,
+		contestType: "Cool",
+	},
+	//Diancie11
+	"botanicalgardens": {
+		basePower: 0,
+		pp: 10,
+		priority: 0,
+		id: "botanicalgardens",
+		name: "Botanical Gardens",
+		boosts: {
+			def: 1,
+			spa: 1,
+			spd: 1,
+		},
+		flags: {snatch: 1, heal: 1},
+		heal: [1, 2],
+		category: "Status",
+		onHit: function (source) {
+			if (source.hasType('Grass')) return false;
+			if (!source.addType('Grass')) return false;
+			this.add('-start', source, 'typeadd', 'Grass', '[from] move: Botanical Gardens');
+		},
+		onPrepareHit: function (target, source) {
+			this.attrLastMove('[still]');
+			this.add('-anim', source, "Leafage", target);
+		},
+		desc: "Heals the user by 1/2 max HP, boosts the user's Def, SpA & SpD by 1 stage, and adds Grass typing to the user.",
+		type: "Grass",
+		target: "self",
+		zMoveEffect: "clearnegativeboost",
+		contestType: "Beautiful",
+	},
+	//megas4ever
+	"draconiandoomsday": {
+		accuracy: 95,
+		basePower: 100,
+		category: "Special",
+		desc: "Boosts the user's Defense, Special Attack, Special Defense, and Speed by one stage.",
+		shortDesc: "+1 Def, SpA, SpD, and Spe.",
+		id: "draconiandoomsday",
+		isViable: true,
+		name: "Draconian Doomsday",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		self: {
+			boosts: {
+				def: 1,
+				spa: 1,
+				spd: 1,
+				spe: 1,
+			},
+		},
+		secondary: false,
+		target: "normal",
+		type: "Dragon",
+		zMovePower: 170,
+		contestType: "Cool",
 	},
 	//DEFAULT-MONS CUSTOM MOVES (Save incase or re-addition)
 	// SpaceGazer
