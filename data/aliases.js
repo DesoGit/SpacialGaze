@@ -40,9 +40,16 @@ exports.BattleAliases = {
 	"gen6inverse": "[Gen 6] Inverse Battle",
 	"uber": "[Gen 7] Ubers",
 
+<<<<<<< HEAD
 	//Tsunami
 	"tsussb": "[Gen 7] Tsu Super Staff Bros",
 	"ssb": "[Gen 7] Tsu Super Staff Bros",
+=======
+	//SpacialGaze
+	"digimon": "[Gen 7] Digimon Showdown",
+	"sgssb": "[Gen 7] Super Staff Bros",
+	"ssb": "[Gen 7] Super Staff Bros",
+>>>>>>> de33fafbcb8c6f7e82db74ca25dd2ef942a3bd75
 	"ssbffa": "[Gen 7] Super Staff Bros Free For All",
 	"rssb": "[Gen 1] Retro Super Staff Bros",
 	"pmd": "[Gen 7] Pokemon Mystery Dungeon",
