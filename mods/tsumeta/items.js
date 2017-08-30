@@ -11,52 +11,78 @@ function typeSupBer_Val(pokemon, ability, item) {
 }
 
 exports.BattleItems = {
-	"sitrusberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			this.heal(pokemon.maxhp / 2);
-		}
+	"sitrusberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp / 2);
+			} else {
+				this.heal(pokemon.maxhp / 4);
+			}
+		},
 	},
-	"oranberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			this.heal(pokemon.maxhp + 20);
-		}
+	"oranberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp + 20);
+			} else {
+				this.heal(10);
+			}
+		},
 	},
-	"figyberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			//inherit: true,
-			this.heal(pokemon.maxhp / 4);
-		}
+	"figyberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp / 2);
+			} else {
+				this.heal(pokemon.maxhp / 4);
+			}
+		},
 	},
-	"wikiberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			//inherit: true,
-			this.heal(pokemon.maxhp / 4);
-		}
+	"wikiberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp / 2);
+			} else {
+				this.heal(pokemon.maxhp / 4);
+			}
+		},
 	},
-	"magoberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			//inherit: true,
-			this.heal(pokemon.maxhp / 4);
-		}
+	"magoberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp / 2);
+			} else {
+				this.heal(pokemon.maxhp / 4);
+			}
+		},
 	},
-	"iapapaberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			//inherit: true,
-			this.heal(pokemon.maxhp / 4);
-		}
+	"iapapaberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp / 2);
+			} else {
+				this.heal(pokemon.maxhp / 4);
+			}
+		},
 	},
-	"aguavberry": function (pokemon, ability, item) {
-		if (pokemon.ability === 'gluttony') {
-			//inherit: true,
-			this.heal(pokemon.maxhp / 4);
-		}
+	"aguavberry": {
+		inherit: true,
+		onEat: function (pokemon) {
+			if (pokemon.ability === 'gluttony') {
+				this.heal(pokemon.maxhp / 2);
+			} else {
+				this.heal(pokemon.maxhp / 4);
+			}
+		},
 	},
 	"occaberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Fire",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Fire' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -66,17 +92,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Fire-type attack. Single use.",
 	},
 	"passhoberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Water",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Water' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -86,17 +104,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Water-type attack. Single use.",
 	},
 	"wacanberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Electric",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Electric' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -106,17 +116,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Electric-type attack. Single use.",
 	},
 	"rindoberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Grass",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Grass' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -126,17 +128,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Grass-type attack. Single use.",
 	},
 	"yacheberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Ice",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Ice' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -146,17 +140,8 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Ice-type attack. Single use.",
 	},
 	"chopleberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Fighting",
-		},
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Fighting' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -166,17 +151,10 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Fighting-type attack. Single use.",
+		inherit: true,
 	},
 	"kebiaberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Poison",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Poison' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -186,17 +164,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Poison-type attack. Single use.",
 	},
 	"shucaberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Ground",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Ground' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -206,17 +176,8 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Ground-type attack. Single use.",
 	},
 	"cobaberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Flying",
-		},
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Flying' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -226,17 +187,10 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Flying-type attack. Single use.",
+		inherit: true,
 	},
 	"payapaberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Psychic",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Psychic' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -246,17 +200,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Psychic-type attack. Single use.",
 	},
 	"tangaberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Bug",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Bug' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -266,17 +212,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Bug-type attack. Single use.",
 	},
 	"chartiberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Rock",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Rock' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -286,17 +224,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Rock-type attack. Single use.",
 	},
 	"chilanberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Normal",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Normal' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -306,17 +236,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Normal-type attack. Single use.",
 	},
 	"kasibberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Ghost",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Ghost' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -326,17 +248,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Ghost-type attack. Single use.",
 	},
 	"habanberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Dragon",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Fire' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -346,17 +260,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Dragon-type attack. Single use.",
 	},
 	"colburberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Dark",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Dark' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -366,17 +272,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Dark-type attack. Single use.",
 	},
 	"babiriberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Steel",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Steel' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -386,17 +284,9 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Steel-type attack. Single use.",
 	},
 	"roseliberry": {
-		isBerry: true,
-		naturalGift: {
-			basePower: 80,
-			type: "Fairy",
-		},
+		inherit: true,
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Fairy' && move.typeMod > 0 && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				if (target.eatItem()) {
@@ -406,10 +296,6 @@ exports.BattleItems = {
 				}
 			}
 		},
-		onEat: function () {},
-		num: 184,
-		gen: 4,
-		desc: "Halves damage taken from a supereffective Fairy-type attack. Single use.",
 	},
 	"souldew": {
 		inherit: true,
