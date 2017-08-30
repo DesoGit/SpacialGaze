@@ -133,7 +133,7 @@ Rank: TBD
 (Krabby)
 @ Eviolite
 EVs: 6 HP / 252 Atk / 252 Spe
-Adament Nature
+Adamant Nature
 Ability: Ready to Stab
     -On entry, +2 Attack and Speed.
 Moves: Crabhammer, Swords Dance, Knock Off
