@@ -73,11 +73,7 @@ exports.BattleMovedex = {
 			}
 		},
 		inherit: true,
-<<<<<<< HEAD
 		desc: "Has a 30% chance to break most Protecting moves; except Detect.",
-=======
-		desc: "Breaks most Protecting moves (except Detect, which has a 30% chance to break).",
->>>>>>> 876d710a37702c4e5daa40fc1c05ba9befd22bc9
 	},
 	"toxic": {
 		inherit: true,
