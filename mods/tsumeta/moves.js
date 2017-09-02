@@ -62,17 +62,18 @@ exports.BattleMovedex = {
 		shortDesc: "Lowers Def + SpD + Spe by 1 stage",
 	},
 	"extremespeed": {
-		flags: {contact: 1},
+		flags: {contact: 1, mirror: 1},
 		onBeforeHit: function (pokemon, target, move) {
 			if (move.id === 'detect') {
-				this.breaksProtect = false;
+				move.breaksProtect = false;
 			} else {
 				if (Math.floor(Math.random() * 99) < 30) {
-					this.breaksProtect = true;
+					move.breaksProtect = true;
 				}
 			}
 		},
-		desc: "Breaks most Protecting moves (except Detect, which has a 30% chance to break).",
+		inherit: true,
+		desc: "Has a 30% chance to break most Protecting moves; except Detect.",
 	},
 	"toxic": {
 		inherit: true,
