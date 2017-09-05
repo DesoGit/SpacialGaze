@@ -334,7 +334,11 @@ class CommandContext {
 			}
 		}
 
+<<<<<<< HEAD
 		if (giveExp) Tsunami.addExp(this.user.userid, this.room, 1);
+=======
+		if (this.user.registered && giveExp) SG.addExp(this.user.userid, this.room, 1);
+>>>>>>> f74b0880cc5ac56eda4597fdb83c457c7ffc5429
 		this.update();
 
 		return message;
