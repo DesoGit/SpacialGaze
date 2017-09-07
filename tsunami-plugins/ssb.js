@@ -72,7 +72,7 @@ function validate(me, targetUser, quiet) {
 	}
 	if (species.tier === 'Uber') {
 		//Most are banned a few arent
-		if (species.id !== 'aegislash' && species.id !== 'blaziken' && species.id !== 'greninja') {
+		if (species.id !== 'aegislash' && species.id !== 'blaziken') {
 			if (!quiet && valid) me.errorReply(targetUser.name + '\'s species was invalid.');
 			valid = false;
 			species = Dex.getTemplate('unown');
@@ -98,6 +98,11 @@ function validate(me, targetUser, quiet) {
 		if (!Dex.mod('cssb').getMove(targetUser.movepool[i]).exists) {
 			valid = false;
 			if (!quiet) me.errorReply(targetUser.name + '\'s move "' + targetUser.movepool[i] + '" does not exist.');
+			targetUser.removeMove(targetUser.movepool[i]);
+		}
+		if (Dex.getMove(targetUser.movepool[i]).ohko) {
+			valid = false;
+			if (!quiet) me.errorReply(targetUser.name + '\'s move "' + targetUser.movepool[i] + '" is banned because its an OHKO move.');
 			targetUser.removeMove(targetUser.movepool[i]);
 		}
 	}
@@ -272,9 +277,9 @@ class SSB {
 		if (!species.learnset && species.id !== 'oricoriosensu' && species.id !== 'oricoriopau' && species.id !== 'oricoriopompom') return false;
 		if (species.gen < 1) return false;
 		if (species.battleOnly) return false;
-		if (species.tier === 'Uber' || species.tier === 'Bank-Uber') {
+		if (species.tier === 'Uber') {
 			//Most are banned a few arent
-			if (species.id !== 'aegislash' && species.id !== 'blaziken' && species.id !== 'greninja') return false;
+			if (species.id !== 'aegislash' && species.id !== 'blaziken') return false;
 		}
 		this.species = species.species;
 		this.ability = species.abilities['0']; //Force legal ability
@@ -364,7 +369,7 @@ class SSB {
 				return false;
 			}
 		} else {
-			if (item.id === 'mawilite' || item.id === 'salamencite' || item.id === 'gengarite' || item.id === 'kangaskhanite' || item.id === 'lucarionite' || item.id === 'blazikenite') return false;
+			if (item.id === 'salamencite' || item.id === 'gengarite' || item.id === 'kangaskhanite' || item.id === 'lucarionite' || item.id === 'blazikenite') return false;
 			this.item = item.name;
 		}
 		return true;
@@ -393,14 +398,10 @@ class SSB {
 		move = Dex.getMove(toId(move));
 		if (!move.exists) return false; //Only normal moves here.
 		if (this.movepool.length + (this.cMove === false ? 0 : 1) >= MAX_MOVEPOOL_SIZE) return false;
-		/*let learnpool = [];
-		for(let i in Tools.getTemplate(this.species).learnset) {
-		  learnpool.push(i);
-		}
-		if (learnpool.indexOf(move.id) === -1) return false;*/
 		if (TeamValidator('gen7ou').checkLearnset(move, this.species, {
 			set: {},
 		})) return false;
+		if (move.ohko) return false;
 		if (this.movepool.indexOf(move.name) > -1) return false;
 		this.movepool.push(move.name);
 		return true;
