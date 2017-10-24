@@ -179,7 +179,6 @@ exports.commands = {
 			"- " + Tsunami.nameColor('Desokoro', true) + " (Server Host, Owner, SysAdmin)<br />" +
 			"<br />" +
 			"<u><b>Major Contributors:</b></u><br />" +
-<<<<<<< HEAD:tsunami-plugins/misc.js
 			"- " + Tsunami.nameColor('HoeenHero', true) + " (Development)<br />" +
 			"- " + Tsunami.nameColor('Tsunami Prince', true) + " (Policy Admin)<br />" +
 			"- " + Tsunami.nameColor('Insist', true) + " (Development)<br />" +
@@ -187,19 +186,6 @@ exports.commands = {
 			"<br />" +
 			"<u><b>Retired Staff:</b></u><br />" +
 			"- " + Tsunami.nameColor('Clue', true) + " (Former Policy & Media Admin)<br />" +
-=======
-			"- " + SG.nameColor('Kraken Mare', true) + " (Policy Admin, Development)<br />" +
-			"- " + SG.nameColor('Opple', true) + " (Policy Leader, Media Leader)<br />" +
-			"- " + SG.nameColor('C733937 123', true) + " (Policy Leader)<br />" +
-			"- " + SG.nameColor('Ashley the Pikachu', true) + " (CSS, Spriting, Digimon Project)<br />" +
-			"- " + SG.nameColor('Lycanium Z', true) + " (Development)<br />" +
-			"<br />" +
-			"<u><b>Retired Staff:</b></u><br />" +
-			"- " + SG.nameColor('The Run', true) + " (Former Server Owner, Development)<br />" +
-			"- " + SG.nameColor('Vulcaron', true) + " (Former Policy Leader)<br />" +
-			"- " + SG.nameColor('HiroZ', true) + " (Former Policy Leader)<br />" +
-			"- " + SG.nameColor('Insist', true) + " (Former Developer)<br />" +
->>>>>>> d869960d8fcc0feee409d77a5114f30e7c985db2:spacialgaze-plugins/misc.js
 			"<br />" +
 			"<u><b>Special Thanks:</b></u><br />" +
 			"- Our Staff Members<br />" +

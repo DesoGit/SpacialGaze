@@ -98,17 +98,16 @@ exports.commands = {
 		},
 		subscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before subscribing');
-<<<<<<< HEAD:tsunami-plugins/news.js
-			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are alreading subscribing Tsunami News.");
+			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are already subscribing to Tsunami News.");
 			Db.NewsSubscribers.set(user.userid, true);
-			this.sendReply("You have subscribed Tsunami News.");
-			this.popupReply("|wide||html|You will receive Tsunami News automatically once you connect to the Tsunami next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
+			this.sendReply("You have subscribed to Tsunami News.");
+			this.popupReply("|wide||html|You will receive Tsunami News automatically once you connect to Tsunami next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
 		},
 		unsubscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before unsubscribing');
-			if (!Db.NewsSubscribers.has(user.userid)) return this.errorReply("You have not subscribed Tsunami News.");
+			if (!Db.NewsSubscribers.has(user.userid)) return this.errorReply("You have not subscribed to Tsunami News.");
 			Db.NewsSubscribers.remove(user.userid);
-			this.sendReply("You have unsubscribed Tsunami News.");
+			this.sendReply("You have unsubscribed to Tsunami News.");
 			this.popupReply("|wide||html|You will no longer automatically receive Tsunami News.<br><hr><center><button class='button' name='send' value='/news'>View News</button></center>");
 		},
 		request: function (target, room, user) {
@@ -132,19 +131,6 @@ exports.commands = {
 			saveNewsRequests();
 			Tsunami.messageSeniorStaff('A news requested has been submitted by ' + user.name + '. ID: ' + newsId + ' Message: ' + target.trim());
 			return this.sendReply("Your request has been sent to Tsunami global authorities..");
-=======
-			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are already subscribing to SpacialGaze News.");
-			Db.NewsSubscribers.set(user.userid, true);
-			this.sendReply("You have subscribed to SpacialGaze News.");
-			this.popupReply("|wide||html|You will receive SpacialGaze News automatically once you connect to SpacialGaze next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
-		},
-		unsubscribe: function (target, room, user) {
-			if (!user.named) return this.errorReply('You must choose a name before unsubscribing');
-			if (!Db.NewsSubscribers.has(user.userid)) return this.errorReply("You have not subscribed to SpacialGaze News.");
-			Db.NewsSubscribers.remove(user.userid);
-			this.sendReply("You have unsubscribed to SpacialGaze News.");
-			this.popupReply("|wide||html|You will no longer automatically receive SpacialGaze News.<br><hr><center><button class='button' name='send' value='/news'>View News</button></center>");
->>>>>>> d869960d8fcc0feee409d77a5114f30e7c985db2:spacialgaze-plugins/news.js
 		},
 	},
 	serverannouncementshelp: ["/news view - Views current Tsunami News.",

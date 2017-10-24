@@ -6,21 +6,12 @@ exports.commands = {
 		if (!this.can('roomowner')) return false;
 		if (!this.canTalk()) return this.errorReply("You cannot do this while unable to speak.");
 		return this.sendReplyBox(
-<<<<<<< HEAD:tsunami-plugins/leaderhelp.js
 			'<b><u><font color="#008ae6">Tsunami\'s Leader Commands:</u></b></font><br /><br />' +
-			'<font size = 1><b>/lockip [IP]</b> - locks a particular IP address from the server. Exisiting users on the IP will not be locked. <br />' +
-			'<b>/banip [IP] OR /unbanip</b> - bans a particular IP address from the server. Exisiting users on the IP will not be banned. <br />' +
-			'<b>/globalvoice [username] OR /globaldevoice</b> - promotes/demotes a user to or from Global Voice <br />' +
-			'<b>/globaldriver [username] OR /globaldedriver</b> - promotes/demotes a user to or from Global Driver <br />' +
-			'<b>/globalmod [username] OR /globaldemod</b> - promotes/demotes a user to or from Global Moderator <br />' +
-=======
-			'<b><u><font color="#008ae6">SpacialGaze\'s Leader Commands:</u></b></font><br /><br />' +
 			'<font size = 1><b>/lockip [IP]</b> - locks a particular IP address from the server. Existing users on the IP will not be locked.<br />' +
 			'<b>/banip [IP] OR /unbanip</b> - bans a particular IP address from the server. Existing users on the IP will not be banned.<br />' +
 			'<b>/globalvoice [username] OR /globaldevoice</b> - promotes/demotes a user to or from Global Voice.<br />' +
 			'<b>/globaldriver [username] OR /globaldedriver</b> - promotes/demotes a user to or from Global Driver.<br />' +
 			'<b>/globalmod [username] OR /globaldemod</b> - promotes/demotes a user to or from Global Moderator.<br />' +
->>>>>>> d869960d8fcc0feee409d77a5114f30e7c985db2:spacialgaze-plugins/leaderhelp.js
 			'<b>/globaldeauth [username]</b> - demotes a user to Regular user <br />' +
 			'<b>/unbanall</b> - unbans all IP addresses <br />' +
 			'<b>/declare [message] or /greendeclare [message] or /reddeclare [message]</b> - Anonymously announces a message in a room in the color specified in the command (/decalre = blue).<br />' +
@@ -57,19 +48,6 @@ exports.commands = {
 			'<b>/clearall</b> - clears the entire chat of a room (use it only if needed).<br />' +
 			'<b>/roomlist</b> - displays the list of public/private/official/battle rooms and the total amount of users connected on the server.<br />' +
 			'<b>/hide [rank]</b> - Hides user\'s global rank to specified rank. [none/+/%/@/&]<br />' +
-<<<<<<< HEAD:tsunami-plugins/leaderhelp.js
-			'<b>/show</b> - Displays your global rank <br />' +
-			'<b>/givecurrency [user], [amount]</b> - gives a special amount of Gyarabucks to a user (needs a reason) <br />' +
-			'<b>/takecurrency [user], [amount]</b> - removes a special amount of Gyarabucks from a user (needs a reason) <br />' +
-			'<b>/moneylog [number]</b> - to view the last x lines <br />' +
-			'<b>/moneylog [text]</b> - to search for text <br />' +
-			'<b>/pmall [message]</b> - sends a pm to all users connected to Tsunami <br />' +
-			'<b>/pmallstaff [message] or /staffpm [message]</b> - sends a pm to all staff members connected to Tsunami <br />' +
-			'<b>/greendeclare [message] or /reddeclare [message]</b> - Anonymously announces a message in a room <br />' +
-			'<b>/roomrequests - Manage room requests, use /help roomrequests for more info. <br />' +
-			'<b>/checkroomrequest [user] - Check a room request <br />' +
-			'& all lower commands. </font>'
-=======
 			'<b>/show</b> - Displays your global rank.<br />' +
 			'<b>/givecurrency [user], [amount]</b> - gives a special amount of Stardust to a user (needs a reason).<br />' +
 			'<b>/takecurrency [user], [amount]</b> - removes a special amount of Stardust from a user (needs a reason).<br />' +
@@ -83,7 +61,6 @@ exports.commands = {
 			'<b>/giveexp [user], [amount]</b> - gives a special amount of exp to a user.<br />' +
 			'<b>/takeexp [user], [amount]</b> - removes a special amount of exp from a user.<br />' +
 			'& all lower commands.</font>'
->>>>>>> d869960d8fcc0feee409d77a5114f30e7c985db2:spacialgaze-plugins/leaderhelp.js
 		);
 	},
 };

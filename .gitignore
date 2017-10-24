@@ -4,18 +4,11 @@
 /node_modules
 /eslint-cache
 /chat-plugins/private.js
-<<<<<<< HEAD
+/chat-plugins/*-private.js
 /tsunami-plugins/filter.js
 /tsunami-plugins/shop.js
 /tsunami-plugins/leagues.js
 /tsunami-plugins/auth2.js
-=======
-/spacialgaze-plugins/filter.js
-/spacialgaze-plugins/shop.js
-/spacialgaze-plugins/leagues.js
-/spacialgaze-plugins/auth2.js
-/chat-plugins/*-private.js
->>>>>>> d869960d8fcc0feee409d77a5114f30e7c985db2
 npm-debug.log
 .eslintcache
 
