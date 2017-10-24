@@ -13,6 +13,12 @@ Navigation: [Tsunami][1] | [PS Server repository][10] | [PS Client repository][2
 [![devDependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/dev-status.svg)](https://david-dm.org/DesoGit/Tsunami_PS?type=dev)
 [![optionalDependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/optional-status.svg)](https://david-dm.org/DesoGit/Tsunami_PS?type=optional)
 
+<<<<<<< HEAD
+=======
+[![Build Status](https://travis-ci.org/Zarel/Pokemon-Showdown.svg)](https://travis-ci.org/Zarel/Pokemon-Showdown)
+[![Dependency Status](https://david-dm.org/zarel/Pokemon-Showdown.svg)](https://david-dm.org/zarel/Pokemon-Showdown)
+[![devDependency Status](https://david-dm.org/zarel/Pokemon-Showdown/dev-status.svg)](https://david-dm.org/zarel/Pokemon-Showdown?type=dev)
+>>>>>>> bc89142864e6a68fe2b7c1821aa5028064d8337a
 
 Introduction
 ------------------------------------------------------------------------
