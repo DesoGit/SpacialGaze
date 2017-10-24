@@ -111,7 +111,11 @@ Owners:
 Contributors:
 
 - [Insist](https://github.com/DeathlyPlays)
+<<<<<<< HEAD
 - [Kraken Mare](https://github.com/RagiingAlways)
+=======
+- [Lycanium Z](https://github.com/Lycanium-Z)
+>>>>>>> d869960d8fcc0feee409d77a5114f30e7c985db2
 
 Special thanks:
 

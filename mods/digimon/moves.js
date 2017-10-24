@@ -984,9 +984,9 @@ exports.BattleMovedex = {
 		target: "allAdjacent",
 		type: "Mech",
 	},
-	"pulselaser": {
-		id: "pulselaser",
-		name: "Pulse Laser",
+	"pulselazer": {
+		id: "pulselazer",
+		name: "Pulse Lazer",
 		basePower: 85,
 		accuracy: 100,
 		category: "Special",
@@ -1049,7 +1049,7 @@ exports.BattleMovedex = {
 		id: "fullpotential",
 		name: "Full Potential",
 		basePower: 0,
-		accuracy: 0,
+		accuracy: 100,
 		category: "Status",
 		pp: 20,
 		boosts: {
