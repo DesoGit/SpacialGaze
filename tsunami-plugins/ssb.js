@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 let fs = require('fs');
 let ssbWrite = true; //if false, do not write to json
@@ -9,11 +9,7 @@ let typeList = ['Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting
 
 global.writeSSB = function () {
 	if (!ssbWrite) return false; //Prevent corruptions
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-	fs.writeFile('config/ssb.json', JSON.stringify(Tsunami.ssb));
-=======
-	fs.writeFile('config/ssb.json', JSON.stringify(SG.ssb), () => {});
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+	fs.writeFile('config/ssb.json', JSON.stringify(Tsunami.ssb), () => {});
 };
 
 //Shamlessly ripped from teambuilder client.
@@ -122,13 +118,8 @@ function validate(me, targetUser, quiet) {
 }
 
 function buildMenu(userid) {
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-	if (!Tsunami.ssb[userid]) return '<span style="color:red"><b>Error: </b>User "' + userid + '" not found in ssb.</span>';
+	if (!Tsunami.ssb[userid]) return '<span style="color:red"><strong>Error: </strong>User "' + userid + '" not found in ssb.</span>';
 	let speciesName = toId(Tsunami.ssb[userid].species);
-=======
-	if (!SG.ssb[userid]) return '<span style="color:red"><strong>Error: </strong>User "' + userid + '" not found in ssb.</span>';
-	let speciesName = toId(SG.ssb[userid].species);
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
 	/*if (speciesName.substring(0, 8) === 'oricorio') {
 	  speciesName = 'oricorio-' + toId(speciesName.substring(8));
 	}*/
@@ -207,11 +198,7 @@ function statMenu(userid) {
 		output += '<tr><td><button class="button" name="send" value="/ssb edit statsq ev, ' + values[i] + ', 0">Set 0</button></td><th>' + values[i] + ': ' + Tsunami.ssb[userid].evs[toId(values[i])] + '</th><td style="border-right:1px solid black"><button class="button" name="send" value="/ssb edit statsq ev, ' + values[i] + ', 252">Set 252</button></td>';
 		output += '<td style="border-left:1px solid black"><button class="button" name="send" value="/ssb edit statsq iv, ' + values[i] + ', 0">Set 0</button></td><th>' + values[i] + ': ' + Tsunami.ssb[userid].ivs[toId(values[i])] + '</th><td><button class="button" name="send" value="/ssb edit statsq iv, ' + values[i] + ', 31">Set 31</button></td></tr>';
 	}
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-	output += '<div style="float: right; display: inline-block; width: 40%"><b><u>Stat Menu</u></b><br/><br/><button class="button" name="send" value="/ssb edit stats help">Set EVs or IVs to a custom value</button><br/><br/><i>Current Nature:</i> ' + Tsunami.ssb[userid].nature + '<br/><br/><button class="button" name="send" value="/ssb edit stats nature help">Set Nature</button><br/><br/><button class="button" name="send" value="/ssb edit main">Main Menu</button></div></div>';
-=======
-	output += '<div style="float: right; display: inline-block; width: 40%"><strong><u>Stat Menu</u></strong><br/><br/><button class="button" name="send" value="/ssb edit stats help">Set EVs or IVs to a custom value</button><br/><br/><i>Current Nature:</i> ' + SG.ssb[userid].nature + '<br/><br/><button class="button" name="send" value="/ssb edit stats nature help">Set Nature</button><br/><br/><button class="button" name="send" value="/ssb edit main">Main Menu</button></div></div>';
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+	output += '<div style="float: right; display: inline-block; width: 40%"><strong><u>Stat Menu</u></strong><br/><br/><button class="button" name="send" value="/ssb edit stats help">Set EVs or IVs to a custom value</button><br/><br/><i>Current Nature:</i> ' + Tsunami.ssb[userid].nature + '<br/><br/><button class="button" name="send" value="/ssb edit stats nature help">Set Nature</button><br/><br/><button class="button" name="send" value="/ssb edit main">Main Menu</button></div></div>';
 	return output;
 }
 
@@ -537,13 +524,8 @@ exports.commands = {
 			main: '',
 			'': function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -559,13 +541,8 @@ exports.commands = {
 			speciesq: 'species',
 			species: function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -585,13 +562,8 @@ exports.commands = {
 			moveq: 'move',
 			move: function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -642,13 +614,8 @@ exports.commands = {
 			statsq: 'stats',
 			stats: function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -719,13 +686,8 @@ exports.commands = {
 			abilityq: 'ability',
 			ability: function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -744,13 +706,8 @@ exports.commands = {
 			itemq: 'item',
 			item: function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -775,13 +732,8 @@ exports.commands = {
 			detailsq: 'details',
 			details: function (target, room, user, connection, cmd, message) {
 				if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-				if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-				if (!Tsunami.ssb[user.userid]) {
-=======
 				if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-				if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+				if (!Tsunami.ssb[user.userid]) {
 					this.sendReply('Could not find your SSB pokemon, creating a new one...');
 					Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 					writeSSB();
@@ -852,13 +804,8 @@ exports.commands = {
 		},
 		toggle: function (target, room, user, connection, cmd, message) {
 			if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-			if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-			if (!Tsunami.ssb[user.userid]) {
-=======
 			if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-			if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+			if (!Tsunami.ssb[user.userid]) {
 				this.sendReply('Could not find your SSB pokemon, creating a new one...');
 				Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 				writeSSB();
@@ -883,13 +830,8 @@ exports.commands = {
 		cmoves: 'custom',
 		custom: function (target, room, user, connection, cmd, message) {
 			if (!user.named) return this.errorReply('You must choose a name first.');
-<<<<<<< HEAD:tsunami-plugins/ssb.js
-			if (user.locked) return this.errorReply('You cannot edit you SSB pokemon while locked.');
-			if (!Tsunami.ssb[user.userid]) {
-=======
 			if (user.locked) return this.errorReply('You cannot edit your SSB pokemon while locked.');
-			if (!SG.ssb[user.userid]) {
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/ssb.js
+			if (!Tsunami.ssb[user.userid]) {
 				this.sendReply('Could not find your SSB pokemon, creating a new one...');
 				Tsunami.ssb[user.userid] = new SSB(user.userid, user.name);
 				writeSSB();

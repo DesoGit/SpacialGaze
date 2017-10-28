@@ -23,11 +23,7 @@ function NewItem(name, desc, price, isSSB) {
 
 function writeShop() {
 	if (!writeJSON) return false; //Prevent corruptions
-<<<<<<< HEAD:tsunami-plugins/eShop.js
-	fs.writeFile('config/eShop.json', JSON.stringify(Tsunami.eShop));
-=======
-	fs.writeFile('config/eShop.json', JSON.stringify(SG.eShop), () => {});
->>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/eShop.js
+	fs.writeFile('config/eShop.json', JSON.stringify(Tsunami.eShop), () => {});
 }
 
 function shopDisplay() {
