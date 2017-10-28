@@ -98,7 +98,11 @@ class Voucher {
 
 function writeFile() {
 	if (!writeJSON) return false; //Prevent corruptions
+<<<<<<< HEAD:tsunami-plugins/vouchers.js
 	fs.writeFile('config/vouchers.json', JSON.stringify(Tsunami.vouchers));
+=======
+	fs.writeFile('config/vouchers.json', JSON.stringify(SG.vouchers), () => {});
+>>>>>>> e7b15e2dc9f7927a3e285f2456ae308cddcfd72a:spacialgaze-plugins/vouchers.js
 }
 
 //load JSON
