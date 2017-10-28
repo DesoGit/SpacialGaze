@@ -32,13 +32,10 @@ const THROTTLE_MULTILINE_WARN_STAFF = 6;
 
 const PERMALOCK_CACHE_TIME = 30 * 24 * 60 * 60 * 1000;
 
-<<<<<<< HEAD
-const fs = require('fs');
-=======
 const DEFAULT_TRAINER_SPRITES = [1, 2, 101, 102, 169, 170, 265, 266];
 
+const fs = require('fs');
 const FS = require('./fs');
->>>>>>> 7acc291fe2dd2c938c11dc57ff3c88d7ffbb8186
 
 let Users = module.exports = getUser;
 
@@ -469,14 +466,11 @@ class User {
 			if ((!room.auth || !room.auth[this.userid]) && this.customSymbol) return this.customSymbol + this.name;
 			return room.getAuth(this) + this.name;
 		}
-<<<<<<< HEAD
-		if (this.customSymbol) return this.customSymbol + this.name;
-=======
 		if (this.semilocked) {
 			const mutedSymbol = (Config.punishgroups && Config.punishgroups.muted ? Config.punishgroups.muted.symbol : '!');
 			return mutedSymbol + this.name;
 		}
->>>>>>> 7acc291fe2dd2c938c11dc57ff3c88d7ffbb8186
+		if (this.customSymbol) return this.customSymbol + this.name;
 		return this.group + this.name;
 	}
 	authAtLeast(minAuth, room) {
@@ -1580,7 +1574,7 @@ Users.socketConnect = function (worker, workerid, socketid, ip, protocol) {
 	}
 	// Emergency mode connections logging
 	if (Config.emergency) {
-		fs.appendFile('logs/cons.emergency.log', '[' + ip + ']\n', err => {
+		fs('logs/cons.emergency.log', '[' + ip + ']\n', err => {
 			if (err) {
 				console.log('!! Error in emergency conns log !!');
 				throw err;
