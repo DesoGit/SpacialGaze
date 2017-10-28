@@ -89,7 +89,7 @@ class Voucher {
 			Users(this.userid).gameBoost = true;
 			break;
 		default:
-			return false; //Unrecoginzed voucher
+			return false; //Unrecognized voucher
 		}
 		//Redeemed, delete this voucher
 		return true;
