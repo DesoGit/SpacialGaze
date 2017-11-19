@@ -88,6 +88,27 @@ exports.BattleScripts = {
 		this.useMove(baseMove, pokemon, target, sourceEffect, zMove);
 		this.singleEvent('AfterMove', move, null, pokemon, target, move);
 		this.runEvent('AfterMove', pokemon, target, move);
+
+		// Dancer's activation order is completely different from any other event, so it's handled separately
+		if (move.flags['dance'] && !move.isExternal) {
+			let dancers = [];
+			for (const side of this.sides) {
+				for (const currentPoke of side.active) {
+					if (!currentPoke || !currentPoke.hp || pokemon === currentPoke) continue;
+					if (currentPoke.hasAbility('dancer')) {
+						dancers.push(currentPoke);
+					}
+				}
+			}
+			// Dancer activates in order of lowest speed stat to highest
+			// Ties go to whichever Pokemon has had the ability for the least amount of time
+			dancers.sort(function (a, b) { return -(b.stats['spe'] - a.stats['spe']) || b.abilityOrder - a.abilityOrder; });
+			for (const dancer of dancers) {
+				this.faintMessages();
+				this.add('-activate', dancer, 'ability: Dancer');
+				this.runMove(baseMove.id, dancer, 0, this.getAbility('dancer'), undefined, true);
+			}
+		}
 		if (noLock && pokemon.volatiles.lockedmove) delete pokemon.volatiles.lockedmove;
 	},
 	/**
@@ -107,7 +128,7 @@ exports.BattleScripts = {
 			this.singleEvent('ModifyMove', move, null, pokemon, target, move, move);
 			move = this.getZMoveCopy(move, pokemon);
 			if (move.type !== 'Normal') sourceEffect = baseMove;
-		} else if (zMove || (sourceEffect && sourceEffect.isZ)) {
+		} else if (zMove || (sourceEffect && sourceEffect.isZ && sourceEffect.id !== 'instruct')) {
 			move = this.getZMoveCopy(move, pokemon);
 		} else {
 			move = this.getMoveCopy(move);
@@ -313,7 +334,7 @@ exports.BattleScripts = {
 			move.ignoreImmunity = (move.category === 'Status');
 		}
 
-		if (move.ignoreImmunity !== true && !move.ignoreImmunity[move.type] && !target.runImmunity(move.type, true)) {
+		if (this.gen < 7 && move.ignoreImmunity !== true && !move.ignoreImmunity[move.type] && !target.runImmunity(move.type, true)) {
 			return false;
 		}
 
@@ -323,6 +344,9 @@ exports.BattleScripts = {
 			return false;
 		}
 
+		if (this.gen >= 7 && move.ignoreImmunity !== true && !move.ignoreImmunity[move.type] && !target.runImmunity(move.type, true)) {
+			return false;
+		}
 		if (move.flags['powder'] && target !== pokemon && !this.getImmunity('powder', target)) {
 			this.debug('natural powder immunity');
 			this.add('-immune', target, '[msg]');
@@ -389,12 +413,12 @@ exports.BattleScripts = {
 
 		if (move.breaksProtect) {
 			let broke = false;
-			for (let i in {banefulbunker:1, kingsshield:1, protect:1, spikyshield:1}) {
-				if (target.removeVolatile(i)) broke = true;
+			for (const effectid of ['banefulbunker', 'kingsshield', 'protect', 'spikyshield']) {
+				if (target.removeVolatile(effectid)) broke = true;
 			}
 			if (this.gen >= 6 || target.side !== pokemon.side) {
-				for (let i in {craftyshield:1, matblock:1, quickguard:1, wideguard:1}) {
-					if (target.side.removeSideCondition(i)) broke = true;
+				for (const effectid of ['craftyshield', 'matblock', 'quickguard', 'wideguard']) {
+					if (target.side.removeSideCondition(effectid)) broke = true;
 				}
 			}
 			if (broke) {
@@ -702,7 +726,7 @@ exports.BattleScripts = {
 
 			if (!hitResult && !didSomething && !moveData.self && !moveData.selfdestruct) {
 				if (!isSelf && !isSecondary) {
-					if (hitResult === false || didSomething === false) this.add('-fail', target);
+					if (hitResult === false || didSomething === false) this.add('-fail', pokemon);
 				}
 				this.debug('move failed because it did nothing');
 				return false;
@@ -813,7 +837,7 @@ exports.BattleScripts = {
 	},
 
 	canZMove: function (pokemon) {
-		if (pokemon.side.zMoveUsed) return;
+		if (pokemon.side.zMoveUsed || (pokemon.transformed && (pokemon.template.isMega || pokemon.template.isPrimal))) return;
 		let item = pokemon.getItem();
 		if (!item.zMove) return;
 		if (item.zMoveUser && !item.zMoveUser.includes(pokemon.template.species)) return;

@@ -4,12 +4,12 @@
     coded by HoeenHero
     -----------------------
     THIS IS NOT THE SAME AS
-    THE PRIVATE SHOP ON Tsunami
+    THE PRIVATE SHOP ON SG
 ******************************/
 'use strict';
 
 const fs = require('fs');
-let allowThisShop = false; //Change to true to make these command work
+let allowThisShop = true; //Change to false to disable
 let writeJSON = true;
 Tsunami.eShop = {};
 
@@ -23,7 +23,7 @@ function NewItem(name, desc, price, isSSB) {
 
 function writeShop() {
 	if (!writeJSON) return false; //Prevent corruptions
-	fs.writeFile('config/eShop.json', JSON.stringify(Tsunami.eShop));
+	fs.writeFile('config/eShop.json', JSON.stringify(Tsunami.eShop), () => {});
 }
 
 function shopDisplay() {
@@ -96,7 +96,7 @@ try {
 
 //Usage notification
 try {
-	fs.accessSync('spacialgaze-plugins/shop.js', fs.F_OK);
+	fs.accessSync('tsunami-plugins/shop.js', fs.F_OK);
 	if (allowThisShop) console.warn('Since the normal shop is up the eShop has been disabled.');
 	allowThisShop = false;
 } catch (e) {
@@ -105,7 +105,7 @@ try {
 }
 
 exports.commands = {
-	//shop: 'eshop', //Uncomment this if you want this to be able to be used using the /shop command
+	shop: 'eshop', //Uncomment this if you want this to be able to be used using the /shop command
 	eshop: {
 		add: function (target, room, user, connection, cmd, message) {
 			if (!this.can('roomowner')) return false;

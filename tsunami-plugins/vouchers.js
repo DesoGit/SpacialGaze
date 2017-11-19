@@ -89,7 +89,7 @@ class Voucher {
 			Users(this.userid).gameBoost = true;
 			break;
 		default:
-			return false; //Unrecoginzed voucher
+			return false; //Unrecognized voucher
 		}
 		//Redeemed, delete this voucher
 		return true;
@@ -98,7 +98,7 @@ class Voucher {
 
 function writeFile() {
 	if (!writeJSON) return false; //Prevent corruptions
-	fs.writeFile('config/vouchers.json', JSON.stringify(Tsunami.vouchers));
+	fs.writeFile('config/vouchers.json', JSON.stringify(Tsunami.vouchers), () => {});
 }
 
 //load JSON

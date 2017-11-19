@@ -98,16 +98,16 @@ exports.commands = {
 		},
 		subscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before subscribing');
-			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are alreading subscribing Tsunami News.");
+			if (Db.NewsSubscribers.has(user.userid)) return this.errorReply("You are already subscribing to Tsunami News.");
 			Db.NewsSubscribers.set(user.userid, true);
-			this.sendReply("You have subscribed Tsunami News.");
-			this.popupReply("|wide||html|You will receive Tsunami News automatically once you connect to the Tsunami next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
+			this.sendReply("You have subscribed to Tsunami News.");
+			this.popupReply("|wide||html|You will receive Tsunami News automatically once you connect to Tsunami next time.<br><hr><center><button class='button' name='send' value ='/news'>View News</button></center>");
 		},
 		unsubscribe: function (target, room, user) {
 			if (!user.named) return this.errorReply('You must choose a name before unsubscribing');
-			if (!Db.NewsSubscribers.has(user.userid)) return this.errorReply("You have not subscribed Tsunami News.");
+			if (!Db.NewsSubscribers.has(user.userid)) return this.errorReply("You have not subscribed to Tsunami News.");
 			Db.NewsSubscribers.remove(user.userid);
-			this.sendReply("You have unsubscribed Tsunami News.");
+			this.sendReply("You have unsubscribed to Tsunami News.");
 			this.popupReply("|wide||html|You will no longer automatically receive Tsunami News.<br><hr><center><button class='button' name='send' value='/news'>View News</button></center>");
 		},
 		request: function (target, room, user) {

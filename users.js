@@ -32,7 +32,10 @@ const THROTTLE_MULTILINE_WARN_STAFF = 6;
 
 const PERMALOCK_CACHE_TIME = 30 * 24 * 60 * 60 * 1000;
 
+const DEFAULT_TRAINER_SPRITES = [1, 2, 101, 102, 169, 170, 265, 266];
+
 const fs = require('fs');
+const FS = require('./fs');
 
 let Users = module.exports = getUser;
 
@@ -186,7 +189,7 @@ function cacheGroupData() {
 	if (Config.groups) {
 		// Support for old config groups format.
 		// Should be removed soon.
-		console.log(
+		console.error(
 			`You are using a deprecated version of user group specification in config.\n` +
 			`Support for this will be removed soon.\n` +
 			`Please ensure that you update your config.js to the new format (see config-example.js, line 220).\n`
@@ -248,7 +251,7 @@ function cacheGroupData() {
 		punishgroups.locked = {
 			name: 'Locked',
 			id: 'locked',
-			symbol: '‽',
+			symbol: '\u203d',
 		};
 	}
 	if (!punishgroups.muted) {
@@ -284,10 +287,9 @@ Users.isUsernameKnown = function (name) {
 	let userid = toId(name);
 	if (Users(userid)) return true;
 	if (userid in usergroups) return true;
-	for (let i = 0; i < Rooms.global.chatRooms.length; i++) {
-		let curRoom = Rooms.global.chatRooms[i];
-		if (!curRoom.auth) continue;
-		if (userid in curRoom.auth) return true;
+	for (const room of Rooms.global.chatRooms) {
+		if (!room.auth) continue;
+		if (userid in room.auth) return true;
 	}
 	return false;
 };
@@ -296,9 +298,8 @@ Users.isTrusted = function (name) {
 	if (name.trusted) return name.trusted;
 	let userid = toId(name);
 	if (userid in usergroups) return userid;
-	for (let i = 0; i < Rooms.global.chatRooms.length; i++) {
-		let curRoom = Rooms.global.chatRooms[i];
-		if (!curRoom.isPrivate && !curRoom.isPersonal && curRoom.auth && userid in curRoom.auth && curRoom.auth[userid] !== '+') return userid;
+	for (const room of Rooms.global.chatRooms) {
+		if (!room.isPrivate && !room.isPersonal && room.auth && userid in room.auth && room.auth[userid] !== '+') return userid;
 	}
 	return false;
 };
@@ -377,8 +378,7 @@ class User {
 		this.userid = '';
 		this.group = Config.groupsranking[0];
 
-		let trainersprites = [1, 2, 101, 102, 169, 170, 265, 266];
-		this.avatar = trainersprites[Math.floor(Math.random() * trainersprites.length)];
+		this.avatar = DEFAULT_TRAINER_SPRITES[Math.floor(Math.random() * DEFAULT_TRAINER_SPRITES.length)];
 
 		this.connected = true;
 
@@ -392,6 +392,7 @@ class User {
 		//       the `ips` object, not just the latest IP.
 		this.latestIp = connection.ip;
 		this.locked = false;
+		this.semilocked = false;
 		this.namelocked = false;
 		this.prevNames = Object.create(null);
 		this.inRooms = new Set();
@@ -400,7 +401,6 @@ class User {
 		this.games = new Set();
 
 		// searches and challenges
-		this.searching = Object.create(null);
 		this.challengesFrom = {};
 		this.challengeTo = null;
 		this.lastChallenge = 0;
@@ -411,6 +411,7 @@ class User {
 		this.blockChallenges = false;
 		this.ignorePMs = false;
 		this.lastConnected = 0;
+		this.inviteOnlyNextBattle = false;
 
 		// chat queue
 		this.chatQueue = null;
@@ -433,15 +434,15 @@ class User {
 	sendTo(roomid, data) {
 		if (roomid && roomid.id) roomid = roomid.id;
 		if (roomid && roomid !== 'global' && roomid !== 'lobby') data = `>${roomid}\n${data}`;
-		for (let i = 0; i < this.connections.length; i++) {
-			if (roomid && !this.connections[i].inRooms.has(roomid)) continue;
-			this.connections[i].send(data);
+		for (const connection of this.connections) {
+			if (roomid && !connection.inRooms.has(roomid)) continue;
+			connection.send(data);
 			Monitor.countNetworkUse(data.length);
 		}
 	}
 	send(data) {
-		for (let i = 0; i < this.connections.length; i++) {
-			this.connections[i].send(data);
+		for (const connection of this.connections) {
+			connection.send(data);
 			Monitor.countNetworkUse(data.length);
 		}
 	}
@@ -450,7 +451,7 @@ class User {
 	}
 	getIdentity(roomid) {
 		if (this.locked || this.namelocked) {
-			const lockedSymbol = (Config.punishgroups && Config.punishgroups.locked ? Config.punishgroups.locked.symbol : '‽');
+			const lockedSymbol = (Config.punishgroups && Config.punishgroups.locked ? Config.punishgroups.locked.symbol : '\u203d');
 			return lockedSymbol + this.name;
 		}
 		if (roomid && roomid !== 'global') {
@@ -464,6 +465,10 @@ class User {
 			}
 			if ((!room.auth || !room.auth[this.userid]) && this.customSymbol) return this.customSymbol + this.name;
 			return room.getAuth(this) + this.name;
+		}
+		if (this.semilocked) {
+			const mutedSymbol = (Config.punishgroups && Config.punishgroups.muted ? Config.punishgroups.muted.symbol : '!');
+			return mutedSymbol + this.name;
 		}
 		if (this.customSymbol) return this.customSymbol + this.name;
 		return this.group + this.name;
@@ -823,7 +828,7 @@ class User {
 
 		let oldid = this.userid;
 		if (userid !== this.userid) {
-			this.cancelSearch();
+			this.cancelSearches();
 
 			if (!Users.move(this, userid)) {
 				return false;
@@ -847,10 +852,10 @@ class User {
 
 		if (this.namelocked) this.named = true;
 
-		for (let i = 0; i < this.connections.length; i++) {
+		for (const connection of this.connections) {
 			//console.log('' + name + ' renaming: socket ' + i + ' of ' + this.connections.length);
 			let initdata = `|updateuser|${this.name}|${this.named ? 1 : 0}|${this.avatar}`;
-			this.connections[i].send(initdata);
+			connection.send(initdata);
 		}
 		this.games.forEach(roomid => {
 			const room = Rooms(roomid);
@@ -868,7 +873,7 @@ class User {
 	}
 	merge(oldUser) {
 		oldUser.cancelChallengeTo();
-		oldUser.cancelSearch();
+		oldUser.cancelSearches();
 		oldUser.inRooms.forEach(roomid => {
 			Rooms(roomid).onLeave(oldUser);
 		});
@@ -880,8 +885,8 @@ class User {
 
 		this.updateGroup(this.registered);
 
-		for (let i = 0; i < oldUser.connections.length; i++) {
-			this.mergeConnection(oldUser.connections[i]);
+		for (const connection of oldUser.connections) {
+			this.mergeConnection(connection);
 		}
 		oldUser.inRooms.clear();
 		oldUser.connections = [];
@@ -1054,8 +1059,7 @@ class User {
 		if (usergroups[userid]) {
 			removed.push(usergroups[userid].charAt(0));
 		}
-		for (let i = 0; i < Rooms.global.chatRooms.length; i++) {
-			let room = Rooms.global.chatRooms[i];
+		for (const room of Rooms.global.chatRooms) {
 			if (!room.isPrivate && room.auth && userid in room.auth && room.auth[userid] !== '+') {
 				removed.push(room.auth[userid] + room.id);
 				room.auth[userid] = '+';
@@ -1114,7 +1118,7 @@ class User {
 				this.destroy();
 			} else {
 				this.cancelChallengeTo();
-				this.cancelSearch();
+				this.cancelSearches();
 			}
 		}
 	}
@@ -1207,12 +1211,12 @@ class User {
 			}
 		}
 		if (!connection) {
-			for (let i = 0; i < this.connections.length; i++) {
+			for (const curConnection of this.connections) {
 				// only join full clients, not pop-out single-room
 				// clients
 				// (...no, pop-out rooms haven't been implemented yet)
-				if (this.connections[i].inRooms.has('global')) {
-					this.joinRoom(room, this.connections[i]);
+				if (curConnection.inRooms.has('global')) {
+					this.joinRoom(room, curConnection);
 				}
 			}
 			return true;
@@ -1233,16 +1237,16 @@ class User {
 			// you can't leave the global room except while disconnecting
 			if (!force) return false;
 			this.cancelChallengeTo();
-			this.cancelSearch();
+			this.cancelSearches();
 		}
 		if (!this.inRooms.has(room.id)) {
 			return false;
 		}
-		for (let i = 0; i < this.connections.length; i++) {
-			if (connection && this.connections[i] !== connection) continue;
-			if (this.connections[i].inRooms.has(room.id)) {
-				this.connections[i].sendTo(room.id, '|deinit');
-				this.connections[i].leaveRoom(room);
+		for (const curConnection of this.connections) {
+			if (connection && curConnection !== connection) continue;
+			if (curConnection.inRooms.has(room.id)) {
+				curConnection.sendTo(room.id, '|deinit');
+				curConnection.leaveRoom(room);
 			}
 			if (connection) break;
 		}
@@ -1280,10 +1284,6 @@ class User {
 		let format = Dex.getFormat(formatid);
 		if (!format['' + type + 'Show']) {
 			connection.popup(`That format is not available.`);
-			return Promise.resolve(false);
-		}
-		if (type === 'search' && this.searching[formatid]) {
-			connection.popup(`You are already searching a battle in that format.`);
 			return Promise.resolve(false);
 		}
 		return TeamValidator(formatid).prepTeam(this.team, this.locked || this.namelocked).then(result => this.finishPrepBattle(connection, result));
@@ -1346,15 +1346,17 @@ class User {
 			atLeastOne = true;
 		});
 		if (!atLeastOne) games = null;
-		let searching = Object.keys(this.searching);
+		let searching = Ladders.matchmaker.getSearches(this);
 		if (onlyIfExists && !searching.length && !atLeastOne) return;
 		(connection || this).send(`|updatesearch|` + JSON.stringify({
 			searching: searching,
 			games: games,
 		}));
 	}
-	cancelSearch(format) {
-		return Ladders.matchmaker.cancelSearch(this, format);
+	cancelSearches(format) {
+		if (Ladders.matchmaker.cancelSearches(this)) {
+			this.popup(`You are no longer looking for a battle because you changed your username.`);
+		}
 	}
 	makeChallenge(user, format, team/*, isPrivate*/) {
 		user = getUser(user);
@@ -1572,7 +1574,7 @@ Users.socketConnect = function (worker, workerid, socketid, ip, protocol) {
 	}
 	// Emergency mode connections logging
 	if (Config.emergency) {
-		fs.appendFile('logs/cons.emergency.log', '[' + ip + ']\n', err => {
+		fs('logs/cons.emergency.log', '[' + ip + ']\n', err => {
 			if (err) {
 				console.log('!! Error in emergency conns log !!');
 				throw err;
@@ -1584,11 +1586,11 @@ Users.socketConnect = function (worker, workerid, socketid, ip, protocol) {
 	connection.user = user;
 	Punishments.checkIp(user, connection);
 	// Generate 1024-bit challenge string.
-	require('crypto').randomBytes(128, (ex, buffer) => {
-		if (ex) {
+	require('crypto').randomBytes(128, (err, buffer) => {
+		if (err) {
 			// It's not clear what sort of condition could cause this.
 			// For now, we'll basically assume it can't happen.
-			console.log(`Error in randomBytes: ${ex}`);
+			require('./crashlogger')(err, 'randomBytes');
 			// This is pretty crude, but it's the easiest way to deal
 			// with this case, which should be impossible anyway.
 			user.disconnectAll();
@@ -1660,8 +1662,8 @@ Users.socketReceive = function (worker, workerid, socketid, message) {
 	}
 
 	let startTime = Date.now();
-	for (let i = 0; i < lines.length; i++) {
-		if (user.chat(lines[i], room, connection) === false) break;
+	for (const line of lines) {
+		if (user.chat(line, room, connection) === false) break;
 	}
 	let deltaTime = Date.now() - startTime;
 	if (deltaTime > 1000) {

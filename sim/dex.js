@@ -34,7 +34,6 @@ const fs = require('fs');
 const path = require('path');
 
 const Data = require('./dex-data');
-const {Effect, PureEffect, RuleTable, Format, Item, Template, Move, Ability} = Data; // eslint-disable-line no-unused-vars
 
 const DATA_DIR = path.resolve(__dirname, '../data');
 const MODS_DIR = path.resolve(__dirname, '../mods');
@@ -427,7 +426,7 @@ class ModdedDex {
 		return moveCopy;
 	}
 	/**
-	 * @param {string | Effect} name
+	 * @param {?string | Effect} name
 	 * @return {Effect}
 	 */
 	getEffect(name) {
@@ -469,9 +468,12 @@ class ModdedDex {
 		}
 		name = (name || '').trim();
 		let id = toId(name);
-		if (this.data.Aliases[id]) {
+		if (this.data.Aliases.hasOwnProperty(id)) {
 			name = this.data.Aliases[id];
 			id = toId(name);
+		}
+		if (this.data.Formats.hasOwnProperty('gen7' + id)) {
+			id = 'gen7' + id;
 		}
 		let effect;
 		/**@type {string[]} */
@@ -711,8 +713,7 @@ class ModdedDex {
 	 * @return {RuleTable}
 	 */
 	getRuleTable(format, depth = 0) {
-		/** @type {RuleTable} */
-		let ruleTable = new RuleTable();
+		let ruleTable = new Data.RuleTable();
 		if (format.ruleTable) return format.ruleTable;
 
 		const ruleset = format.ruleset.slice();
@@ -1104,13 +1105,13 @@ class ModdedDex {
 			let ability = buf.substring(i, j);
 			let template = dexes['base'].getTemplate(set.species);
 			// @ts-ignore
-			set.ability = (template.abilities && ability in {'':1, 0:1, 1:1, H:1} ? template.abilities[ability || '0'] : ability);
+			set.ability = (template.abilities && ['', '0', '1', 'H'].includes(ability) ? template.abilities[ability || '0'] : ability);
 			i = j + 1;
 
 			// moves
 			j = buf.indexOf('|', i);
 			if (j < 0) return null;
-			set.moves = buf.substring(i, j).split(',', 24);
+			set.moves = buf.substring(i, j).split(',', 24).filter(x => x);
 			i = j + 1;
 
 			// nature

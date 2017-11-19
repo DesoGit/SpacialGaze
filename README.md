@@ -11,8 +11,6 @@ Navigation: [Tsunami][1] | [PS Server repository][10] | [PS Client repository][2
 [![Build Status](https://travis-ci.org/DesoGit/Tsunami_PS.svg?branch=master)](https://travis-ci.org/DesoGit/Tsunami_PS)
 [![dependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/status.svg)](https://david-dm.org/DesoGit/Tsunami_PS)
 [![devDependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/dev-status.svg)](https://david-dm.org/DesoGit/Tsunami_PS?type=dev)
-[![optionalDependencies Status](https://david-dm.org/DesoGit/Tsunami_PS/optional-status.svg)](https://david-dm.org/DesoGit/Tsunami_PS?type=optional)
-
 
 Introduction
 ------------------------------------------------------------------------

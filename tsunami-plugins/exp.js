@@ -244,17 +244,18 @@ exports.commands = {
 	doubleexp: function (target, room, user) {
 		if (!this.can('roomowner')) return;
 		DOUBLE_XP = !DOUBLE_XP;
+		Rooms.rooms.forEach((curRoom, id) => {
+			if (id !== 'global') curRoom.addRaw('<div class="broadcast-' + (DOUBLE_XP ? 'green' : 'red') + '"><b>Double XP is turned ' + (DOUBLE_XP ? 'on! You will now ' : 'off! You will no longer ') + 'receive double XP.</b></div>').update();
+		});
 		return this.sendReply('Double XP was turned ' + (DOUBLE_XP ? 'ON' : 'OFF') + '.');
 	},
 
 	expon: function (target, room, user) {
-		if (!this.can('root')) return false;
 		Db.expoff.remove(user.userid);
 		this.sendReply("You are no longer exempt from exp");
 	},
 
 	expoff: function (target, room, user) {
-		if (!this.can('root')) return false;
 		Db.expoff.set(user.userid, true);
 		this.sendReply("You are now exempt from exp");
 	},
